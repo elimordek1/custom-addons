@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_fleet" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.fleet</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="vehicle_id"/>
+                <field name="connected_service_id" readonly="1"/>
+            </field>
+            <xpath expr="//field[@name='move_ids_without_package']/list" position="inside">
+                <field name="unit_price"/>
+                <field name="cost_including_tax"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_move_form_inherit_fleet" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.fleet</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_reference" position="after">
+                <field name="connected_service_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

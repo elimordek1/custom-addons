@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_product_list_inherit" model="ir.ui.view">
+        <field name="name">product.stock.list.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <field name="uom_id" position="after">
+                <field name="lst_price"/>
+                <field name="total_stock_value" sum="Total Value"/>
+            </field>
+        </field>
+    </record>
+
+
+    <!-- Inherit Stock Move Form View -->
+    <record id="view_stock_move_form_inherit" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit.service</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="replace">
+                <field name="product_id" 
+                    required="1"
+                    domain="[('company_id', 'in', [company_id, False])]"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit Stock Picking Form View -->
+    <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.service</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']/list//field[@name='product_id']" position="replace">
+                <field name="product_id" 
+                    required="1"
+                    domain="[('company_id', 'in', [company_id, False])]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="vehicle_id"/>
+                <field name="connected_service_id"/>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/list" position="inside">
+                <field name="barcode"/>
+                <field name="unit_price"/>
+                <field name="cost_including_tax"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button 
+                    name="action_create_car_service" 
+                    string="Create Car Service" 
+                    type="object" 
+                    class="btn-primary"
+                    invisible="not is_car_service or has_service_created"
+                />
+            </xpath>
+            <xpath expr="//header/button[@name='action_confirm']" position="replace"/>
+            <xpath expr="//header/button[@name='action_confirm']" position="replace">
+                <button 
+                    name="action_confirm" 
+                    id="action_confirm" 
+                    data-hotkey="q" 
+                    string="Confirm" 
+                    class="btn-primary" 
+                    type="object" 
+                    context="{'validate_analytic': True}" 
+                    invisible="state not in ('draft', 'sent') or (is_car_service and not has_service_created)"
+                />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="is_car_service"/>
+                <field name="car_id" invisible="not is_car_service"/>
+                <field name="has_service_created" invisible="1"/>
+                <field name="total_cost" invisible="not is_car_service"/>
+                <field name="connected_service_id" invisible="not is_car_service"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_product_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.report.tree.difference.inherit</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.sale_report_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_subtotal']" position="after">
+                <field name="difference_amount" sum="Total Difference"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

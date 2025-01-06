@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fleet Vehicle Log Services Form Inherit -->
+    <record id="fleet_vehicle_log_services_view_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.form.inherit</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button 
+                    name="action_create_stock_picking" 
+                    string="შექმენი ჩამოწერა" 
+                    type="object" 
+                    class="btn-primary"
+                    invisible="order_id"
+                />
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="order_id"/>
+                <field name="invoice_id"/>
+                <field name="stock_picking_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

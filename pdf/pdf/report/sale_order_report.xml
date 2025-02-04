@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_sale_order_custom" model="ir.actions.report">
+        <field name="name">Custom Sale Order Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">pdf.report_peugeot_geo</field>
+        <field name="report_file">pdf.report_peugeot_geo</field>
+        <field name="print_report_name">'Sale Order - ' + object.name</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_sale_order_peugeot-eng" model="ir.actions.report">
+        <field name="name">Custom Peugeot Sale Order Report ENG</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">pdf.report_peugeot_eng</field>
+        <field name="report_file">pdf.report_peugeot_eng</field>
+        <field name="print_report_name">'Sale Order - ' + object.name</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_sale_order_peugeot-geo-act" model="ir.actions.report">
+        <field name="name">Custom Peugeot Sale Order Report GEO Act</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">pdf.report_proforma_invoice_eng</field>
+        <field name="report_file">pdf.report_proforma_invoice_eng</field>
+        <field name="print_report_name">'Sale Order - ' + object.name</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_sale_order_peugeot-eng-act" model="ir.actions.report">
+        <field name="name">Custom Peugeot Sale Order Report ENG Act</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">pdf.report_proforma_invoice_geo</field>
+        <field name="report_file">pdf.report_proforma_invoice_geo</field>
+        <field name="print_report_name">'Sale Order - ' + object.name</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

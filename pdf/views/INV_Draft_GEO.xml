@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="invoice_report" name="Custom Invoice Template">
+        <t t-call="web.basic_layout">
+            <div class="invoice-container">
+                <!-- Header with centered logo -->
+                <header style="text-align: center;">
+                    <img src="/pdf/static/description/Peugeot-Logo.png" alt="Logo" width="200"/>
+                </header>
+
+                <!-- Invoice Header -->
+                <div class="invoice-header">
+                    <strong>Invoice Number:</strong> <span t-field="doc.invoice_number"/>
+                </div>
+
+                <!-- Invoice Details -->
+                <div class="invoice-details">
+                    <p><strong>Date:</strong> <span t-field="doc.date"/></p>
+                    <p><strong>Order Number:</strong> <span t-field="doc.order_number"/></p>
+                    <p><strong>Valid Until:</strong> <span t-field="doc.valid_until"/></p>
+                </div>
+
+                <!-- Buyer Information -->
+                <div class="buyer-info">
+                    <strong>Buyer Information:</strong>
+                    <p><strong>ID:</strong> <span t-field="doc.buyer.id"/></p>
+                    <p><strong>Address:</strong> <span t-field="doc.buyer.address"/></p>
+                    <p><strong>Phone:</strong> <span t-field="doc.buyer.phone"/></p>
+                </div>
+
+                <!-- Vehicle Information -->
+                <div class="vehicle-info">
+                    <strong>Vehicle Information:</strong>
+                    <p><strong>Model:</strong> <span t-field="doc.vehicle.model"/></p>
+                    <p><strong>VIN:</strong> <span t-field="doc.vehicle.vin"/></p>
+                    <p><strong>Price:</strong> <span t-field="doc.vehicle.price"/></p>
+                    <p><strong>Currency:</strong> <span t-field="doc.vehicle.currency"/></p>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="payment-info">
+                    <strong>Payment Details:</strong>
+                    <p><strong>Advance:</strong> <span t-field="doc.payment.advance"/></p>
+                    <p><strong>Total:</strong> <span t-field="doc.payment.total"/></p>
+                    <p><strong>Currency:</strong> <span t-field="doc.payment.currency"/></p>
+                    <p><strong>Note:</strong> <span t-field="doc.payment.note"/></p>
+                </div>
+
+                <!-- Company Information -->
+                <div class="company-info">
+                    <strong>Company Information:</strong>
+                    <p><strong>Name:</strong> <span t-field="doc.company.name"/></p>
+                    <p><strong>Company ID:</strong> <span t-field="doc.company.id"/></p>
+                </div>
+
+                <div class="director">
+                    <strong>Director:</strong> <span t-field="doc.director"/>
+                </div>
+
+                <div class="thank-you">
+                    <p><span t-field="doc.thank_you"/></p>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

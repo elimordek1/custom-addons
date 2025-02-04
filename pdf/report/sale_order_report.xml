@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Report Action for Sale Order PDF -->
+    <record id="action_report_sale_order_custom" model="ir.actions.report">
+        <field name="name">Custom Sale Order Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_name">pdf.invoice_report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

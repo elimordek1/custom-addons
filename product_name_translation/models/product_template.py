@@ -18,6 +18,7 @@ class ResPartner(models.Model):
 
     rs_acc = fields.Char(compute='_compute_rs_acc', string='rs.ge ექაუნთი', readonly=True)
     rs_pass = fields.Char(compute='_compute_rs_pass', string='rs.ge პაროლი', readonly=True)
+    is_vat_payer = fields.Boolean(string='Is VAT Payer')
 
 
 
@@ -34,56 +35,98 @@ class ResPartner(models.Model):
             record.rs_pass = user.rs_pass
 
 
-    def button_get_name_from_tin(self):
-        for record in self:
-            try:
-                usn = record.rs_acc  # Use the rs_acc field of the record
-                usp = record.rs_pass  # Use the rs_pass field of the record
-                tin = record.vat
+def button_check_vat_payer(self):
+   for record in self:
+       try:
+           usn = record.rs_acc
+           usp = record.rs_pass
+           tin = record.vat
 
-                soap_request = f"""<?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                  <soap:Body>
-                    <get_name_from_tin xmlns="http://tempuri.org/">
-                      <su>{usn}</su>
-                      <sp>{usp}</sp>
-                      <tin>{tin}</tin>
-                    </get_name_from_tin>
-                  </soap:Body>
-                </soap:Envelope>"""
+           soap_request = f"""<?xml version="1.0" encoding="utf-8"?>
+           <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+             <soap:Body>
+               <is_vat_payer_tin xmlns="http://tempuri.org/">
+                 <su>{usn}</su>
+                 <sp>{usp}</sp>
+                 <tin>{tin}</tin>
+               </is_vat_payer_tin>
+             </soap:Body>
+           </soap:Envelope>"""
 
-                # Define the URL and headers
-                url = "http://services.rs.ge/waybillservice/waybillservice.asmx"
-                headers = {
-                    "Content-Type": "text/xml; charset=utf-8",
-                    "SOAPAction": "http://tempuri.org/get_name_from_tin"
-                }
+           url = "http://services.rs.ge/waybillservice/waybillservice.asmx"
+           headers = {
+               "Content-Type": "text/xml; charset=utf-8",
+               "SOAPAction": "http://tempuri.org/is_vat_payer_tin"
+           }
 
-                # Send the request
-                response = requests.post(url, data=soap_request, headers=headers)
+           response = requests.post(url, data=soap_request, headers=headers)
 
-                # Check for a successful response
-                if response.status_code != 200:
-                    record.company_review = f"Failed to get response from service. Status code: {response.status_code}"
-                    continue
+           if response.status_code != 200:
+               record.company_review = f"Failed to get response from service. Status code: {response.status_code}"
+               return
 
-                # Parse the XML response
-                root = ET.fromstring(response.text)
+           root = ET.fromstring(response.text)
 
-                # Define the namespace (use the appropriate namespace for your SOAP response)
-                namespaces = {
-                    'soap': 'http://schemas.xmlsoap.org/soap/envelope/',
-                    'ns': 'http://tempuri.org/'  # Adjust this namespace if it differs
-                }
+           namespaces = {
+               'soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+               'ns': 'http://tempuri.org/'
+           }
 
-                # Find the `name` element in the response
-                result_element = root.find('.//ns:get_name_from_tinResult', namespaces)
+           result_element = root.find('.//ns:is_vat_payer_tinResult', namespaces)
 
-                # Check if the element was found and assign its text to the company_review field
-                if result_element is not None:
-                    record.name = result_element.text
-                else:
-                    record.name = response_element.text
+           if result_element is not None:
+               is_vat_payer = result_element.text.lower() == 'true'
+               record.is_vat_payer = is_vat_payer
+           else:
+               record.company_review = "Could not find VAT payer status in response"
 
-            except Exception as e:
-                record.company_review = f"An error occurred: {str(e)}"
+       except Exception as e:
+           record.company_review = f"An error occurred: {str(e)}"
+
+def button_get_name_from_tin(self):
+   for record in self:
+       try:
+           usn = record.rs_acc
+           usp = record.rs_pass
+           tin = record.vat
+
+           soap_request = f"""<?xml version="1.0" encoding="utf-8"?>
+           <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+             <soap:Body>
+               <get_name_from_tin xmlns="http://tempuri.org/">
+                 <su>{usn}</su>
+                 <sp>{usp}</sp>
+                 <tin>{tin}</tin>
+               </get_name_from_tin>
+             </soap:Body>
+           </soap:Envelope>"""
+
+           url = "http://services.rs.ge/waybillservice/waybillservice.asmx"
+           headers = {
+               "Content-Type": "text/xml; charset=utf-8",
+               "SOAPAction": "http://tempuri.org/get_name_from_tin"
+           }
+
+           response = requests.post(url, data=soap_request, headers=headers)
+
+           if response.status_code != 200:
+               record.company_review = f"Failed to get response from service. Status code: {response.status_code}"
+               return
+
+           root = ET.fromstring(response.text)
+
+           namespaces = {
+               'soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+               'ns': 'http://tempuri.org/'
+           }
+
+           result_element = root.find('.//ns:get_name_from_tinResult', namespaces)
+
+           if result_element is not None:
+               record.name = result_element.text
+               self.button_check_vat_payer()  # Call VAT check after setting name
+           else:
+               record.name = response_element.text
+
+       except Exception as e:
+           record.company_review = f"An error occurred: {str(e)}"

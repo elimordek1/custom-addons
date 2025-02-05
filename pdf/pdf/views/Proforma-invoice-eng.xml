@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+ <template id="report_proforma_invoice_eng">
+   <t t-call="web.html_container">
+     <t t-foreach="docs" t-as="doc">
+       <t t-call="web.basic_layout">
+         <t t-set="styles">
+           <![CDATA[
+             body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+             .invoice-container { width: 100%; max-width: 800px; margin: 0 auto; padding: 10px; box-sizing: border-box; }
+             .invoice-header { text-align: center; margin-bottom: 10px; }
+             .logo-img { max-width: 100px; }
+             .company-name { font-size: 18px; font-weight: bold; }
+             .invoice-title { text-align: center; margin-bottom: 10px; }
+             .invoice-label { font-size: 16px; font-weight: bold; }
+             .invoice-info, .customer-info { margin-bottom: 10px; }
+             .label { font-weight: bold; }
+             .vehicle-table, .parts-table { width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px; }
+             .vehicle-table th, .parts-table th { background-color: #f2f2f2; padding: 5px; text-align: left; }
+             .vehicle-table td, .parts-table td { padding: 5px; border: 1px solid #ddd; }
+             .total-section { margin-bottom: 10px; font-size: 12px; }
+             .bank-details table { width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px; }
+             .bank-details td { padding: 5px; border: 1px solid #ddd; }
+             .signatures { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; }
+             .footer-container { text-align: center; font-size: 12px; }
+             .thank-you-message { font-size: 14px; margin-bottom: 5px; }
+             .company-info { font-size: 12px; }
+           ]]>
+         </t>
+         <t t-call-assets="web.report_assets_common" t-js="false" t-css="true">
+           <t t-set="extra_css" t-value="styles"/>
+         </t>
+         <div class="invoice-container">
+           <div class="invoice-header">
+             <img class="logo-img" src="/pdf/static/description/Peugeot-Logo.png" alt="Peugeot Georgia"/>
+             <span class="company-name">PEUGEOT GEORGIA</span>
+           </div>
+           <div class="invoice-title">
+             <span class="invoice-label">Receipt-Delivery Act</span>
+           </div>
+           <div class="invoice-info">
+             <div>
+               <span class="label">Date:</span>
+               <span t-field="doc.date_order"/>
+             </div>
+             <div>
+               <span class="label">Number:</span>
+               <span t-field="doc.name"/>
+             </div>
+           </div>
+           <div class="customer-info">
+             <span class="section-title" style="font-weight: bold;">Buyer:</span>
+             <div>
+               <span class="label">Name:</span>
+               <span t-field="doc.partner_id.name"/>
+             </div>
+             <div>
+               <span class="label">VAT No:</span>
+               <span t-field="doc.partner_id.vat"/>
+             </div>
+             <div>
+               <span class="label">Address:</span>
+               <span t-field="doc.partner_id.street"/>
+             </div>
+             <div>
+               <span class="label">Phone Number:</span>
+               <span t-field="doc.partner_id.phone"/>
+             </div>
+           </div>
+           <div class="vehicle-table">
+             <table>
+               <thead>
+                 <tr>
+                   <th>Automobile Model</th>
+                   <th>VIN Code</th>
+                   <th>Mileage</th>
+                   <th>State Number</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr t-foreach="doc.order_line" t-as="line" t-if="line.product_id.type == 'product' and line.product_id.categ_id.name == 'Vehicles'">
+                   <td><span t-field="line.product_id.name"/></td>
+                   <td><span t-field="line.product_id.default_code"/></td>
+                   <td><span t-field="line.mileage"/></td>
+                   <td><span t-field="line.state_number"/></td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+
+           <!-- Parts Table -->
+           <div class="parts-table">
+             <table>
+               <thead>
+                 <tr>
+                   <th>N</th>
+                   <th>Part Number</th>
+                   <th>Name of the Part</th>
+                   <th>Unit Price</th>
+                   <th>Quantity</th>
+                   <th>Amount</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr t-foreach="doc.order_line" t-as="line" t-if="line.product_id.type == 'consu'">
+                   <td><span t-field="line.product_id.type"> </span></td>
+                   <td><span t-esc="line_index + 1"/></td>
+                   <td><span t-field="line.product_id.default_code"/></td>
+                   <td><span t-field="line.product_id.name"/></td>
+                   <td><span t-field="line.price_unit"/></td>
+                   <td><span t-field="line.product_uom_qty"/></td>
+                   <td><span t-field="line.price_subtotal"/></td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+
+           <!-- Services Table -->
+           <div class="parts-table">
+             <table>
+               <thead>
+                 <tr>
+                   <th>N</th>
+                   <th>Service Number</th>
+                   <th>Name of the Service</th>
+                   <th>Unit Price</th>
+                   <th>Quantity</th>
+                   <th>Amount</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr t-foreach="doc.order_line" t-as="line" t-if="line.product_id.detail_type == 'service'">
+                   <td><span t-esc="line_index + 1"/></td>
+                   <td><span t-field="line.product_id.default_code"/></td>
+                   <td><span t-field="line.product_id.name"/></td>
+                   <td><span t-field="line.price_unit"/></td>
+                   <td><span t-field="line.product_uom_qty"/></td>
+                   <td><span t-field="line.price_subtotal"/></td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+
+           <div class="total-section">
+             <div>
+               <span class="label">Cost of Work:</span>
+               <span t-field="doc.amount_total"/>
+             </div>
+             <div>
+               <span class="label">Cost of Spare Parts:</span>
+               <span t-esc="doc.get_spare_parts_total()"/>
+             </div>
+             <div>
+               <span class="label">Total Amount:</span>
+               <span t-field="doc.amount_total"/>
+             </div>
+             <div>
+               <span class="label">Advance:</span>
+               <span t-esc="doc.get_advance_amount()"/>
+             </div>
+           </div>
+           <div class="bank-details">
+             <table>
+               <tbody>
+                 <tr>
+                   <td>
+                     <span class="label">Name:</span> Ltd Novcom
+                   </td>
+                   <td>
+                     <span class="label">Tax ID:</span> 404535614
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>
+                     <span class="label">Bank:</span> JSC "TBC Bank"
+                   </td>
+                   <td>
+                     <span class="label">Bank:</span> JSC "Bank of Georgia"
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>
+                     <span class="label">Bank Code:</span> TBCBGE22
+                   </td>
+                   <td>
+                     <span class="label">Bank Code:</span> BAGAGE22
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>
+                     <span class="label">IBAN:</span> GE42TB7364236020100014
+                   </td>
+                   <td>
+                     <span class="label">IBAN:</span> GE54BG0000000580810424
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+           <div class="signatures">
+             <div>Client ----------</div>
+             <div>Service Provider ----------</div>
+           </div>
+           <div class="footer-container">
+             <div class="thank-you-message">
+               Peugeot Georgia team thanks you for choosing Peugeot
+             </div>
+             <div class="company-info">
+               Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia +995 (32) 2 19 21 95, info@peugeot-georgia.ge
+             </div>
+           </div>
+         </div>
+       </t>
+     </t>
+   </t>
+ </template>
+</odoo>

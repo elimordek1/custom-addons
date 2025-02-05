@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="report_peugeot_geo">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="doc">
+        <t t-call="web.basic_layout">
+          <div class="invoice-container" style="width: 100%; margin: 0; padding: 0; font-family: Arial, sans-serif;">
+            <!-- Header Section -->
+            <div class="invoice-header" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px;">
+              <img class="logo-img" src="/pdf/static/description/Peugeot-Logo.png" alt="Logo" style="max-height: 60px; max-width: 60px;" />
+              <span class="company-name" style="font-size: 20px; font-weight: bold;">PEUGEOT GEORGIA</span>
+            </div>
+
+            <!-- Invoice Information -->
+            <div class="invoice-title" style="margin-top: 10px;">
+              <span class="invoice-label" style="font-weight: bold;">ინვოისი №</span>
+              <span class="invoice-number">12345</span>
+            </div>
+            <div class="invoice-date" style="margin-top: 10px;">
+              <div>
+                <span class="label" style="font-weight: bold;">თარიღი:</span>
+                <span>2021-01-01</span>
+              </div>
+              <div>
+                <span class="label" style="font-weight: bold;">შეკვეთის N:</span>
+                <span>12345</span>
+              </div>
+              <div>
+                <span class="label" style="font-weight: bold;">მოქმედების ვადა:</span>
+                <span>2021-02-01</span>
+              </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="customer-info" style="margin-top: 10px;">
+              <span class="section-title" style="font-weight: bold;">მყიდველი:</span>
+              <div>
+                <span class="label" style="font-weight: bold;">პ/ნ:</span>
+                <span>123456789</span>
+              </div>
+              <div>
+                <span class="label" style="font-weight: bold;">მისამართი:</span>
+                <span>Example Address</span>
+              </div>
+              <div>
+                <span class="label" style="font-weight: bold;">ტელეფონის ნომერი:</span>
+                <span>+995 123 4567</span>
+              </div>
+            </div>
+
+            <!-- Vehicle Table -->
+            <div class="vehicle-table" style="margin-top: 20px;">
+              <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+                <thead>
+                  <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">ავტომობილის მოდელი</th>
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">საიდენტიფიკაციო კოდი</th>
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">გამოშვების წელი </th>
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">ექსტერიერის ფერი</th>
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">ძრავის მოცულობა</th>
+                    <th style="padding: 8px; border: 1px solid #000; text-align: center;">ღირებულება</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Example Vehicle Row -->
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Example Model</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">Example code</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">2021</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">blue</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">2.0L</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">10,000.00</td>
+                  </tr>
+                  <!-- Avansi Row -->
+                  <tr>
+                    <td colspan="6" style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">ავანსი</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">1,000.00</td>
+                  </tr>
+                  <!-- Total Amount Row -->
+                  <tr>
+                    <td colspan="6" style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">ჯამური გადასახდელი თანხა</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">9,000.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Payment Note -->
+            <div class="payment-note" style="margin-top: 10px; font-size: 12px;">
+              ანგარიშსწორება წარმოებს ეროვნული ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
+            </div>
+
+            <!-- Customs Note -->
+            <div class="customs-note" style="margin-top: 5px; font-size: 12px;">
+              ღირებულებაში შედის განბაჟების და გაფორმების ხარჯები.
+            </div>
+
+            <!-- Company and Bank Information -->
+            <div class="company-bank-info" style="margin-top: 20px;">
+              <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+                <tbody>
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">
+                      <span class="label" style="font-weight: bold;">დასახელება:</span>
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">შპს ნოვკომ</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">
+                      <span class="label" style="font-weight: bold;">პ/ნ:</span>
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">404535614</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">
+                      <span class="label" style="font-weight: bold;">ბანკი:</span>
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">ს.ს. "თიბისი ბანკი" და სს "საქართველოს ბანკი"</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">
+                      <span class="label" style="font-weight: bold;">ბანკის კოდი:</span>
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">TBCBGE22_GEL / BAGAGE22</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">
+                      <span class="label" style="font-weight: bold;">IBAN:</span>
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">GE42TB7364236020100014 / GE54BG0000000580810424</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer -->
+            <div style="margin-top: 30px; text-align: center; font-size: 11px; width: 100%;">
+              <span style="display: block;">დირექტორი: /თორნიკე კიკნაველიძე/</span>
+              <span style="display: block; margin-top: 10px;">მადლობა, რომ ირჩევთ პეჟოს</span>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

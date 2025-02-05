@@ -1,4 +1,10 @@
-from odoo import models, fields
+import requests
+from odoo import models, fields, api, _
+import logging
+from datetime import datetime
+import pandas as pd
+
+_logger = logging.getLogger(__name__)
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -12,6 +18,21 @@ class ResPartner(models.Model):
 
     rs_acc = fields.Char(compute='_compute_rs_acc', string='rs.ge ექაუნთი', readonly=True)
     rs_pass = fields.Char(compute='_compute_rs_pass', string='rs.ge პაროლი', readonly=True)
+
+
+
+    @api.depends('user_id.rs_acc')
+    def _compute_rs_acc(self):
+        for record in self:
+            user = self.env.user
+            record.rs_acc = user.rs_acc
+
+    @api.depends('user_id.rs_pass')
+    def _compute_rs_pass(self):
+        for record in self:
+            user = self.env.user
+            record.rs_pass = user.rs_pass
+
 
     def button_get_name_from_tin(self):
         for record in self:

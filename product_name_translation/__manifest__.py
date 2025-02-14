@@ -3,7 +3,7 @@
     'version': '1.0',
     'category': 'Sales',
     'author': 'Your Company',
-    'depends': ['product','base'],
+    'depends': ['base','product'],
     'data': [
         'views/product_template_view.xml',
         'views/res_partner.xml',

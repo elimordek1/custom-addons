@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <template id="report_proforma_invoice_geo">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <!-- Logo and Header -->
+                    <div class="header text-center">
+                        <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
+                        <h2>PEUGEOT GEORGIA</h2>
+                    </div>
+
+                    <!-- Invoice Title -->
+                    <div class="text-center mb-4">
+                        <h3>პროფორმა ინვოისი</h3>
+                    </div>
+
+                    <!-- Document Info -->
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <strong>თარიღი:</strong> <span t-field="doc.date_order"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>ნომერი:</strong> <span t-field="doc.name"/>
+                        </div>
+                    </div>
+
+                    <!-- Buyer Info -->
+                    <div class="mb-4">
+                        <h4>მყიდველი:</h4>
+                        <div><strong>სახელი:</strong> <span t-field="doc.partner_id.name"/></div>
+                        <div><strong>საიდენტიფიკაციო კოდი:</strong> <span t-field="doc.partner_id.vat"/></div>
+                        <div><strong>მისამართი:</strong> <span t-field="doc.partner_id.street"/></div>
+                        <div><strong>ტელეფონი:</strong> <span t-field="doc.partner_id.phone"/></div>
+                    </div>
+
+                    <!-- Vehicle Table -->
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>ავტომობილის მოდელი</th>
+                                <th>ვინ კოდი</th>
+                                <th>გამოშვების წელი</th>
+                                <th>ექსტერიერის ფერი</th>
+                                <th>ძრავის მოცულობა</th>
+                                <th>ღირებულება (₾)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-field="doc.car_id.model_id.brand_id.name"/>
+                                        <span t-field="doc.car_id.model_id.name"/>
+                                    </td>
+                                    <td><span t-field="doc.car_id.x_studio_vinnumber"/></td>
+                                    <td><span t-field="doc.car_id.model_id.model_year"/></td>
+                                    <td><span t-field="doc.car_id.color"/></td>
+                                    <td><span t-field="doc.car_id.x_studio_engine_size"/></td>
+                                    <td class="text-right">
+                                        ₾ <span t-field="line.price_unit"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="text-right"><strong>ბალანსი (₾):</strong></td>
+                                <td class="text-right">
+                                    ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="text-right"><strong>ჯამური გადასახდელი თანხა (₾):</strong></td>
+                                <td class="text-right">
+                                    ₾ <span t-field="doc.amount_total"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Bank Details -->
+                    <div class="mt-4">
+                        <h4>საბანკო რეკვიზიტები:</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>დასახელება:</strong> შპს ნოვკომი</td>
+                                <td><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
+                                <td><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ბანკის კოდი:</strong> TBCBGE22</td>
+                                <td><strong>ბანკის კოდი:</strong> BAGAGE22</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
+                                <td><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="footer text-center mt-4">
+                        <p class="mb-1">პეჟოს გუნდი გიხდით მადლობას პეჟოს არჩევისთვის</p>
+                        <p>აღმაშენებლის ხეივანი 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

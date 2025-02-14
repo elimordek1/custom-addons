@@ -1,1 +1,1 @@
-from . import product_name_translation
+from . import product_template

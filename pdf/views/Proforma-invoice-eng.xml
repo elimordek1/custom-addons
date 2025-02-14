@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <template id="report_proforma_invoice_eng">
+      <t t-call="web.html_container">
+          <t t-foreach="docs" t-as="doc">
+              <t t-call="web.basic_layout">
+                  <!-- Logo and Header -->
+                  <div class="header text-center">
+                      <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
+                      <h2>PEUGEOT GEORGIA</h2>
+                  </div>
+
+                  <!-- Invoice Title -->
+                  <div class="text-center mb-4">
+                      <h3>Proforma Invoice</h3>
+                  </div>
+
+                  <!-- Document Info -->
+                  <div class="row mb-4">
+                      <div class="col-6">
+                          <strong>Date:</strong> <span t-field="doc.date_order"/>
+                      </div>
+                      <div class="col-6">
+                          <strong>Number:</strong> <span t-field="doc.name"/>
+                      </div>
+                  </div>
+
+                  <!-- Buyer Info -->
+                  <div class="mb-4">
+                      <h4>Buyer:</h4>
+                      <div><strong>Name:</strong> <span t-field="doc.partner_id.name"/></div>
+                      <div><strong>VAT:</strong> <span t-field="doc.partner_id.vat"/></div>
+                      <div><strong>Address:</strong> <span t-field="doc.partner_id.street"/></div>
+                      <div><strong>Phone:</strong> <span t-field="doc.partner_id.phone"/></div>
+                  </div>
+
+                  <!-- Vehicle Table -->
+                  <table class="table table-bordered mt-4">
+                      <thead>
+                          <tr>
+                              <th>Automobile Model</th>
+                              <th>VIN Code</th>
+                              <th>Release Year</th>
+                              <th>Exterior Color</th>
+                              <th>Engine Size</th>
+                              <th>Price (₾)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <t t-foreach="doc.order_line" t-as="line">
+                              <tr>
+                                  <td>
+                                      <span t-field="doc.car_id.model_id.brand_id.name"/>
+                                      <span t-field="doc.car_id.model_id.name"/>
+                                  </td>
+                                  <td><span t-field="doc.car_id.x_studio_vinnumber"/></td>
+                                  <td><span t-field="doc.car_id.model_id.model_year"/></td>
+                                  <td><span t-field="doc.car_id.color"/></td>
+                                  <td><span t-field="doc.car_id.x_studio_engine_size"/></td>
+                                  <td class="text-right">
+                                      ₾ <span t-field="line.price_unit"/>
+                                  </td>
+                              </tr>
+                          </t>
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td colspan="4"></td>
+                              <td class="text-right"><strong>Balance (₾):</strong></td>
+                              <td class="text-right">
+                                  ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td colspan="4"></td>
+                              <td class="text-right"><strong>Total Amount (₾):</strong></td>
+                              <td class="text-right">
+                                  ₾ <span t-field="doc.amount_total"/>
+                              </td>
+                          </tr>
+                      </tfoot>
+                  </table>
+
+                  <!-- Bank Details -->
+                  <div class="mt-4">
+                      <h4>Bank Details:</h4>
+                      <table class="table table-bordered">
+                          <tr>
+                              <td><strong>Name:</strong> Ltd Novcom</td>
+                              <td><strong>Tax ID:</strong> 404535614</td>
+                          </tr>
+                          <tr>
+                              <td><strong>Bank:</strong> JSC "TBC Bank"</td>
+                              <td><strong>Bank:</strong> JSC "Bank of Georgia"</td>
+                          </tr>
+                          <tr>
+                              <td><strong>Bank Code:</strong> TBCBGE22</td>
+                              <td><strong>Bank Code:</strong> BAGAGE22</td>
+                          </tr>
+                          <tr>
+                              <td><strong>IBAN:</strong> GE42TB7364236020100014</td>
+                              <td><strong>IBAN:</strong> GE54BG0000000580810424</td>
+                          </tr>
+                      </table>
+                  </div>
+
+                  <!-- Footer -->
+                  <div class="footer text-center mt-4">
+                      <p class="mb-1">Peugeot Georgia team thanks you for choosing Peugeot</p>
+                      <p>Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia +995 (32) 2 19 21 95, info@peugeot-georgia.ge</p>
+                  </div>
+              </t>
+          </t>
+      </t>
+  </template>
+</odoo>

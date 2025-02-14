@@ -34,6 +34,10 @@
                 <field name="total_cost" invisible="not is_car_service"/>
                 <field name="connected_service_id" invisible="not is_car_service"/>
             </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="odometer"/>
+                <field name="odometer_id"/>
+            </xpath>
         </field>
     </record>
     <record id="view_order_product_tree_inherit" model="ir.ui.view">

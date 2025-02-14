@@ -44,17 +44,16 @@ class SaleOrder(models.Model):
         for order in self:
             service = self.env['fleet.vehicle.log.services'].search([('order_id', '=', order.id)], limit=1)
             order.connected_service_id = service.id if service else False
-    
     # Action Methods
     def action_create_car_service(self):
         self.ensure_one()
         if not self.car_id:
             raise UserError(_("Please select a car first!"))
-            
+
         service_type = self.env['fleet.service.type'].search([('name', '=', 'Car Service')], limit=1)
         if not service_type:
             raise UserError(_("Service type 'Car Service' not found! Please create it first."))
-                
+            
         service_vals = {
             'vehicle_id': self.car_id.id,
             'amount': self.total_cost,
@@ -65,11 +64,19 @@ class SaleOrder(models.Model):
             'inv_ref': self.name,
             'service_type_id': service_type.id,
             'order_id': self.id,
-            'state': 'running'
+            'state': 'done'
         }
-        
+
         service = self.env['fleet.vehicle.log.services'].create(service_vals)
         self.has_service_created = True
+        if self.odometer:
+           odometer = self.env['fleet.vehicle.odometer'].create({
+               'vehicle_id': self.car_id.id,
+               'value': self.odometer,
+               'date': self.date_order,
+               'name': f"Service Order: {self.name}"
+           })
+           self.odometer_id = odometer.id
         
         return {
             'type': 'ir.actions.client',
@@ -80,7 +87,9 @@ class SaleOrder(models.Model):
                 'sticky': False,
                 'next': {'type': 'ir.actions.act_window_close'},
             }
-        }
+            }
+
+
 
     # Override Methods
     def write(self, vals):
@@ -359,6 +368,33 @@ class SaleReport(models.Model):
                 * {self._case_value_or_one('account_currency_table.rate')}
             ) ELSE 0 END"""
         return res
+        
+        
+class SaleOrderExtended(models.Model):
+    _inherit = 'sale.order'
+    
+    @api.model
+    def create(self, vals):
+        if vals.get('is_car_service'):
+            # Get the current sequence
+            sequence = self.env['ir.sequence'].next_by_code('sale.order')
+            if sequence and sequence.startswith('S'):
+                # Replace S with P
+                vals['name'] = 'P' + sequence[1:]
+        return super(SaleOrder, self).create(vals)
+    
+    # You might also want to handle write cases
+    def write(self, vals):
+        if 'is_car_service' in vals:
+            if vals['is_car_service']:
+                if self.name and self.name.startswith('P'):
+                    vals['name'] = 'S' + self.name[1:]
+            else:
+                if self.name and self.name.startswith('S'):
+                    vals['name'] = 'P' + self.name[1:]
+        return super(SaleOrder, self).write(vals)
+        
 
-
+    odometer = fields.Float(string='Odometer')
+    odometer_id = fields.Many2one('fleet.vehicle.odometer', string='Odometer Record', readonly=True)
 

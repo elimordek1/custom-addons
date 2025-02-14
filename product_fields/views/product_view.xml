@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Product Template Form View -->
     <record id="product_template_form_view_inherit_vehicle" model="ir.ui.view">
         <field name="name">product.template.form.inherit.vehicle</field>
         <field name="model">product.template</field>
@@ -9,42 +10,114 @@
                 <page string="Vehicle Information" name="vehicle_info">
                     <group>
                         <group>
+                            <field name="vehicle_model_id"/>
                             <field name="vin_code"/>
                             <field name="manufacture_date"/>
+                            <field name="exterior_color_id"/>
+                            <field name="exterior_color_eng_id"/>
+                            <field name="engine_volume_id"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Vehicle Models">
-                            <field name="vehicle_model_ids">
-                                <list editable="bottom">
-                                    <field name="name"/>
-                                </list>
-                            </field>
-                        </page>
-                        <page string="Colors">
-                            <group>
-                                <field name="exterior_color_ids">
-                                    <list editable="bottom">
-                                        <field name="name"/>
-                                    </list>
-                                </field>
-                                <field name="exterior_color_eng_ids">
-                                    <list editable="bottom">
-                                        <field name="name"/>
-                                    </list>
-                                </field>
-                            </group>
-                        </page>
-                        <page string="Engine">
-                            <field name="engine_volume_ids">
-                                <list editable="bottom">
-                                    <field name="volume"/>
-                                </list>
-                            </field>
-                        </page>
-                    </notebook>
                 </page>
             </notebook>
         </field>
     </record>
+
+    <!-- Vehicle Model List View -->
+    <record id="vehicle_model_view_tree" model="ir.ui.view">
+        <field name="name">vehicle.model.tree</field>
+        <field name="model">vehicle.model</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Exterior Color List View -->
+    <record id="exterior_color_view_tree" model="ir.ui.view">
+        <field name="name">exterior.color.tree</field>
+        <field name="model">exterior.color</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Exterior Color Eng List View -->
+    <record id="exterior_color_eng_view_tree" model="ir.ui.view">
+        <field name="name">exterior.color.eng.tree</field>
+        <field name="model">exterior.color.eng</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Engine Volume List View -->
+    <record id="engine_volume_view_tree" model="ir.ui.view">
+        <field name="name">engine.volume.tree</field>
+        <field name="model">engine.volume</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <record id="vehicle_model_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Models</field>
+        <field name="res_model">vehicle.model</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="exterior_color_action" model="ir.actions.act_window">
+        <field name="name">Exterior Colors</field>
+        <field name="res_model">exterior.color</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="exterior_color_eng_action" model="ir.actions.act_window">
+        <field name="name">Exterior Colors (ENG)</field>
+        <field name="res_model">exterior.color.eng</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="engine_volume_action" model="ir.actions.act_window">
+        <field name="name">Engine Volumes</field>
+        <field name="res_model">engine.volume</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_vehicle_configuration"
+              name="Vehicle Configuration"
+              parent="stock.menu_stock_config_settings"
+              sequence="100"/>
+
+    <menuitem id="menu_vehicle_model"
+              name="Vehicle Models"
+              action="vehicle_model_action"
+              parent="menu_vehicle_configuration"
+              sequence="10"/>
+
+    <menuitem id="menu_exterior_color"
+              name="Exterior Colors"
+              action="exterior_color_action"
+              parent="menu_vehicle_configuration"
+              sequence="20"/>
+
+    <menuitem id="menu_exterior_color_eng"
+              name="Exterior Colors (ENG)"
+              action="exterior_color_eng_action"
+              parent="menu_vehicle_configuration"
+              sequence="30"/>
+
+    <menuitem id="menu_engine_volume"
+              name="Engine Volumes"
+              action="engine_volume_action"
+              parent="menu_vehicle_configuration"
+              sequence="40"/>
 </odoo>

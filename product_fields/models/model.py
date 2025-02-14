@@ -1,40 +1,35 @@
-# models/vehicle_info.py
 from odoo import models, fields, api
+
+class VehicleModel(models.Model):
+    _name = 'vehicle.model'
+    _description = 'Vehicle Model'
+
+    name = fields.Char(string='Vehicle Model', required=True)
+
+class ExteriorColor(models.Model):
+    _name = 'exterior.color'
+    _description = 'Exterior Color'
+
+    name = fields.Char(string='Exterior Color', required=True)
+
+class ExteriorColorEng(models.Model):
+    _name = 'exterior.color.eng'
+    _description = 'Exterior Color English'
+
+    name = fields.Char(string='Exterior Color (ENG)', required=True)
+
+class EngineVolume(models.Model):
+    _name = 'engine.volume'
+    _description = 'Engine Volume'
+
+    name = fields.Float(string='Engine Volume', required=True)
 
 class ProductTemplateInherit(models.Model):
     _inherit = 'product.template'
 
-    vehicle_model_ids = fields.One2many('vehicle.model.line', 'product_id', string='Vehicle Models')
+    vehicle_model_id = fields.Many2one('vehicle.model', string='Vehicle Model')
     vin_code = fields.Char(string='VIN Code')
     manufacture_date = fields.Date(string='Manufacture Date')
-    exterior_color_ids = fields.One2many('exterior.color.line', 'product_id', string='Exterior Colors')
-    exterior_color_eng_ids = fields.One2many('exterior.color.eng.line', 'product_id', string='Exterior Colors (ENG)')
-    engine_volume_ids = fields.One2many('engine.volume.line', 'product_id', string='Engine Volumes')
-
-class VehicleModelLine(models.Model):
-    _name = 'vehicle.model.line'
-    _description = 'Vehicle Model Lines'
-
-    product_id = fields.Many2one('product.template', string='Product')
-    name = fields.Char(string='Vehicle Model')
-
-class ExteriorColorLine(models.Model):
-    _name = 'exterior.color.line'
-    _description = 'Exterior Color Lines'
-
-    product_id = fields.Many2one('product.template', string='Product')
-    name = fields.Char(string='Exterior Color')
-
-class ExteriorColorEngLine(models.Model):
-    _name = 'exterior.color.eng.line'
-    _description = 'Exterior Color English Lines'
-
-    product_id = fields.Many2one('product.template', string='Product')
-    name = fields.Char(string='Exterior Color (ENG)')
-
-class EngineVolumeLine(models.Model):
-    _name = 'engine.volume.line'
-    _description = 'Engine Volume Lines'
-
-    product_id = fields.Many2one('product.template', string='Product')
-    volume = fields.Float(string='Engine Volume')
+    exterior_color_id = fields.Many2one('exterior.color', string='Exterior Color')
+    exterior_color_eng_id = fields.Many2one('exterior.color.eng', string='Exterior Color (ENG)')
+    engine_volume_id = fields.Many2one('engine.volume', string='Engine Volume')

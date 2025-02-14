@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_vehicle_model_line_user,vehicle.model.line.user,model_vehicle_model_line,base.group_user,1,1,1,1
-access_exterior_color_line_user,exterior.color.line.user,model_exterior_color_line,base.group_user,1,1,1,1
-access_exterior_color_eng_line_user,exterior.color.eng.line.user,model_exterior_color_eng_line,base.group_user,1,1,1,1
-access_engine_volume_line_user,engine.volume.line.user,model_engine_volume_line,base.group_user,1,1,1,1
+access_vehicle_model_user,vehicle.model.user,model_vehicle_model,base.group_user,1,1,1,1
+access_exterior_color_user,exterior.color.user,model_exterior_color,base.group_user,1,1,1,1
+access_exterior_color_eng_user,exterior.color.eng.user,model_exterior_color_eng,base.group_user,1,1,1,1
+access_engine_volume_user,engine.volume.user,model_engine_volume,base.group_user,1,1,1,1

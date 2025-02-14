@@ -1,8 +1,8 @@
 from odoo import models, fields
 
 class ProductExtraData(models.Model):
-    _name = 'product.extra.data'
-    _description = 'Дополнительные данные для продукта'
+    _name = 'product.extra.data'  # Changed * to _
+    _description = 'Дополнительные данные для продукта'  # Changed * to _
 
     model_name = fields.Char('ავტომობილის მოდელი')
     engine_capacity = fields.Char('ძრავის მოცულობა')
@@ -13,9 +13,9 @@ class ProductExtraData(models.Model):
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = 'product.template'  # Changed * to _
 
-    car_model_ids = fields.One2many(
+    car_model_ids = fields.One2many(  # Removed * from car*model_ids
         'product.extra.data', 'product_id', string='ავტომობილის მოდელი'
     )
     engine_capacity_ids = fields.One2many(

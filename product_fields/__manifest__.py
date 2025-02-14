@@ -14,8 +14,7 @@
     'author': 'Your Company',
     'website': 'https://www.yourcompany.com',
     'depends': [
-        'base',
-        'product',
+        'base','product',
     ],
     'data': [
         'views/product_view.xml',

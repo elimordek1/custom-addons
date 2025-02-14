@@ -2,11 +2,10 @@
     <record id="view_product_form_inherit_extra_fields" model="ir.ui.view">
         <field name="name">product.template.form.inherit.extra.fields</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.view_product_form"/>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-            <!-- Добавление вкладки -->
             <xpath expr="//notebook" position="inside">
-                <page string="Дополнительные данные">
+                <page string="Car info">
                     <group>
                         <field name="vin_code"/>
                     </group>

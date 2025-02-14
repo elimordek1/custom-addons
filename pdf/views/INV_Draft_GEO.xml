@@ -30,34 +30,50 @@
                       <table style="width: 100%; border-collapse: collapse;">
                           <thead>
                               <tr style="border-bottom: 2px solid #000;">
-                                  <th>ავტომობილის მოდელი</th>
-                                  <th>VIN კოდი</th>
-                                  <th>გამოშვების წელი</th>
-                                  <th>ექსტერიერის ფერი</th>
-                                  <th>ძრავის მოცულობა</th>
-                                  <th>ღირებულება</th>
+                                  <th style="padding: 8px;">ავტომობილის მოდელი</th>
+                                  <th style="padding: 8px;">ვინ კოდი</th>
+                                  <th style="padding: 8px;">გამოშვების წელი</th>
+                                  <th style="padding: 8px;">ექსტერიერის ფერი</th>
+                                  <th style="padding: 8px;">ძრავის მოცულობა</th>
+                                  <th style="padding: 8px;">ღირებულება</th>
                               </tr>
                           </thead>
                           <tbody>
                               <tr t-foreach="doc.order_line" t-as="line">
-                                  <td><span t-field="line.product_id.vehicle_model_id.name"/></td>
-                                  <td><span t-field="line.product_id.vin_code"/></td>
-                                  <td><span t-field="line.product_id.manufacture_date"/></td>
-                                  <td><span t-field="line.product_id.exterior_color_id.name"/></td>
-                                  <td><span t-field="line.product_id.engine_volume_id.name"/></td>
-                                  <td style="text-align: right;"><span t-field="line.price_unit"/></td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.vehicle_model_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.vin_code"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.manufacture_date"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.exterior_color_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.engine_volume_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                      <span t-field="line.price_unit"/>
+                                  </td>
                               </tr>
                           </tbody>
                           <tfoot>
                               <tr>
-                                  <td colspan="4"></td>
-                                  <td style="text-align: right; font-weight: bold;">ბალანსი:</td>
-                                  <td style="text-align: right;"><span t-field="doc.x_studio_related_field_4is_1ijgac036"/></td>
+                                  <td colspan="4" style="border: none;">&#160;</td>
+                                  <td style="padding: 8px; text-align: right; font-weight: bold;">ბალანსი :</td>
+                                  <td style="padding: 8px; text-align: right;">
+                                      <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
+                                  </td>
                               </tr>
                               <tr>
-                                  <td colspan="4"></td>
-                                  <td style="text-align: right; font-weight: bold;">ჯამური გადასახდელი თანხა:</td>
-                                  <td style="text-align: right;"><span t-field="doc.amount_total"/></td>
+                                  <td colspan="4" style="border: none;">&#160;</td>
+                                  <td style="padding: 8px; text-align: right; font-weight: bold;">ჯამური გადასახდელი თანხა :</td>
+                                  <td style="padding: 8px; text-align: right;">
+                                      <span t-field="doc.amount_total"/>
+                                  </td>
                               </tr>
                           </tfoot>
                       </table>
@@ -67,20 +83,20 @@
                   <div class="mt-4">
                       <table style="width: 100%; border-collapse: collapse;">
                           <tr>
-                              <td><strong>დასახელება:</strong> შპს ნოვკომი</td>
-                              <td><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
                           </tr>
                           <tr>
-                              <td><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
-                              <td><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
                           </tr>
                           <tr>
-                              <td><strong>ბანკის კოდი:</strong> TBCBGE22</td>
-                              <td><strong>ბანკის კოდი:</strong> BAGAGE22</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკის კოდი:</strong> TBCBGE22</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკის კოდი:</strong> BAGAGE22</td>
                           </tr>
                           <tr>
-                              <td><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
-                              <td><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
+                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
                           </tr>
                       </table>
                   </div>

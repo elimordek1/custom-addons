@@ -38,29 +38,28 @@
                                     <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Price</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr t-foreach="doc.order_line" t-as="line">
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-field="line.product_id.product_tmpl_id.brand_id.name"/>
-                                        <span t-field="line.product_id.product_tmpl_id.name"/>
-                                    </td>
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-field="line.product_id.x_studio_vinnumber"/>
-                                    </td>
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-field="line.product_id.product_tmpl_id.model_year"/>
-                                    </td>
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-field="line.product_id.color"/>
-                                    </td>
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-field="line.product_id.x_studio_engine_size"/>
-                                    </td>
-                                    <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                        <span t-field="line.price_unit"/>
-                                    </td>
-                                </tr>
-                            </tbody>
+                             <tbody>
+                              <tr t-foreach="doc.order_line" t-as="line">
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.vehicle_model_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.vin_code"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.manufacture_date"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.exterior_color_eng_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                      <span t-field="line.product_id.engine_volume_id.name"/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                      <span t-field="line.price_unit"/>
+                                  </td>
+                              </tr>
+                          </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="4" style="border: none;">&#160;</td>

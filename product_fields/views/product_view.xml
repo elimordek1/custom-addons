@@ -5,41 +5,41 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Car info">
+                <page string="Car Data">
                     <group>
                         <field name="vin_code"/>
                     </group>
                     <group>
                         <field name="car_model_ids" widget="one2many_list">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="model_name"/>
                             </tree>
                         </field>
                     </group>
                     <group>
                         <field name="engine_capacity_ids" widget="one2many_list">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="engine_capacity"/>
                             </tree>
                         </field>
                     </group>
                     <group>
                         <field name="exterior_color_ids" widget="one2many_list">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="exterior_color"/>
                             </tree>
                         </field>
                     </group>
                     <group>
                         <field name="exterior_color_eng_ids" widget="one2many_list">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="exterior_color_eng"/>
                             </tree>
                         </field>
                     </group>
                     <group>
                         <field name="manufacture_year_ids" widget="one2many_list">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="year_of_manufacture"/>
                             </tree>
                         </field>

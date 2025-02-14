@@ -22,7 +22,7 @@ class EngineVolume(models.Model):
     _name = 'engine.volume'
     _description = 'Engine Volume'
 
-    name = fields.Float(string='Engine Volume', required=True)
+    name = fields.Char(string='Engine Volume', required=True)
 
 class ProductTemplateInherit(models.Model):
     _inherit = 'product.template'

@@ -1,0 +1,14 @@
+<odoo>
+
+
+    <record id="action_report_sale_order" model="ir.actions.report">
+        <field name="name">Sale Order Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_reports.report_saleorder_2</field>
+        <field name="report_file">custom_reports.report_saleorder_2</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

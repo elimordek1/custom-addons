@@ -1,6 +1,6 @@
 # __manifest__.py
 {
-    'name': 'Products Fields',
+    'name': 'Product Fields',
     'version': '18.0.1.0.0',
     'category': 'Sales/Sales',
     'summary': 'Add car field to sale orders',

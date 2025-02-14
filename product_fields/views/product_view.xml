@@ -1,49 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_product_form_inherit_extra_fields" model="ir.ui.view">
-        <field name="name">product.template.form.inherit.extra.fields</field>
+    <record id="product_template_form_view_inherit_vehicle" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.vehicle</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page string="Additional Data">
+                <page string="Vehicle Information" name="vehicle_info">
                     <group>
-                        <field name="vin_code"/>
+                        <group>
+                            <field name="vin_code"/>
+                            <field name="manufacture_date"/>
+                        </group>
                     </group>
-                    <group string="Car Models">
-                        <field name="car_model_ids">
-                            <tree editable="bottom">
-                                <field name="model_name"/>
-                            </tree>
-                        </field>
-                    </group>
-                    <group string="Engine Capacities">
-                        <field name="engine_capacity_ids">
-                            <tree editable="bottom">
-                                <field name="engine_capacity"/>
-                            </tree>
-                        </field>
-                    </group>
-                    <group string="Exterior Colors">
-                        <field name="exterior_color_ids">
-                            <tree editable="bottom">
-                                <field name="exterior_color"/>
-                            </tree>
-                        </field>
-                    </group>
-                    <group string="Exterior Colors (English)">
-                        <field name="exterior_color_eng_ids">
-                            <tree editable="bottom">
-                                <field name="exterior_color_eng"/>
-                            </tree>
-                        </field>
-                    </group>
-                    <group string="Manufacture Years">
-                        <field name="manufacture_year_ids">
-                            <tree editable="bottom">
-                                <field name="year_of_manufacture"/>
-                            </tree>
-                        </field>
-                    </group>
+                    <notebook>
+                        <page string="Vehicle Models">
+                            <field name="vehicle_model_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Colors">
+                            <group>
+                                <field name="exterior_color_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                                <field name="exterior_color_eng_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Engine">
+                            <field name="engine_volume_ids">
+                                <tree editable="bottom">
+                                    <field name="volume"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </page>
             </notebook>
         </field>

@@ -1,6 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_car_model,access.product.car.model,model_product_car_model,base.group_user,1,1,1,1
-access_product_engine_capacity,access.product.engine.capacity,model_product_engine_capacity,base.group_user,1,1,1,1
-access_product_exterior_color,access.product.exterior.color,model_product_exterior_color,base.group_user,1,1,1,1
-access_product_exterior_color_eng,access.product.exterior.color.eng,model_product_exterior_color_eng,base.group_user,1,1,1,1
-access_product_manufacture_year,access.product.manufacture.year,model_product_manufacture_year,base.group_user,1,1,1,1
+access_vehicle_model_line_user,vehicle.model.line.user,model_vehicle_model_line,base.group_user,1,1,1,1
+access_exterior_color_line_user,exterior.color.line.user,model_exterior_color_line,base.group_user,1,1,1,1
+access_exterior_color_eng_line_user,exterior.color.eng.line.user,model_exterior_color_eng_line,base.group_user,1,1,1,1
+access_engine_volume_line_user,engine.volume.line.user,model_engine_volume_line,base.group_user,1,1,1,1

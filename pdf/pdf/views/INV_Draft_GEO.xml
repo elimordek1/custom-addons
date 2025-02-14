@@ -68,7 +68,7 @@
                                       <t t-if="not doc.car_id.x_studio_engine_size">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                      ₾ <span t-field="line.price_unit"/>
+                                      <span t-field="line.price_unit"/>
                                       <t t-if="not line.price_unit">&#160;</t>
                                   </td>
                               </tr>
@@ -78,7 +78,7 @@
                                   <td colspan="4" style="border: none;">&#160;</td>
                                   <td style="padding: 8px; text-align: right; font-weight: bold;">ბალანსი :</td>
                                   <td style="padding: 8px; text-align: right;">
-                                      <span t-field="doc.currency_id.symbol"/>
+<!--                                      <span t-field="doc.currency_id.symbol"/>-->
                                       <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                   </td>
                               </tr>
@@ -86,7 +86,7 @@
                                   <td colspan="4" style="border: none;">&#160;</td>
                                   <td style="padding: 8px; text-align: right; font-weight: bold;">ჯამური გადასახდელი თანხა :</td>
                                   <td style="padding: 8px; text-align: right;">
-                                      <span t-field="doc.currency_id.symbol"/>
+<!--                                      <span t-field="doc.currency_id.symbol"/>-->
                                       <span t-field="doc.amount_total"/>
                                   </td>
                               </tr>

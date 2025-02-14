@@ -49,40 +49,40 @@
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="doc.car_id.model_id.brand_id.name"/>
                                       <span t-field="doc.car_id.model_id.name"/>
-                                      <t t-if="not doc.car_id.model_id.brand_id.name and not doc.car_id.model_id.name">&nbsp;</t>
+                                      <t t-if="not doc.car_id.model_id.brand_id.name and not doc.car_id.model_id.name">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="doc.car_id.x_studio_vinnumber"/>
-                                      <t t-if="not doc.car_id.x_studio_vinnumber">&nbsp;</t>
+                                      <t t-if="not doc.car_id.x_studio_vinnumber">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="doc.car_id.model_id.model_year"/>
-                                      <t t-if="not doc.car_id.model_id.model_year">&nbsp;</t>
+                                      <t t-if="not doc.car_id.model_id.model_year">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="doc.car_id.color"/>
-                                      <t t-if="not doc.car_id.color">&nbsp;</t>
+                                      <t t-if="not doc.car_id.color">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="doc.car_id.x_studio_engine_size"/>
-                                      <t t-if="not doc.car_id.x_studio_engine_size">&nbsp;</t>
+                                      <t t-if="not doc.car_id.x_studio_engine_size">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                                       ₾ <span t-field="line.price_unit"/>
-                                      <t t-if="not line.price_unit">&nbsp;</t>
+                                      <t t-if="not line.price_unit">&#160;</t>
                                   </td>
                               </tr>
                           </tbody>
                           <tfoot>
                               <tr>
-                                  <td colspan="4" style="border: none;">&nbsp;</td>
+                                  <td colspan="4" style="border: none;">&#160;</td>
                                   <td style="padding: 8px; text-align: right; font-weight: bold;">ბალანსი (₾):</td>
                                   <td style="padding: 8px; text-align: right;">
                                       ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                   </td>
                               </tr>
                               <tr>
-                                  <td colspan="4" style="border: none;">&nbsp;</td>
+                                  <td colspan="4" style="border: none;">&#160;</td>
                                   <td style="padding: 8px; text-align: right; font-weight: bold;">ჯამური გადასახდელი თანხა (₾):</td>
                                   <td style="padding: 8px; text-align: right;">
                                       ₾ <span t-field="doc.amount_total"/>

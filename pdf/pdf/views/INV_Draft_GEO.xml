@@ -56,7 +56,7 @@
                                       <t t-if="not doc.car_id.x_studio_vinnumber">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                        <span t-esc="doc.car_id.model_id.model_year.replace(',', '')"/>
+                                        <span t-esc="str(doc.car_id.model_id.model_year).replace(',', '')"/>
                                         <t t-if="not doc.car_id.model_id.model_year">&#160;</t>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">

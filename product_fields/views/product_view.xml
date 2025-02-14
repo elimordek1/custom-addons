@@ -1,0 +1,52 @@
+<odoo>
+    <record id="view_product_form_inherit_extra_fields" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.extra.fields</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.view_product_form"/>
+        <field name="arch" type="xml">
+            <!-- Добавление вкладки -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Дополнительные данные">
+                    <group>
+                        <field name="vin_code"/>
+                    </group>
+                    <group>
+                        <field name="car_model_ids" widget="one2many_list">
+                            <tree>
+                                <field name="model_name"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="engine_capacity_ids" widget="one2many_list">
+                            <tree>
+                                <field name="engine_capacity"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="exterior_color_ids" widget="one2many_list">
+                            <tree>
+                                <field name="exterior_color"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="exterior_color_eng_ids" widget="one2many_list">
+                            <tree>
+                                <field name="exterior_color_eng"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="manufacture_year_ids" widget="one2many_list">
+                            <tree>
+                                <field name="year_of_manufacture"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

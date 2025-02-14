@@ -16,30 +16,30 @@
                     <notebook>
                         <page string="Vehicle Models">
                             <field name="vehicle_model_ids">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="name"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Colors">
                             <group>
                                 <field name="exterior_color_ids">
-                                    <tree editable="bottom">
+                                    <list editable="bottom">
                                         <field name="name"/>
-                                    </tree>
+                                    </list>
                                 </field>
                                 <field name="exterior_color_eng_ids">
-                                    <tree editable="bottom">
+                                    <list editable="bottom">
                                         <field name="name"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
                         <page string="Engine">
                             <field name="engine_volume_ids">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="volume"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>

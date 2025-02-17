@@ -3,3 +3,4 @@ access_vehicle_model_user,vehicle.model.user,model_vehicle_model,base.group_user
 access_exterior_color_user,exterior.color.user,model_exterior_color,base.group_user,1,1,1,1
 access_exterior_color_eng_user,exterior.color.eng.user,model_exterior_color_eng,base.group_user,1,1,1,1
 access_engine_volume_user,engine.volume.user,model_engine_volume,base.group_user,1,1,1,1
+access_manufacture_year_user,manufacture.year.user,model_manufacture_year,base.group_user,1,1,1,1

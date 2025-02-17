@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Product Template Form View -->
+  <!-- Update Product Template Form View -->
     <record id="product_template_form_view_inherit_vehicle" model="ir.ui.view">
         <field name="name">product.template.form.inherit.vehicle</field>
         <field name="model">product.template</field>
@@ -13,7 +14,7 @@
                         <group>
                             <field name="vehicle_model_id"/>
                             <field name="vin_code"/>
-                            <field name="manufacture_date"/>
+                            <field name="manufacture_year_id"/>
                             <field name="exterior_color_id"/>
                             <field name="exterior_color_eng_id"/>
                             <field name="engine_volume_id"/>
@@ -21,6 +22,17 @@
                     </group>
                 </page>
             </notebook>
+        </field>
+    </record>
+
+    <record id="manufacture_year_view_list" model="ir.ui.view">
+        <field name="name">manufacture.year.list</field>
+        <field name="model">manufacture.year</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
         </field>
     </record>
 
@@ -73,6 +85,13 @@
     </record>
 
     <!-- Menu Actions -->
+       <!-- Add new Manufacture Year action -->
+    <record id="manufacture_year_action" model="ir.actions.act_window">
+        <field name="name">Manufacture Years</field>
+        <field name="res_model">manufacture.year</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
     <record id="vehicle_model_action" model="ir.actions.act_window">
         <field name="name">Vehicle Models</field>
         <field name="res_model">vehicle.model</field>
@@ -96,6 +115,8 @@
         <field name="res_model">engine.volume</field>
         <field name="view_mode">list,form</field>
     </record>
+
+
 
     <!-- Menus -->
     <menuitem id="menu_vehicle_configuration"
@@ -126,4 +147,11 @@
               action="engine_volume_action"
               parent="menu_vehicle_configuration"
               sequence="40"/>
+
+     <!-- Add new menu item -->
+    <menuitem id="menu_manufacture_year"
+              name="Manufacture Years"
+              action="manufacture_year_action"
+              parent="menu_vehicle_configuration"
+              sequence="50"/>
 </odoo>

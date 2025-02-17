@@ -18,12 +18,38 @@
                     <!-- Document Info -->
                     <div class="row mb-4">
                         <div class="col">
-                            <strong>Date:</strong> <span t-field="doc.date_order"/>
+                            <strong>Date:</strong> <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
                         </div>
                         <div class="col">
                             <strong>Number:</strong> <span t-field="doc.name"/>
                         </div>
+                           <div class="col">
+                        <strong>Expiration:</strong> <span t-field="doc.validity_date"/>
                     </div>
+                    </div>
+
+                        <div class="row mb-4">
+                <div class="col-6">
+                    <table class="table table-sm" style="border: 1px solid #ddd;">
+                        <tr>
+                            <td><strong>Client Name:</strong></td>
+                            <td><span t-field="doc.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ID:</strong></td>
+                            <td><span t-field="doc.partner_id.vat"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adress:</strong></td>
+                            <td><span t-field="doc.partner_id.street"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile:</strong></td>
+                            <td><span t-field="doc.partner_id.mobile"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
                     <!-- Vehicle Table -->
                     <div class="vehicle-table" style="margin-top: 20px;">
@@ -47,7 +73,7 @@
                                       <span t-field="line.product_id.vin_code"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                      <span t-field="line.product_id.manufacture_date"/>
+                                      <span t-field="line.product_id.manufacture_year_id.name"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="line.product_id.exterior_color_eng_id.name"/>
@@ -56,7 +82,7 @@
                                       <span t-field="line.product_id.engine_volume_id.name"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                      <span t-field="line.price_unit"/>
+                                    <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                   </td>
                               </tr>
                           </tbody>

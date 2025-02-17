@@ -40,7 +40,7 @@
                             <td><span t-field="doc.partner_id.vat"/></td>
                         </tr>
                         <tr>
-                            <td><strong>ელ.ფოსტა:</strong></td>
+                            <td><strong>მისამარტი:</strong></td>
                             <td><span t-field="doc.partner_id.street"/></td>
                         </tr>
                         <tr>
@@ -73,7 +73,7 @@
                                       <span t-field="line.product_id.vin_code"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                      <span t-field="line.product_id.manufacture_date"/>
+                                      <span t-field="line.product_id.manufacture_year_id.name"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="line.product_id.exterior_color_id.name"/>

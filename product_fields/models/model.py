@@ -1,5 +1,11 @@
 from odoo import models, fields, api
 
+class ManufactureYear(models.Model):
+    _name = 'manufacture.year'
+    _description = 'Manufacture Year'
+
+    name = fields.Char(string='Year', required=True)
+
 class VehicleModel(models.Model):
     _name = 'vehicle.model'
     _description = 'Vehicle Model'
@@ -29,7 +35,7 @@ class ProductTemplateInherit(models.Model):
 
     vehicle_model_id = fields.Many2one('vehicle.model', string='Vehicle Model')
     vin_code = fields.Char(string='VIN Code')
-    manufacture_date = fields.Date(string='Manufacture Date')
+    manufacture_year_id = fields.Many2one('manufacture.year', string='Manufacture Year')
     exterior_color_id = fields.Many2one('exterior.color', string='Exterior Color')
     exterior_color_eng_id = fields.Many2one('exterior.color.eng', string='Exterior Color (ENG)')
     engine_volume_id = fields.Many2one('engine.volume', string='Engine Volume')

@@ -40,7 +40,7 @@
                             <td><span t-field="doc.partner_id.vat"/></td>
                         </tr>
                         <tr>
-                            <td><strong>მისამარტი:</strong></td>
+                            <td><strong>მისამართი:</strong></td>
                             <td><span t-field="doc.partner_id.street"/></td>
                         </tr>
                         <tr>

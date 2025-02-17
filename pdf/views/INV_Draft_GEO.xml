@@ -15,15 +15,41 @@
                       <h4>მიღება-ჩაბარების აქტი</h4>
                   </div>
 
-                  <!-- Document Info -->
-                  <div class="row mb-4">
-                      <div class="col">
-                          <strong>თარიღი:</strong> <span t-field="doc.date_order"/>
-                      </div>
-                      <div class="col">
-                          <strong>ნომერი:</strong> <span t-field="doc.name"/>
-                      </div>
-                  </div>
+                 <div class="row mb-4">
+                    <div class="col">
+                        <strong>თარიღი:</strong> <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
+                    </div>
+                    <div class="col">
+                        <strong>ნომერი:</strong> <span t-field="doc.name"/>
+                    </div>
+                    <div class="col">
+                        <strong>ვადა:</strong> <span t-field="doc.validity_date"/>
+                    </div>
+                </div>
+
+                                  <!-- Customer Information Block -->
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <table class="table table-sm" style="border: 1px solid #ddd;">
+                            <tr>
+                                <td><strong>კლიენტის სახელი:</strong></td>
+                                <td><span t-field="doc.partner_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>საიდენტიფიკაციო კოდი:</strong></td>
+                                <td><span t-field="doc.partner_id.vat"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>საკონტაქტო პირი:</strong></td>
+                                <td><span t-field="doc.partner_id.contact_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>მობილური:</strong></td>
+                                <td><span t-field="doc.partner_id.mobile"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
                   <!-- Vehicle Table -->
                   <div class="vehicle-table" style="margin-top: 20px;">
@@ -55,9 +81,9 @@
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="line.product_id.engine_volume_id.name"/>
                                   </td>
-                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                      <span t-field="line.price_unit"/>
-                                  </td>
+                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                    <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                   </td>
                               </tr>
                           </tbody>
                           <tfoot>

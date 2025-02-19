@@ -381,13 +381,11 @@ class SaleOrderExtended(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('state', 'draft') == 'draft':
-            # Force using the next sequence without relying on Odoo's implicit generation
             sequence = self.env['ir.sequence'].next_by_code('sale.order')
+            sequence = sequence-1
             if sequence and sequence.startswith('S'):
-                vals['name'] = 'Q' + sequence[1:]
-
-        # Explicitly pass the modified vals
-        return super(SaleOrderExtended, self).create(vals)
+                vals['name'] = 'Q' + sequence[1:]  # All quotations start with Q
+        return super(SaleOrder, self).create(vals)
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()

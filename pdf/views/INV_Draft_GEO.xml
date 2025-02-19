@@ -23,7 +23,7 @@
                         <strong>ნომერი:</strong> <span t-field="doc.name"/>
                     </div>
                     <div class="col">
-                        <strong>ვადა:</strong> <span t-field="doc.validity_date"/>
+                        <strong>მოქმედების ვადა:</strong> <span t-field="doc.validity_date"/>
                     </div>
                 </div>
 

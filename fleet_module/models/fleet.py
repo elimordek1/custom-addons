@@ -368,33 +368,33 @@ class SaleReport(models.Model):
                 * {self._case_value_or_one('account_currency_table.rate')}
             ) ELSE 0 END"""
         return res
-        
-        
+
+
+
+
 class SaleOrderExtended(models.Model):
     _inherit = 'sale.order'
-    
-    @api.model
-    def create(self, vals):
-        if vals.get('is_car_service'):
-            # Get the current sequence
-            sequence = self.env['ir.sequence'].next_by_code('sale.order')
-            if sequence and sequence.startswith('S'):
-                # Replace S with P
-                vals['name'] = 'P' + sequence[1:]
-        return super(SaleOrder, self).create(vals)
-    
-    # You might also want to handle write cases
-    def write(self, vals):
-        if 'is_car_service' in vals:
-            if vals['is_car_service']:
-                if self.name and self.name.startswith('P'):
-                    vals['name'] = 'S' + self.name[1:]
-            else:
-                if self.name and self.name.startswith('S'):
-                    vals['name'] = 'P' + self.name[1:]
-        return super(SaleOrder, self).write(vals)
-        
 
     odometer = fields.Float(string='Odometer')
     odometer_id = fields.Many2one('fleet.vehicle.odometer', string='Odometer Record', readonly=True)
 
+    @api.model
+    def create(self, vals):
+        if vals.get('state', 'draft') == 'draft':
+            # Force using the next sequence without relying on Odoo's implicit generation
+            sequence = self.env['ir.sequence'].next_by_code('sale.order')
+            if sequence and sequence.startswith('S'):
+                vals['name'] = 'Q' + sequence[1:]
+
+        # Explicitly pass the modified vals
+        return super(SaleOrderExtended, self).create(vals)
+
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        for order in self:
+            if order.name.startswith('Q'):
+                if order.is_car_service:
+                    order.name = 'S' + order.name[1:]  # Car service orders get S
+                else:
+                    order.name = 'P' + order.name[1:]  # Regular orders get P
+        return res

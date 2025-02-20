@@ -88,7 +88,7 @@
                           </tbody>
                       </table>
                   </div>
-                   <div style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;">
+                   <div style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;margin-bot:20px;">
                         <div style="float: right; width: 40%;">
                             <table style="width: 100%;">
                                 <tr>

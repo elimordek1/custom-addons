@@ -88,24 +88,24 @@
                           </tbody>
                       </table>
                   </div>
-                   <div style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;">
+               <div style="margin-top: 20px; width: 100%; display: flex;">
+                    <div style="margin-left: auto;">
                         <table>
                             <tr>
-                                <td colspan="4" style="border: none;">&#160;</td>
-                                <td style="padding: 8px; text-align: right; font-weight: bold; width: 250px;">ბალანსი :</td>
+                                <td style="padding: 8px; text-align: right; font-weight: bold; width: 200px;">ბალანსი :</td>
                                 <td style="padding: 8px; text-align: right;">
                                     <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" style="border: none;">&#160;</td>
-                                <td style="padding: 8px; text-align: right; font-weight: bold; width: 250px;">ჯამური გადასახდელი თანხა :</td>
+                                <td style="padding: 8px; text-align: right; font-weight: bold; width: 200px;">ჯამური გადასახდელი თანხა :</td>
                                 <td style="padding: 8px; text-align: right;">
                                     <span t-field="doc.amount_total"/>
                                 </td>
                             </tr>
                         </table>
                     </div>
+                </div>
 
                   <!-- Bank Details -->
                   <div class="mt-4">

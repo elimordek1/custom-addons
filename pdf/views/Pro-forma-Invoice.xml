@@ -86,23 +86,26 @@
                                   </td>
                               </tr>
                           </tbody>
-                            <tfoot>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;margin-bot:20px;">
+                        <div style="float: right; width: 40%;">
+                            <table style="width: 100%;">
                                 <tr>
-                                    <td colspan="4" style="border: none;">&#160;</td>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold;">Balance :</td>
-                                    <td style="padding: 8px; text-align: right;">
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Balance :</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
                                         <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" style="border: none;">&#160;</td>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold;">Total Amount :</td>
-                                    <td style="padding: 8px; text-align: right;">
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Total Amount :</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
                                         <span t-field="doc.amount_total"/>
                                     </td>
                                 </tr>
-                            </tfoot>
-                        </table>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- Bank Details -->

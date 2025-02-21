@@ -1,279 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="report_proforma_invoice_geo">
+        <template id="report_proforma_invoice_geo">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
-                    <head>
-                        <style>
-                            @import url('https://fonts.googleapis.com/css2?family=BPG+Arial&display=swap');
+                    <!-- Logo and Header -->
+                    <div class="header text-center">
+                        <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
+                        <h2>PEUGEOT GEORGIA</h2>
+                    </div>
 
-                            body {
-                                font-family: 'BPG Arial', Arial, sans-serif;
-                                margin: 0;
-                                padding: 20px;
-                                color: #333;
-                            }
+                    <!-- Invoice Title -->
+                    <div class="text-center mb-4">
+                        <h3>პროფორმა ინვოისი</h3>
+                    </div>
 
-                            .invoice-container {
-                                width: 100%;
-                                max-width: 800px;
-                                margin: 0 auto;
-                                padding: 20px;
-                                box-sizing: border-box;
-                            }
-
-                            .invoice-header {
-                                text-align: right;
-                                margin-bottom: 30px;
-                            }
-
-                            .logo-img {
-                                max-width: 150px;
-                                float: right;
-                            }
-
-                            .title {
-                                font-size: 18px;
-                                color: #1f1f1f;
-                                margin-bottom: 30px;
-                                text-align: center;
-                                clear: both;
-                            }
-
-                            .customer-info {
-                                margin-bottom: 30px;
-                                font-size: 14px;
-                                line-height: 1.6;
-                            }
-
-                            .buyer {
-                                border-bottom: 1px solid black;
-                                width: 195px;
-                                display: inline-block;
-                            }
-
-                            .date-section {
-                                float: right;
-                                text-align: right;
-                                font-size: 14px;
-                            }
-
-                            .vehicle-table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-bottom: 30px;
-                                clear: both;
-                            }
-
-                            .vehicle-table td {
-                                padding: 8px;
-                                border-bottom: 1px solid #000;
-                                font-size: 14px;
-                            }
-
-                            .red-text {
-                                color: #FF0000;
-                                font-weight: bold;
-                            }
-
-                            .parts-table {
-                                width: 100%;
-                                margin-bottom: 30px;
-                                border-collapse: collapse;
-                            }
-
-                            .parts-table th,
-                            .parts-table td {
-                                padding: 4px 8px;
-                                text-align: left;
-                                font-size: 13px;
-                            }
-
-                            .service-total {
-                                text-align: right;
-                                padding: 10px 0;
-                                border-top: 1px solid #000;
-                            }
-
-                            .bank-details {
-                                margin: 40px 0;
-                                border-top: 1px solid #000;
-                                padding-top: 20px;
-                            }
-
-                            .bank-table {
-                                width: 100%;
-                                font-size: 13px;
-                            }
-
-                            .bank-table td {
-                                padding-bottom: 4px;
-                            }
-
-                            .signatures {
-                                display: flex;
-                                justify-content: space-between;
-                                margin: 40px 0;
-                                font-size: 13px;
-                                text-align: center;
-                            }
-
-                            .signature-line {
-                                border-bottom: 1px solid #000;
-                                width: 200px;
-                                margin-top: 30px;
-                            }
-
-                            .footer {
-                                text-align: center;
-                                margin-top: 40px;
-                                font-size: 13px;
-                                color: #666;
-                                border-top: 1px solid #ccc;
-                                padding-top: 20px;
-                            }
-                        </style>
-                    </head>
-                    <div class="invoice-container">
-                        <div class="invoice-header">
-                            <img class="logo-img" t-att-src="'/pdf/static/description/Peugeot-Logo.png'" alt="Peugeot"/>
+                    <!-- Document Info -->
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <strong>თარიღი:</strong> <span t-field="doc.date_order"/>
                         </div>
-
-                        <div class="title">
-                            მიღება-ჩაბარების აქტი
+                        <div class="col-6">
+                            <strong>ნომერი:</strong> <span t-field="doc.name"/>
                         </div>
+                    </div>
 
-                        <div class="date-section">
-                            თარიღი: <span t-field="doc.date_order"/><br/>
-                            ნომერი: <span t-field="doc.name"/>
-                        </div>
+                    <!-- Buyer Info -->
+                    <div class="mb-4">
+                        <h4>მყიდველი:</h4>
+                        <div><strong>სახელი:</strong> <span t-field="doc.partner_id.name"/></div>
+                        <div><strong>საიდენტიფიკაციო კოდი:</strong> <span t-field="doc.partner_id.vat"/></div>
+                        <div><strong>მისამართი:</strong> <span t-field="doc.partner_id.street"/></div>
+                        <div><strong>ტელეფონი:</strong> <span t-field="doc.partner_id.phone"/></div>
+                    </div>
 
-                        <div class="customer-info">
-                            <div class="buyer">მყიდველი: <span t-field="doc.partner_id.name"/></div><br/>
-                            ს/ნ: <span t-field="doc.partner_id.vat"/><br/>
-                            ტელეფონი: <span t-field="doc.partner_id.phone"/><br/>
-                            მისამართი: <span t-field="doc.partner_id.street"/>
-                        </div>
-
-                        <table class="vehicle-table">
+                    <!-- Vehicle Table -->
+                    <table class="table table-bordered mt-4">
+                        <thead>
                             <tr>
-                                <td>ავტომობილის მოდელი</td>
-                                <td>VIN Code</td>
-                                <td>გარბენი</td>
-                                <td>სახელმწიფო ნომერი</td>
+                                <th>ავტომობილის მოდელი</th>
+                                <th>ვინ კოდი</th>
+                                <th>გამოშვების წელი</th>
+                                <th>ექსტერიერის ფერი</th>
+                                <th>ძრავის მოცულობა</th>
+                                <th>ღირებულება (₾)</th>
                             </tr>
-                            <tr t-foreach="doc.order_line" t-as="line">
-                                <td><span t-field="line.product_id.name"/></td>
-                                <td><span t-field="line.product_id.default_code"/></td>
-                                <td class="red-text">7649km</td>
-                                <td>MM233LM</td>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-field="doc.car_id.model_id.brand_id.name"/>
+                                        <span t-field="doc.car_id.model_id.name"/>
+                                    </td>
+                                    <td><span t-field="doc.car_id.x_studio_vinnumber"/></td>
+                                    <td><span t-field="doc.car_id.model_id.model_year"/></td>
+                                    <td><span t-field="doc.car_id.color"/></td>
+                                    <td><span t-field="doc.car_id.x_studio_engine_size"/></td>
+                                    <td class="text-right">
+                                        ₾ <span t-field="line.price_unit"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="text-right"><strong>ბალანსი (₾):</strong></td>
+                                <td class="text-right">
+                                    ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="text-right"><strong>ჯამური გადასახდელი თანხა (₾):</strong></td>
+                                <td class="text-right">
+                                    ₾ <span t-field="doc.amount_total"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Bank Details -->
+                    <div class="mt-4">
+                        <h4>საბანკო რეკვიზიტები:</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>დასახელება:</strong> შპს ნოვკომი</td>
+                                <td><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
+                                <td><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ბანკის კოდი:</strong> TBCBGE22</td>
+                                <td><strong>ბანკის კოდი:</strong> BAGAGE22</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
+                                <td><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
                             </tr>
                         </table>
+                    </div>
 
-                        <table class="parts-table">
-                            <tr>
-                                <th>N</th>
-                                <th>სამუშაოს დასახელება</th>
-                                <th style="text-align: right;">თანხა</th>
-                            </tr>
-                            <t t-set="service_items" t-value="[
-                                {'sequence': '1', 'name': 'ძრავის ზეთის შეცვლა', 'price': '35.00'},
-                                {'sequence': '2', 'name': 'ძრავის ჰაერის ფილტრის შეცვლა', 'price': '18.00'},
-                                {'sequence': '3', 'name': 'სალონის ჰაერის ფილტრის შეცვლა', 'price': '18.00'}
-                            ]"/>
-                            <tr t-foreach="service_items" t-as="item">
-                                <td><span t-esc="item['sequence']"/></td>
-                                <td><span t-esc="item['name']"/></td>
-                                <td style="text-align: right;"><span t-esc="item['price']"/> ₾</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="text-align: right;">სულ სამუშაოების ღირებულება:</td>
-                                <td style="text-align: right;">71.00 ₾</td>
-                            </tr>
-                        </table>
-
-                        <table class="parts-table">
-                            <tr>
-                                <th>N</th>
-                                <th>ნაწილის ნომერი</th>
-                                <th>სათადარიგო ნაწილის დასახელება</th>
-                                <th>ერთეულის ფასი</th>
-                                <th>რაოდენობა</th>
-                                <th>თანხა</th>
-                            </tr>
-                            <t t-set="parts" t-value="[
-                                {'sequence': '1', 'number': '98 189 140 80', 'name': 'ძრავის ზეთის ფილტრი', 'price': '48', 'quantity': '1.00', 'total': '48.00'},
-                                {'sequence': '2', 'number': '0164 88', 'name': 'კარტერის ჰაერის მილსადენი', 'price': '8', 'quantity': '1.00', 'total': '8.00'},
-                                {'sequence': '3', 'number': '16 393 686 80', 'name': 'ძრავის ზეთი ERP 0w30 1Lt', 'price': '45', 'quantity': '5.00', 'total': '225.00'},
-                                {'sequence': '4', 'number': '1444 TT', 'name': 'ძრავის ჰაერის ფილტრი', 'price': '78', 'quantity': '1.00', 'total': '78.00'},
-                                {'sequence': '5', 'number': '98 215 018 80', 'name': 'სალონის ჰაერის ფილტრი', 'price': '128', 'quantity': '1.00', 'total': '128.00'}
-                            ]"/>
-                            <tr t-foreach="parts" t-as="part">
-                                <td><span t-esc="part['sequence']"/></td>
-                                <td><span t-esc="part['number']"/></td>
-                                <td><span t-esc="part['name']"/></td>
-                                <td style="text-align: right;"><span t-esc="part['price']"/></td>
-                                <td style="text-align: right;"><span t-esc="part['quantity']"/></td>
-                                <td style="text-align: right;"><span t-esc="part['total']"/> ₾</td>
-                            </tr>
-                        </table>
-
-                        <div style="text-align: right;">
-                            სათადარიგო ნაწილების ღირებულება: 487.00 ₾
-                            <div style="margin-top: 15px; border-top: 1px solid #000; padding-top: 10px;">
-                                თანხა: 558.00 ₾<br/>
-                                ავანსი: 0 ₾<br/>
-                                გადასახდელი თანხა: 558.00 ₾
-                            </div>
-                        </div>
-
-                        <div class="bank-details">
-                            <table class="bank-table">
-                                <tr>
-                                    <td>დასახელება:</td>
-                                    <td>შპს ნოვკომ</td>
-                                    <td>შპს ნოვკომ</td>
-                                </tr>
-                                <tr>
-                                    <td>ს/კ</td>
-                                    <td>404535614</td>
-                                    <td>404535614</td>
-                                </tr>
-                                <tr>
-                                    <td>ბანკი:</td>
-                                    <td>სს "თიბისი ბანკი"</td>
-                                    <td>სს "საქართველოს ბანკი"</td>
-                                </tr>
-                                <tr>
-                                    <td>ბანკის კოდი:</td>
-                                    <td>TBCBGE22</td>
-                                    <td>BAGAGE22</td>
-                                </tr>
-                                <tr>
-                                    <td>ანგარიშის ნომერი:</td>
-                                    <td>GE42TB7364236020100014</td>
-                                    <td>GE54BG0000000580810424</td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="signatures">
-                            <div>
-                                <span>დამკვეთი</span>
-                                <div class="signature-line"></div>
-                            </div>
-                            <div>
-                                <span>შემსრულებელი</span>
-                                <div class="signature-line"></div>
-                            </div>
-                        </div>
-
-                        <div class="footer">
-                            პეჟოს გუნდი გიხდით მადლობას ჩვენი სერვისით სარგებლობისთვის<br/>
-                            აღმაშენებლის გამზ. 100, 0131 თბილისი | საქართველო<br/>
-                            +995 (32) 2 19 21 95, info@peugeot-georgia.ge
-                        </div>
+                    <!-- Footer -->
+                    <div class="footer text-center mt-4">
+                        <p class="mb-1">პეჟოს გუნდი გიხდით მადლობას პეჟოს არჩევისთვის</p>
+                        <p>აღმაშენებლის ხეივანი 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</p>
                     </div>
                 </t>
             </t>

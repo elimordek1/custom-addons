@@ -52,7 +52,7 @@
             </div>
 
                   <!-- Vehicle Table -->
-                  <div class="vehicle-table" style="margin-top: 20px;">
+                  <div class="vehicle-table" style="margin-top: 20px;margin-bot:20px;">
                       <table style="width: 100%; border-collapse: collapse;">
                           <thead>
                               <tr style="border-bottom: 2px solid #000;">

@@ -378,13 +378,7 @@ class SaleOrderExtended(models.Model):
     odometer = fields.Float(string='Odometer')
     odometer_id = fields.Many2one('fleet.vehicle.odometer', string='Odometer Record', readonly=True)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('state', 'draft') == 'draft':
-            sequence = self.env['ir.sequence'].next_by_code('sale.order')
-            if sequence and sequence.startswith('S'):
-                vals['name'] = 'Q' + sequence[1:]  # All quotations start with Q
-        return super(SaleOrder, self).create(vals)
+
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()

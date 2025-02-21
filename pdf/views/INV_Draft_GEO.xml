@@ -88,7 +88,7 @@
                           </tbody>
                       </table>
                   </div>
-                   <div class="mb-4" style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;">
+                   <div class="mb-4" style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;padding-bottom:20px;">
                         <div style="float: right; width: 40%;">
                             <table style="width: 100%;">
                                 <tr>
@@ -106,7 +106,6 @@
                             </table>
                         </div>
                     </div>
-
                   <!-- Bank Details -->
                   <div class="mt-4" style="padding-top:20px;">
                       <table style="width: 100%; border-collapse: collapse;">

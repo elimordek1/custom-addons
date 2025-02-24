@@ -1,189 +1,311 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="report_proforma_invoice_eng">
+    <template id="report_proforma_act_eng">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
                     <head>
                         <style>
-                            body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-                            .invoice-container { width: 100%; max-width: 800px; margin: 0 auto; padding: 10px; box-sizing: border-box; }
-                            .invoice-header { text-align: center; margin-bottom: 10px; }
-                            .logo-img { max-width: 100px; }
-                            .company-name { font-size: 18px; font-weight: bold; }
-                            .invoice-title { text-align: center; margin-bottom: 10px; }
-                            .invoice-label { font-size: 16px; font-weight: bold; }
-                            .invoice-info, .customer-info { margin-bottom: 10px; }
-                            .label { font-weight: bold; }
-                            .vehicle-table, .parts-table { width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px; }
-                            .vehicle-table th, .parts-table th { background-color: #f2f2f2; padding: 5px; text-align: left; }
-                            .vehicle-table td, .parts-table td { padding: 5px; border: 1px solid #ddd; }
-                            .total-section { margin-bottom: 10px; font-size: 12px; }
-                            .bank-details table { width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px; }
-                            .bank-details td { padding: 5px; border: 1px solid #ddd; }
-                            .signatures { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; }
-                            .footer-container { text-align: center; font-size: 12px; }
-                            .thank-you-message { font-size: 14px; margin-bottom: 5px; }
-                            .company-info { font-size: 12px; }
+                            body {
+                                font-family: Arial, sans-serif;
+                                margin: 0;
+                                padding: 20px;
+                                color: #333;
+                            }
+
+                            .invoice-container {
+                                width: 100%;
+                                max-width: 800px;
+                                margin: 0 auto;
+                                padding: 20px;
+                                box-sizing: border-box;
+                            }
+
+                            .invoice-header {
+                                text-align: center;
+                                margin-bottom: 30px;
+                                position: relative;
+                            }
+
+                            .logo-img {
+                                max-width: 150px;
+                                margin-bottom: 20px;
+                                float: right;
+                            }
+
+                            .title {
+                                font-size: 18px;
+                                color: #1f1f1f;
+                                margin-bottom: 30px;
+                                text-align: center;
+                            }
+
+                            .main-info {
+                                margin-bottom: 30px;
+                                position: relative;
+                            }
+
+                            .date-section {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                text-align: right;
+                                font-size: 14px;
+                            }
+
+                            .customer-info {
+                                margin-bottom: 30px;
+                                font-size: 14px;
+                                line-height: 1.6;
+                                padding-top: 35px;
+                            }
+
+                            .vehicle-info {
+                                margin-bottom: 30px;
+                                width: 100%;
+                                border-collapse: collapse;
+                            }
+
+                            .vehicle-info td {
+                                padding: 8px;
+                                border-bottom: 1px solid #ccc;
+                                font-size: 14px;
+                            }
+
+                            .parts-table {
+                                width: 100%;
+                                margin-bottom: 30px;
+                                border-collapse: collapse;
+                            }
+
+                            .parts-table th,
+                            .parts-table td {
+                                border: none;
+                                padding: 8px;
+                                text-align: left;
+                                font-size: 13px;
+                            }
+
+                            .parts-table tr.service-total td {
+                                border-top: 1px solid #000;
+                                padding-top: 15px;
+                                margin-top: 10px;
+                            }
+
+                            .parts-table th {
+                                font-weight: normal;
+                                color: #666;
+                            }
+
+                            .totals {
+                                margin-bottom: 30px;
+                                font-size: 14px;
+                                text-align: right;
+                                display: flex;
+                                flex-flow: column;
+                                gap: 5px;
+                            }
+
+                            .bank-details {
+                                margin-bottom: 30px;
+                                font-size: 13px;
+                            }
+
+                            .bank-info {
+                                display: flex;
+                                justify-content: space-between;
+                                margin-bottom: 15px;
+                            }
+
+                            .bank-column {
+                                width: 48%;
+                            }
+
+                            .signatures {
+                                display: flex;
+                                justify-content: space-between;
+                                margin: 40px 0;
+                                font-size: 14px;
+                            }
+
+                            .signature-line {
+                                border-bottom: 1px solid #000;
+                                width: 200px;
+                                margin-top: 30px;
+                            }
+
+                            .footer {
+                                text-align: center;
+                                margin-top: 40px;
+                                font-size: 13px;
+                                color: #666;
+                            }
+
+                            .buyer {
+                                border-bottom: 1px solid black;
+                                width: 195px;
+                            }
+
+                            .kvemotxazi {
+                                border-bottom: 1px solid black;
+                                float: left;
+                            }
+
+                            .pejofooter {
+                                border-bottom: 1px solid black;
+                                width: 100%;
+                                font-weight: bolder;
+                            }
+
+                            .title_2 {
+                                display: flex;
+                                justify-content: start;
+                                font-family: monospace;
+                            }
                         </style>
                     </head>
                     <div class="invoice-container">
                         <div class="invoice-header">
-                            <img class="logo-img" src="/pdf/static/description/Peugeot-Logo.png" alt="Peugeot Georgia" style="max-width: 100px;"/>
-                            <span class="company-name" style="font-size: 18px; font-weight: bold;">PEUGEOT GEORGIA</span>
+                            <img class="logo-img" t-att-src="'/pdf/static/description/Peugeot-Logo.png'" alt="Peugeot"/>
                         </div>
-                        <div class="invoice-title">
-                            <span class="invoice-label" style="font-size: 16px; font-weight: bold;">Receipt-Delivery Act</span>
-                        </div>
-                        <div class="invoice-info">
-                            <div><span class="label" style="font-weight: bold;">Date:</span> <span t-field="doc.date_order"/></div>
-                            <div><span class="label" style="font-weight: bold;">Number:</span> <span t-field="doc.name"/></div>
-                        </div>
-                        <div class="customer-info">
-                            <span class="section-title" style="font-weight: bold;">Buyer:</span>
-                            <div><span class="label" style="font-weight: bold;">Name:</span> <span t-field="doc.partner_id.name"/></div>
-                            <div><span class="label" style="font-weight: bold;">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
-                            <div><span class="label" style="font-weight: bold;">Address:</span> <span t-field="doc.partner_id.street"/></div>
-                            <div><span class="label" style="font-weight: bold;">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
-                        </div>
-                        <div class="vehicle-table">
-                            <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px;">
-                                <thead>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Automobile Model</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">VIN Code</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Mileage</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">State Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr t-foreach="doc.order_line" t-as="line">
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span t-field="line.product_id.name"/></td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span t-field="line.product_id.default_code"/></td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span>Mileage</span></td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span>State Number</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="parts-table">
-                            <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px;">
-                                <thead>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">N</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Part Number</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Name of the spare part</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Unit Price</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Quantity</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                       <tr t-foreach="doc.order_line" t-as="line">
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                               <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px;">
-                                <thead>
-                                    <tr>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">N</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Service Number</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Name of the Service</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Unit Price</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Quantity</th>
-                                        <th style="background-color: #f2f2f2; padding: 5px; text-align: left;">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr t-foreach="doc.order_line" t-as="line">
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
-                                        </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
 
+                        <div class="title">
+                            Receipt-Delivery Act
                         </div>
-                        <div class="total-section">
-                            <div><span class="label" style="font-weight: bold;">Cost of Work:</span> <span t-field="doc.amount_total"/></div>
-                            <div><span class="label" style="font-weight: bold;">Cost of Spare Parts:</span> <span /></div>
-                            <div><span class="label" style="font-weight: bold;">Total Amount:</span> <span t-field="doc.amount_total"/></div>
-                            <div><span class="label" style="font-weight: bold;">Advance:</span> <span /></div>
+
+                        <div class="main-info">
+                            <div class="customer-info">
+                                <div class="buyer">Buyer:</div>
+                                <br/>
+                                <div class="title_2">Name: <span t-field="doc.partner_id.name"/></div>
+                                Tax ID: <span t-field="doc.partner_id.vat"/><br/>
+                                Address: <span t-field="doc.partner_id.phone"/><br/>
+                                Phone Number: <span t-field="doc.partner_id.street"/>
+                            </div>
+
+                            <div class="date-section">
+                                Date: <span t-field="doc.date_order"/><br/>
+                                Number: <span t-field="doc.name"/>
+                            </div>
                         </div>
-                        <div class="bank-details">
-                            <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse; font-size: 12px;">
-                                <tbody>
+
+                        <table class="vehicle-info">
+                            <tr style="border-bottom: 1px solid #000;">
+                                <td style="padding: 4px 8px;">Vehicle Model</td>
+                                <td style="padding: 4px 8px;">VIN Code</td>
+                                <td style="padding: 4px 8px;">Mileage</td>
+                                <td style="padding: 4px 8px;">State Number</td>
+                            </tr>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td style="padding: 4px 8px;"><span t-field="line.product_id.name"/></td>
+                                    <td style="padding: 4px 8px;"><span t-field="line.product_id.default_code"/></td>
+                                    <td style="padding: 4px 8px; color: #FF0000; font-weight: bold;"><span t-field="line.mileage"/></td>
+                                    <td style="padding: 4px 8px;"><span t-field="line.state_number"/></td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <table class="parts-table" style="margin-top: 30px;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 4px 8px;">N</th>
+                                    <th style="padding: 4px 8px; width: 70%;">Service Description</th>
+                                    <th style="padding: 4px 8px; text-align: right;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.service_items" t-as="item">
                                     <tr>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Name:</span> Ltd Novcom</td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Tax ID:</span> 404535614</td>
+                                        <td style="padding: 4px 8px;"><span t-field="item.sequence"/></td>
+                                        <td style="padding: 4px 8px;"><span t-field="item.name"/></td>
+                                        <td style="padding: 4px 8px; text-align: right;"><span t-field="item.price"/> ₾</td>
                                     </tr>
+                                </t>
+                                <tr class="service-total">
+                                    <td colspan="2" style="text-align: right; padding: 4px 8px;">Total Service Cost:</td>
+                                    <td style="text-align: right; padding: 4px 8px;"><span t-field="doc.amount_total"/> ₾</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="parts-table">
+                            <thead>
+                                <tr>
+                                    <th>N</th>
+                                    <th>Part Number</th>
+                                    <th>Spare Parts</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.order_line" t-as="line">
                                     <tr>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Bank:</span> JSC "TBC Bank"</td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Bank:</span> JSC "Bank of Georgia"</td>
+                                        <td><span t-field="line.sequence"/></td>
+                                        <td><span t-field="line.sequence"/></td>
+                                        <td><span t-field="line.product_id.name"/></td>
+                                        <td><span t-field="line.price_unit"/></td>
+                                        <td><span t-field="line.product_uom_qty"/></td>
+                                        <td><span t-field="line.price_subtotal"/></td>
                                     </tr>
-                                    <tr>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Bank Code:</span> TBCBGE22</td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">Bank Code:</span> BAGAGE22</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">IBAN:</span> GE42TB7364236020100014</td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;"><span class="label" style="font-weight: bold;">IBAN:</span> GE54BG0000000580810424</td>
-                                    </tr>
-                                </tbody>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="totals">
+                            <div class="kvemotxazi">Cost of Spare Parts: 50 ₾</div>
+                            <div>Total Amount: <span t-field="doc.amount_total"/> ₾</div>
+                            <div>Advance Payment: <span t-field="doc.amount_total"/> ₾</div><br/>
+                            <div>Amount to Pay: 0 ₾</div>
+                        </div>
+
+                        <div style="margin: 40px 0; border-top: 1px solid #000; padding-top: 20px;">
+                            <table style="width: 100%; font-size: 13px;">
+                                <tr>
+                                    <td style="padding-bottom: 4px;">Name:</td>
+                                    <td style="padding-bottom: 4px;">Ltd Novcom</td>
+                                    <td style="padding-bottom: 4px;">Ltd Novcom</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 4px;">Tax ID:</td>
+                                    <td style="padding-bottom: 4px;">404535614</td>
+                                    <td style="padding-bottom: 4px;">404535614</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 4px;">Bank:</td>
+                                    <td style="padding-bottom: 4px;">JSC "TBC Bank"</td>
+                                    <td style="padding-bottom: 4px;">JSC "Bank of Georgia"</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 4px;">Bank Code:</td>
+                                    <td style="padding-bottom: 4px;">TBCBGE22</td>
+                                    <td style="padding-bottom: 4px;">BAGAGE22</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 4px;">Account Number:</td>
+                                    <td style="padding-bottom: 4px;">GE42TB7364236020100014</td>
+                                    <td style="padding-bottom: 4px;">GE54BG0000000580810424</td>
+                                </tr>
                             </table>
                         </div>
-                        <div class="signatures" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px;">
-                            <div>Client ----------</div>
-                            <div>Service Provider ----------</div>
+
+                        <div style="display: flex; justify-content: space-between; margin: 40px 0; font-size: 13px;">
+                            <div style="text-align: center;">
+                                <div>Client</div>
+                                <div style="margin-top: 30px; border-bottom: 1px solid #000; width: 200px;"></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div>Service Provider</div>
+                                <div style="margin-top: 30px; border-bottom: 1px solid #000; width: 200px;"></div>
+                            </div>
                         </div>
-                        <div class="footer-container" style="text-align: center; font-size: 12px;">
-                            <div class="thank-you-message" style="font-size: 14px; margin-bottom: 5px;">Peugeot Georgia team thanks you for choosing Peugeot</div>
-                            <div class="company-info" style="font-size: 12px;">Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia +995 (32) 2 19 21 95 , info@peugeot-georgia.ge</div>
+
+                        <div class="footer">
+                            <div class="pejofooter">Peugeot Georgia team thanks you for choosing Peugeot</div><br/>
+                            Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia<br/>
+                            +995 (32) 2 19 21 95, info@peugeot-georgia.ge
                         </div>
                     </div>
                 </t>
@@ -191,6 +313,3 @@
         </t>
     </template>
 </odoo>
-
-
-

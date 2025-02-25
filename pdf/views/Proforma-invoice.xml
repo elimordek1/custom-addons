@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-        <template id="report_proforma_invoice_geo">
+    <template id="report_proforma_invoice_geo">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
@@ -17,89 +17,127 @@
 
                     <!-- Document Info -->
                     <div class="row mb-4">
-                        <div class="col-6">
+                        <div class="col-6"></div>
+                        <div class="col-6 text-right">
                             <strong>თარიღი:</strong> <span t-field="doc.date_order"/>
-                        </div>
-                        <div class="col-6">
+                            <br/>
                             <strong>ნომერი:</strong> <span t-field="doc.name"/>
                         </div>
                     </div>
 
                     <!-- Buyer Info -->
                     <div class="mb-4">
-                        <h4>მყიდველი:</h4>
-                        <div><strong>სახელი:</strong> <span t-field="doc.partner_id.name"/></div>
-                        <div><strong>საიდენტიფიკაციო კოდი:</strong> <span t-field="doc.partner_id.vat"/></div>
-                        <div><strong>მისამართი:</strong> <span t-field="doc.partner_id.street"/></div>
-                        <div><strong>ტელეფონი:</strong> <span t-field="doc.partner_id.phone"/></div>
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-6 text-right">
+                                <h4>მყიდველი:</h4>
+                                <div><strong>სახელი:</strong> <span t-field="doc.partner_id.name"/></div>
+                                <div><strong>საიდენტიფიკაციო კოდი:</strong> <span t-field="doc.partner_id.vat"/></div>
+                                <div><strong>მისამართი:</strong> <span t-field="doc.partner_id.street"/></div>
+                                <div><strong>ტელეფონი:</strong> <span t-field="doc.partner_id.phone"/></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Vehicle Table -->
-                    <table class="table table-bordered mt-4">
+                    <!-- Vehicle Table - First Table -->
+                    <h5 class="mt-4">ავტომობილი</h5>
+                    <table class="table mt-2" style="border: none;">
                         <thead>
-                            <tr>
-                                <th>ავტომობილის მოდელი</th>
-                                <th>ვინ კოდი</th>
-                                <th>გამოშვების წელი</th>
-                                <th>ექსტერიერის ფერი</th>
-                                <th>ძრავის მოცულობა</th>
-                                <th>ღირებულება (₾)</th>
+                            <tr style="border: none; border-bottom: 1px solid #dee2e6;">
+                                <th style="border: none;">ავტომობილის მოდელი</th>
+                                <th style="border: none;">ვინ კოდი</th>
+                                <th style="border: none;">გამოშვების წელი</th>
+                                <th style="border: none;">ექსტერიერის ფერი</th>
+                                <th style="border: none;">ძრავის მოცულობა</th>
+                                <th style="border: none; text-align: right;">ღირებულება (₾)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-foreach="doc.order_line" t-as="line">
-                                <tr>
-                                    <td>
+                            <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name != 'All / ავტომობილი - დაბეგრილი')" t-as="line">
+                                <tr style="border: none;">
+                                    <td style="border: none;">
                                         <span t-field="doc.car_id.model_id.brand_id.name"/>
                                         <span t-field="doc.car_id.model_id.name"/>
                                     </td>
-                                    <td><span t-field="doc.car_id.x_studio_vinnumber"/></td>
-                                    <td><span t-field="doc.car_id.model_id.model_year"/></td>
-                                    <td><span t-field="doc.car_id.color"/></td>
-                                    <td><span t-field="doc.car_id.x_studio_engine_size"/></td>
-                                    <td class="text-right">
+                                    <td style="border: none;"><span t-field="doc.car_id.x_studio_vinnumber"/></td>
+                                    <td style="border: none;"><span t-field="doc.car_id.model_id.model_year"/></td>
+                                    <td style="border: none;"><span t-field="doc.car_id.color"/></td>
+                                    <td style="border: none;"><span t-field="doc.car_id.x_studio_engine_size"/></td>
+                                    <td style="border: none; text-align: right;">
                                         ₾ <span t-field="line.price_unit"/>
                                     </td>
                                 </tr>
                             </t>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4"></td>
-                                <td class="text-right"><strong>ბალანსი (₾):</strong></td>
-                                <td class="text-right">
-                                    ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"></td>
-                                <td class="text-right"><strong>ჯამური გადასახდელი თანხა (₾):</strong></td>
-                                <td class="text-right">
-                                    ₾ <span t-field="doc.amount_total"/>
-                                </td>
-                            </tr>
-                        </tfoot>
                     </table>
+
+                    <!-- Second Table for "All / ავტომობილი - დაბეგრილი" category -->
+                    <h5 class="mt-4">ავტომობილი - დაბეგრილი</h5>
+                    <table class="table mt-2" style="border: none;">
+                        <thead>
+                            <tr style="border: none; border-bottom: 1px solid #dee2e6;">
+                                <th style="border: none;">პროდუქტი</th>
+                                <th style="border: none;">აღწერა</th>
+                                <th style="border: none;">რაოდენობა</th>
+                                <th style="border: none; text-align: right;">ერთეულის ფასი</th>
+                                <th style="border: none; text-align: right;">გადასახადი</th>
+                                <th style="border: none; text-align: right;">ჯამი</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name == 'All / ავტომობილი - დაბეგრილი')" t-as="line">
+                                <tr style="border: none;">
+                                    <td style="border: none;"><span t-field="line.product_id.name"/></td>
+                                    <td style="border: none;"><span t-field="line.name"/></td>
+                                    <td style="border: none;"><span t-field="line.product_uom_qty"/></td>
+                                    <td style="border: none; text-align: right;">₾ <span t-field="line.price_unit"/></td>
+                                    <td style="border: none; text-align: right;">₾ <span t-field="line.tax_id.amount" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td style="border: none; text-align: right;">₾ <span t-field="line.price_subtotal"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Totals -->
+                    <div class="row mt-4">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <table class="table" style="border: none;">
+                                <tr style="border: none;">
+                                    <td style="border: none; text-align: right;"><strong>ბალანსი (₾):</strong></td>
+                                    <td style="border: none; text-align: right;">
+                                        ₾ <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
+                                    </td>
+                                </tr>
+                                <tr style="border: none;">
+                                    <td style="border: none; text-align: right;"><strong>ჯამური გადასახდელი თანხა (₾):</strong></td>
+                                    <td style="border: none; text-align: right;">
+                                        ₾ <span t-field="doc.amount_total"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
                     <!-- Bank Details -->
                     <div class="mt-4">
                         <h4>საბანკო რეკვიზიტები:</h4>
-                        <table class="table table-bordered">
-                            <tr>
-                                <td><strong>დასახელება:</strong> შპს ნოვკომი</td>
-                                <td><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                        <table class="table" style="border: none;">
+                            <tr style="border: none;">
+                                <td style="border: none;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
+                                <td style="border: none;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
                             </tr>
-                            <tr>
-                                <td><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
-                                <td><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
+                            <tr style="border: none;">
+                                <td style="border: none;"><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
+                                <td style="border: none;"><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
                             </tr>
-                            <tr>
-                                <td><strong>ბანკის კოდი:</strong> TBCBGE22</td>
-                                <td><strong>ბანკის კოდი:</strong> BAGAGE22</td>
+                            <tr style="border: none;">
+                                <td style="border: none;"><strong>ბანკის კოდი:</strong> TBCBGE22</td>
+                                <td style="border: none;"><strong>ბანკის კოდი:</strong> BAGAGE22</td>
                             </tr>
-                            <tr>
-                                <td><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
-                                <td><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
+                            <tr style="border: none;">
+                                <td style="border: none;"><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
+                                <td style="border: none;"><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
                             </tr>
                         </table>
                     </div>

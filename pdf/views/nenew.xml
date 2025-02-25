@@ -92,7 +92,7 @@
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
                                             <span t-if="not line.product_id.name"> </span>
                                         </td>
-                                        <td style="padding: 5px; border: 1px solid #ddd;">
+                                        <td style="padding: 5px; border: 1px solid #dd1d;">
                                             <span t-if="line.price_unit" t-field="line.price_unit"/>
                                             <span t-if="not line.price_unit"> </span>
                                         </td>

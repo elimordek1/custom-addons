@@ -3,38 +3,33 @@
     <template id="report_proforma_invoice_eng">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="web.basic_layout">
-                    <head>
-                        <style>
-                            body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-                            .invoice-container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; box-sizing: border-box; }
-                            .invoice-header { text-align: center; margin-bottom: 10px; }
-                            .logo-img { max-width: 100px; }
-                            .company-name { font-size: 18px; font-weight: bold; }
-                            .invoice-title { text-align: center; margin-bottom: 15px; }
-                            .invoice-label { font-size: 16px; font-weight: bold; }
-                            .info-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
-                            .customer-info { text-align: left; flex: 1; }
-                            .invoice-info { text-align: right; flex: 1; }
-                            .label { font-weight: bold; }
-                            .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
-                            .table-title { font-weight: bold; margin: 15px 0 5px 0; display: block; }
-                            table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none; }
-                            th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
-                            td { padding: 8px; border: none; }
-                            .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
-                            .signatures { display: flex; justify-content: space-between; margin: 30px 0 20px 0; font-size: 12px; }
-                            .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
-                            .thank-you-message { font-size: 14px; margin-bottom: 5px; }
-                            .company-info { font-size: 12px; }
-                        </style>
-                    </head>
-                    <div class="invoice-container">
-                        <div class="invoice-header">
-                            <img class="logo-img" src="/pdf/static/description/Peugeot-Logo.png" alt="Peugeot Georgia" style="max-width: 100px;"/>
-                            <div class="company-name">PEUGEOT GEORGIA</div>
-                        </div>
+                <t t-call="web.external_layout">
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+                        .page { margin: 0; padding: 0; }
+                        .invoice-container { width: 100%; margin: 0; padding: 0; }
+                        .invoice-header { text-align: center; margin-bottom: 10px; }
+                        .logo-img { max-width: 100px; }
+                        .company-name { font-size: 18px; font-weight: bold; }
+                        .invoice-title { text-align: center; margin-bottom: 15px; }
+                        .invoice-label { font-size: 16px; font-weight: bold; }
+                        .info-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+                        .customer-info { text-align: left; flex: 1; }
+                        .invoice-info { text-align: right; flex: 1; }
+                        .label { font-weight: bold; }
+                        .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
+                        .table-title { font-weight: bold; margin: 15px 0 5px 0; display: block; }
+                        table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none; }
+                        th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
+                        td { padding: 8px; border: none; }
+                        .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
+                        .signatures { display: flex; justify-content: space-between; margin: 30px 0 20px 0; font-size: 12px; }
+                        .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
+                        .thank-you-message { font-size: 14px; margin-bottom: 5px; }
+                        .company-info { font-size: 12px; }
+                    </style>
 
+                    <div class="invoice-container">
                         <div class="invoice-title">
                             <span class="invoice-label">Receipt-Delivery Act</span>
                         </div>
@@ -65,12 +60,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name != 'All / ავტომობილი - დაბეგრილი')" t-as="line">
+                                <tr>
+                                    <td><span t-field="doc.car_id.model_id.name"/></td>
+                                    <td><span t-field="doc.car_id.vin_sn"/></td>
+                                    <td><span t-field="doc.car_id.odometer"/></td>
+                                    <td><span t-field="doc.car_id.license_plate"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Service Table -->
+                        <span class="table-title">Service</span>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>N</th>
+                                    <th>Service Number</th>
+                                    <th>Name of the Service</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'service')" t-as="line">
                                     <tr>
-                                        <td><span t-field="line.product_id.name"/></td>
-                                        <td><span t-field="line.product_id.default_code"/></td>
-                                        <td><span>Mileage</span></td>
-                                        <td><span>State Number</span></td>
+                                        <td>
+                                            <span t-if="line.sequence" t-field="line.sequence"/>
+                                            <span t-if="not line.sequence"> </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
+                                            <span t-if="not line.product_id.default_code"> </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
+                                            <span t-if="not line.product_id.name"> </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
+                                            <span t-if="not line.price_unit"> </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
+                                            <span t-if="not line.product_uom_qty"> </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
+                                            <span t-if="not line.price_subtotal"> </span>
+                                        </td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -122,7 +160,7 @@
                         </table>
 
                         <!-- Car Category Table -->
-                        <span class="table-title">Vehicle - Taxed</span>
+                        <span class="table-title">სათადარიგო ნაწილები</span>
                         <table>
                             <thead>
                                 <tr>
@@ -136,51 +174,6 @@
                             </thead>
                             <tbody>
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name == 'All / ავტომობილი - დაბეგრილი')" t-as="line">
-                                    <tr>
-                                        <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-
-                        <!-- Service Table -->
-                        <span class="table-title">Service</span>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>N</th>
-                                    <th>Service Number</th>
-                                    <th>Name of the Service</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'service')" t-as="line">
                                     <tr>
                                         <td>
                                             <span t-if="line.sequence" t-field="line.sequence"/>

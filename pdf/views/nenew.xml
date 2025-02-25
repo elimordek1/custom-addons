@@ -66,10 +66,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span t-field="doc.car_id.model_id.name"/></td>
-                                    <td><span t-field="doc.car_id.vin_sn"/></td>
-                                    <td><span t-field="doc.car_id.odometer"/></td>
-                                    <td><span t-field="doc.car_id.license_plate"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.model_id.name"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.vin_sn"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.odometer"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.license_plate"/></td>
                                 </tr>
                             </tbody>
                         </table>

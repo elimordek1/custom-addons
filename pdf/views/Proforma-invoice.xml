@@ -27,14 +27,14 @@
                             border: none !important;
                         }
                           .signature-box {
-            width: 30%;
-            text-align: center;
-        }
-        .signature-line {
-            margin-top: 20px;
-            border-top: 1px solid #000;
-            padding-top: 5px;
-        }
+                            width: 30%;
+                            text-align: center;
+                        }
+                        .signature-line {
+                            margin-top: 20px;
+                            border-top: 1px solid #000;
+                            padding-top: 5px;
+                        }
                     </style>
 
                     <div class="invoice-container">
@@ -191,15 +191,14 @@
                                 </tbody>
                             </table>
                         </div>
-                    <div style="display:flex;justify-content:space-around;width:400px;">
-                        <div class="signature-box">
-                            <div class="signature-line">ყიდულობს</div>
+                        <div style="display:flex;justify-content:space-around;width:100%;">
+                            <div class="signature-box">
+                                <div class="signature-line">ყიდულობს</div>
+                            </div>
+                            <div class="signature-box">
+                                <div class="signature-line">პასუხისმგებელი</div>
+                            </div>
                         </div>
-                        <div class="signature-box">
-                            <div class="signature-line">პასუხისმგებელი</div>
-                        </div>
-                    </div>
-
                         <div class="footer-container">
                             <div class="thank-you-message">Peugeot Georgia გუნდი მადლობას გიხდით Peugeot-ის არჩევისათვის</div>
                             <hr/>

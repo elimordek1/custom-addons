@@ -27,7 +27,7 @@
                             border: none !important;
                         }
                           .signature-box {
-            width: 45%;
+            width: 30%;
             text-align: center;
         }
         .signature-line {
@@ -191,13 +191,15 @@
                                 </tbody>
                             </table>
                         </div>
-
-                  <div class="signature-box">
+                    <div style="display:flex;justify-content:space-around;">
+                                 <div class="signature-box">
         <div class="signature-line">დამკვეთი</div>
     </div>
     <div class="signature-box">
         <div class="signature-line">შესრულებელი</div>
     </div>
+
+                    </div>
 
                         <div class="footer-container">
                             <div class="thank-you-message">Peugeot Georgia team thanks you for choosing Peugeot</div>

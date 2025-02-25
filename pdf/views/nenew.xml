@@ -8,9 +8,6 @@
                         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
                         .page { margin: 0; padding: 0; }
                         .invoice-container { width: 100%; margin: 0; padding: 0; }
-                        .invoice-header { text-align: center; margin-bottom: 10px; }
-                        .logo-img { max-width: 100px; }
-                        .company-name { font-size: 18px; font-weight: bold; }
                         .invoice-title { text-align: center; margin-bottom: 15px; }
                         .invoice-label { font-size: 16px; font-weight: bold; }
                         .info-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
@@ -128,7 +125,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name != 'All / ავტომობილი - დაბეგრილი' and l.product_id.type == 'product')" t-as="line">
+                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name != 'სათადარიგო ნაწილები' and l.product_id.type == 'product')" t-as="line">
                                     <tr>
                                         <td>
                                             <span t-if="line.sequence" t-field="line.sequence"/>
@@ -158,52 +155,6 @@
                                 </t>
                             </tbody>
                         </table>
-
-                        <!-- Car Category Table -->
-                        <span class="table-title">სათადარიგო ნაწილები</span>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>N</th>
-                                    <th>Code</th>
-                                    <th>Description</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name == 'All / ავტომობილი - დაბეგრილი')" t-as="line">
-                                    <tr>
-                                        <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-
                         <div class="total-section">
                             <div>
                                 <span class="label">Cost of Work:</span>

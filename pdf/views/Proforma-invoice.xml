@@ -35,6 +35,12 @@
                             border-top: 1px solid #000;
                             padding-top: 5px;
                         }
+                        .flex-row {
+    display: flex;
+    gap: 20px;             /* Расстояние между элементами */
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: center;   /* Выравнивание по вертикали */
+}
                     </style>
 
                     <div class="invoice-container">
@@ -191,7 +197,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div style="display:flex;justify-content:space-around;width:100%;">
+                        <div class="flex-row">
                             <div class="signature-box">
                                 <div class="signature-line">ყიდულობს</div>
                             </div>

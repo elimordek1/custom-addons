@@ -191,14 +191,17 @@
                                 </tbody>
                             </table>
                         </div>
-                    <div style="display:flex;justify-content:space-around;width:400px;">
-                        <div class="signature-box">
-                            <div class="signature-line">Buyer</div>
-                        </div>
-                        <div class="signature-box">
+
+                        <div class="footer_left" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: left;">
+                             <div class="signature-box">
                             <div class="signature-line">Responsible</div>
                         </div>
-                    </div>
+                        </div>
+                        <div class="footer_right" style="margin-top: 0px; text-align: right; font-size: 11px; width: 49%; float: right;">
+                            <div class="signature-box">
+                                <div class="signature-line">Buyer</div>
+                            </div>
+                        </div>
 
                         <div class="footer-container">
                             <div class="thank-you-message">Peugeot Georgia team thanks you for choosing Peugeot</div>

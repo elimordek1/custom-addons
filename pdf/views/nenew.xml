@@ -7,17 +7,19 @@
                     <head>
                         <style>
                             body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-                            .invoice-container { width: 100%; max-width: 800px; margin: 0 auto; padding: 10px; box-sizing: border-box; }
-                            .invoice-header { text-align: center; margin-bottom: 20px; }
+                            .invoice-container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; box-sizing: border-box; }
+                            .invoice-header { text-align: center; margin-bottom: 10px; }
                             .logo-img { max-width: 100px; }
                             .company-name { font-size: 18px; font-weight: bold; }
-                            .invoice-title { text-align: center; margin-bottom: 20px; }
+                            .invoice-title { text-align: center; margin-bottom: 15px; }
                             .invoice-label { font-size: 16px; font-weight: bold; }
-                            .invoice-info, .customer-info { margin-bottom: 20px; text-align: right; }
+                            .info-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+                            .customer-info { text-align: left; flex: 1; }
+                            .invoice-info { text-align: right; flex: 1; }
                             .label { font-weight: bold; }
                             .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
                             .table-title { font-weight: bold; margin: 15px 0 5px 0; display: block; }
-                            table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; }
+                            table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none; }
                             th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
                             td { padding: 8px; border: none; }
                             .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
@@ -37,17 +39,18 @@
                             <span class="invoice-label">Receipt-Delivery Act</span>
                         </div>
 
-                        <div class="invoice-info">
-                            <div><span class="label">Date:</span> <span t-field="doc.date_order"/></div>
-                            <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
-                        </div>
-
-                        <div class="customer-info">
-                            <span class="section-title">Buyer:</span>
-                            <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
-                            <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
-                            <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
-                            <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
+                        <div class="info-row">
+                            <div class="customer-info">
+                                <span class="section-title">Buyer:</span>
+                                <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
+                                <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
+                                <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
+                                <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
+                            </div>
+                            <div class="invoice-info">
+                                <div><span class="label">Date:</span> <span t-field="doc.date_order"/></div>
+                                <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
+                            </div>
                         </div>
 
                         <!-- Vehicle Table -->
@@ -74,7 +77,7 @@
                         </table>
 
                         <!-- Parts Table -->
-                        <span class="table-title">Spare Parts</span>
+                        <span class="table-title">სათადარიგო ნაწილები</span>
                         <table>
                             <thead>
                                 <tr>
@@ -164,7 +167,7 @@
                         </table>
 
                         <!-- Service Table -->
-                        <span class="table-title">Services</span>
+                        <span class="table-title">Service</span>
                         <table>
                             <thead>
                                 <tr>

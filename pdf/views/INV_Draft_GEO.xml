@@ -20,7 +20,7 @@
                         <strong>თარიღი:</strong> <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
                     </div>
                     <div class="col">
-                        <strong>ნომერი:</strong> <span t-field="doc.name"/>
+                        <strong>შევეთის ნომერი:</strong> <span t-field="doc.name"/>
                     </div>
                     <div class="col">
                         <strong>მოქმედების ვადა:</strong> <span t-field="doc.validity_date"/>
@@ -32,11 +32,11 @@
                 <div class="col-6">
                     <table class="table table-sm" style="border: 1px solid #ddd;">
                         <tr>
-                            <td><strong>კლიენტის სახელი:</strong></td>
+                            <td><strong>მყიდველი:</strong></td>
                             <td><span t-field="doc.partner_id.name"/></td>
                         </tr>
                         <tr>
-                            <td><strong>საიდენტიფიკაციო კოდი:</strong></td>
+                            <td><strong>პ/ნ:</strong></td>
                             <td><span t-field="doc.partner_id.vat"/></td>
                         </tr>
                         <tr>
@@ -44,7 +44,7 @@
                             <td><span t-field="doc.partner_id.street"/></td>
                         </tr>
                         <tr>
-                            <td><strong>მობილური:</strong></td>
+                            <td><strong>ტელეფონის ნომერი:</strong></td>
                             <td><span t-field="doc.partner_id.mobile"/></td>
                         </tr>
                     </table>
@@ -92,7 +92,7 @@
                         <div style="float: right; width: 40%;">
                             <table style="width: 100%;">
                                 <tr>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">ბალანსი :</td>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">ავანსი :</td>
                                     <td style="padding: 8px; text-align: right; width: 50%;">
                                         <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                     </td>
@@ -127,12 +127,6 @@
                               <td style="padding: 8px; border: 1px solid #ddd;"><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
                           </tr>
                       </table>
-                  </div>
-
-                  <!-- Signatures -->
-                  <div class="row mt-4">
-                      <div class="col">კლიენტი ----------</div>
-                      <div class="col text-right">სერვის პროვაიდერი ----------</div>
                   </div>
 
                   <!-- Footer -->

@@ -17,16 +17,13 @@
                         .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
                         .table-title { font-weight: bold; margin: 15px 0 5px 0; display: block; }
                         table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none; }
-                        th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
-                        td { padding: 8px; border: none; }
+                        th { background-color: #f2f2f2; padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+                        td { padding: 8px; }
                         .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
                         .signatures { display: flex; justify-content: space-between; margin: 30px 0 20px 0; font-size: 12px; }
                         .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
-                        .thank-you-message { font-size: 14px; margin-bottom: 5px; }
-                        .company-info { font-size: 12px; }
-                        table, th, td {
-                            border: none !important;
-                        }
+                        .buyer-divider { width: 100%; max-width: 90%; margin: 10px 0; border-top: 2px solid #000; }
+                        .centered-divider { width: 50%; margin: 10px auto; border-top: 2px solid #000; }
                     </style>
 
                     <div class="invoice-container">
@@ -40,7 +37,7 @@
                         </div>
 
                         <div class="info-row">
-                             <div class="invoice-info">
+                            <div class="invoice-info">
                                 <div><span class="label">Date:</span> <span t-field="doc.date_order"/></div>
                                 <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
                             </div>
@@ -50,31 +47,10 @@
                                 <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
                                 <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
+                                <div class="buyer-divider"></div>
                             </div>
                         </div>
 
-                        <!-- Vehicle Table -->
-                        <span class="table-title">Automobile Information</span>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Automobile Model</th>
-                                    <th>VIN Code</th>
-                                    <th>Mileage</th>
-                                    <th>State Number</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="border:none;"><span t-field="doc.car_id.model_id.name"/></td>
-                                    <td style="border:none;"><span t-field="doc.car_id.vin_sn"/></td>
-                                    <td style="border:none;"><span t-field="doc.car_id.odometer"/></td>
-                                    <td style="border:none;"><span t-field="doc.car_id.license_plate"/></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- Service Table -->
                         <span class="table-title">Service</span>
                         <table>
                             <thead>
@@ -87,111 +63,29 @@
                             <tbody>
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'service')" t-as="line">
                                     <tr>
-                                        <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-
-                        <!-- Parts Table -->
-                        <span class="table-title">სათადარიგო ნაწილები</span>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>N</th>
-                                    <th>Part Number</th>
-                                    <th>Name of the spare part</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები')" t-as="line">
-                                    <tr>
-                                        <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
-                                            <span t-if="not line.price_subtotal"> </span>
-                                        </td>
+                                        <td t-field="line.sequence"/>
+                                        <td t-field="line.product_id.name"/>
+                                        <td t-field="line.price_subtotal"/>
                                     </tr>
                                 </t>
                             </tbody>
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">Cost of Work:</span>
+                                <span class="label">Total Service Price:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
                             </div>
-                            <div>
-                                <span class="label">Cost of Spare Parts:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'product').mapped('price_subtotal'))"/>
-                            </div>
-                            <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
-                            <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
                         </div>
 
-                        <div class="bank-details">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td><span class="label">Name:</span> Ltd Novcom</td>
-                                        <td><span class="label">Tax ID:</span> 404535614</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="label">Bank:</span> JSC "TBC Bank"</td>
-                                        <td><span class="label">Bank:</span> JSC "Bank of Georgia"</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="label">Bank Code:</span> TBCBGE22</td>
-                                        <td><span class="label">Bank Code:</span> BAGAGE22</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="label">IBAN:</span> GE42TB7364236020100014</td>
-                                        <td><span class="label">IBAN:</span> GE54BG0000000580810424</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="total-section">
+                            <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
+                            <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
+                            <div class="centered-divider"></div>
                         </div>
 
                         <div class="signatures">
                             <div>Client ----------</div>
                             <div>Service Provider ----------</div>
-                        </div>
-
-                        <div class="footer-container">
-                            <div class="thank-you-message">Peugeot Georgia team thanks you for choosing Peugeot</div>
-                            <div class="company-info">Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia +995 (32) 2 19 21 95, info@peugeot-georgia.ge</div>
                         </div>
                     </div>
                 </t>

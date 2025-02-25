@@ -89,7 +89,7 @@
                         </table>
 
                         <!-- მომსახურების მაგიდა -->
-                        <span class="table-title">მომსახურება</span>
+                        <span class="table-title">სერვისი</span>
                         <table>
                             <thead>
                                 <tr>
@@ -164,7 +164,7 @@
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">მუშაობის ღირებულება:</span>
+                                <span class="label">სერვისის ღირებულება:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
                             </div>
                             <div>
@@ -197,12 +197,14 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-flex">
+                     <div class="footer_left" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: right;">
+                             <div class="signature-box">
+                            <div class="signature-line">პასუხისმგებელი</div>
+                        </div>
+                        </div>
+                        <div class="footer_right" style="margin-top: 0px; text-align: right; font-size: 11px; width: 49%; float: right;">
                             <div class="signature-box">
-                                <div class="signature-line">ყიდულობს</div>
-                            </div>
-                            <div class="signature-box">
-                                <div class="signature-line">პასუხისმგებელი</div>
+                                <div class="signature-line">მყიდველები</div>
                             </div>
                         </div>
                         <div class="footer-container">

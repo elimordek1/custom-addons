@@ -197,7 +197,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="flex-row">
+                        <div class="d-flex">
                             <div class="signature-box">
                                 <div class="signature-line">ყიდულობს</div>
                             </div>

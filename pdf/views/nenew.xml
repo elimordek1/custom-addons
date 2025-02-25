@@ -26,6 +26,15 @@
                         table, th, td {
                             border: none !important;
                         }
+                          .signature-box {
+            width: 45%;
+            text-align: center;
+        }
+        .signature-line {
+            margin-top: 20px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+        }
                     </style>
 
                     <div class="invoice-container">
@@ -183,16 +192,12 @@
                             </table>
                         </div>
 
-                  <div class="signatures" style="display: flex; justify-content: space-between; width: 100%; margin-top: 30px;">
-                        <div style="position: relative; padding-right: 20px;">
-                            <span style="white-space: nowrap;">Client</span>
-                            <div style="border-top: 1px solid #000; width: 100%; position: absolute; top: 50%; left: 0;"></div>
-                        </div>
-                        <div style="position: relative; padding-left: 20px;">
-                            <span style="white-space: nowrap;">Service Provider</span>
-                            <div style="border-top: 1px solid #000; width: 100%; position: absolute; top: 50%; right: 0;"></div>
-                        </div>
-                    </div>
+                  <div class="signature-box">
+        <div class="signature-line">დამკვეთი</div>
+    </div>
+    <div class="signature-box">
+        <div class="signature-line">შესრულებელი</div>
+    </div>
 
                         <div class="footer-container">
                             <div class="thank-you-message">Peugeot Georgia team thanks you for choosing Peugeot</div>

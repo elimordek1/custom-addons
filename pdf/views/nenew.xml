@@ -20,7 +20,6 @@
                         th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
                         td { padding: 8px; border: none; }
                         .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
-                        .signatures { display: flex; justify-content: space-between; margin: 30px 0 20px 0; font-size: 12px; }
                         .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
                         .thank-you-message { font-size: 14px; margin-bottom: 5px; }
                         .company-info { font-size: 12px; }
@@ -184,14 +183,14 @@
                             </table>
                         </div>
 
-                     <div class="signatures" style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 20px 0; font-size: 12px;">
-                        <div style="text-align: left; position: relative; width: 45%;">
-                            <span style="position: absolute; top: -15px; left: 0;">Client</span>
-                            <hr style="border: none; border-top: 1px solid #000; margin: 0;"/>
+                  <div class="signatures" style="display: flex; justify-content: space-between; width: 100%; margin-top: 30px;">
+                        <div style="position: relative; padding-right: 20px;">
+                            <span style="white-space: nowrap;">Client</span>
+                            <div style="border-top: 1px solid #000; width: 100%; position: absolute; top: 50%; left: 0;"></div>
                         </div>
-                        <div style="text-align: right; position: relative; width: 45%;">
-                            <span style="position: absolute; top: -15px; right: 0;">Service Provider</span>
-                            <hr style="border: none; border-top: 1px solid #000; margin: 0;"/>
+                        <div style="position: relative; padding-left: 20px;">
+                            <span style="white-space: nowrap;">Service Provider</span>
+                            <div style="border-top: 1px solid #000; width: 100%; position: absolute; top: 50%; right: 0;"></div>
                         </div>
                     </div>
 

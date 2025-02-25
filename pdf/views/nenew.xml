@@ -24,6 +24,9 @@
                         .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
                         .thank-you-message { font-size: 14px; margin-bottom: 5px; }
                         .company-info { font-size: 12px; }
+                        table, th, td {
+                            border: none !important;
+                        }
                     </style>
 
                     <div class="invoice-container">
@@ -52,7 +55,7 @@
 
                         <!-- Vehicle Table -->
                         <span class="table-title">Automobile Information</span>
-                        <table style="border:none;">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Automobile Model</th>
@@ -130,7 +133,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.complete_name != 'სათადარიგო ნაწილები' and l.product_id.type == 'product')" t-as="line">
+                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'სათადარიგო ნაწილები')" t-as="line">
                                     <tr>
                                         <td>
                                             <span t-if="line.sequence" t-field="line.sequence"/>

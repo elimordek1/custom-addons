@@ -80,10 +80,7 @@
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>Service Number</th>
                                     <th>Name of the Service</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -95,20 +92,8 @@
                                             <span t-if="not line.sequence"> </span>
                                         </td>
                                         <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
-                                        </td>
-                                        <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
                                             <span t-if="not line.product_id.name"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.price_unit" t-field="line.price_unit"/>
-                                            <span t-if="not line.price_unit"> </span>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_uom_qty" t-field="line.product_uom_qty"/>
-                                            <span t-if="not line.product_uom_qty"> </span>
                                         </td>
                                         <td>
                                             <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
@@ -133,7 +118,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'სათადარიგო ნაწილები')" t-as="line">
+                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'All / სათადარიგო ნაწილები')" t-as="line">
                                     <tr>
                                         <td>
                                             <span t-if="line.sequence" t-field="line.sequence"/>

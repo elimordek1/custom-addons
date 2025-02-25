@@ -3,7 +3,7 @@
     <template id="report_proforma_invoice_eng">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="web.external_layout">
+                <t t-call="web.basic_layout">
                     <style>
                         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
                         .page { margin: 0; padding: 0; }

@@ -87,7 +87,7 @@
         border-collapse: collapse;
 
         th, td {
-            border: 1px solid #000;
+            border: none;
             padding: 6px;
             text-align: center;
             font-size: 11px;
@@ -130,7 +130,7 @@
 
             .advance-row, .total-row {
                 td {
-                    border: 1px solid #000;
+                    border: none;
 
                     &[colspan="7"] {
                         border-right: none;

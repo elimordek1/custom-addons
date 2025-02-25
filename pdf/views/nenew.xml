@@ -40,16 +40,16 @@
                         </div>
 
                         <div class="info-row">
+                             <div class="invoice-info">
+                                <div><span class="label">Date:</span> <span t-field="doc.date_order"/></div>
+                                <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
+                            </div>
                             <div class="customer-info">
                                 <span class="section-title">Buyer:</span>
                                 <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
                                 <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
-                            </div>
-                            <div class="invoice-info">
-                                <div><span class="label">Date:</span> <span t-field="doc.date_order"/></div>
-                                <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
                             </div>
                         </div>
 
@@ -118,7 +118,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'All / სათადარიგო ნაწილები')" t-as="line">
+                                <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები')" t-as="line">
                                     <tr>
                                         <td>
                                             <span t-if="line.sequence" t-field="line.sequence"/>

@@ -113,7 +113,7 @@
                         </table>
 
                         <!-- Parts Table -->
-                        <span class="table-title">სათადარიგო ნაწილები</span>
+                        <span class="table-title">Parts</span>
                         <table>
                             <thead>
                                 <tr>
@@ -168,7 +168,7 @@
                             <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
                             <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
                         </div>
-
+                        <hr/>
                         <div class="bank-details">
                             <table>
                                 <tbody>
@@ -191,18 +191,18 @@
                                 </tbody>
                             </table>
                         </div>
-                    <div style="display:flex;justify-content:space-around;">
-                                 <div class="signature-box">
-        <div class="signature-line">დამკვეთი</div>
-    </div>
-    <div class="signature-box">
-        <div class="signature-line">შესრულებელი</div>
-    </div>
-
+                    <div style="display:flex;justify-content:space-around;width:400px;">
+                        <div class="signature-box">
+                            <div class="signature-line">Buyer</div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line">Responsible</div>
+                        </div>
                     </div>
 
                         <div class="footer-container">
                             <div class="thank-you-message">Peugeot Georgia team thanks you for choosing Peugeot</div>
+                            <hr/>
                             <div class="company-info">Agmashenebeli Ave. 100, 0131 Tbilisi | Georgia +995 (32) 2 19 21 95, info@peugeot-georgia.ge</div>
                         </div>
                     </div>

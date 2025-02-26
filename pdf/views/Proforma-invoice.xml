@@ -115,6 +115,12 @@
                                 </t>
                             </tbody>
                         </table>
+                        <div class="total-section">
+                            <div>
+                                <span class="label">სერვისის ღირებულება:</span>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
+                            </div>
+                        </div>
 
                         <!-- ნაწილების მაგიდა -->
                         <table>
@@ -161,22 +167,24 @@
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">სერვისის ღირებულება:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
-                            </div>
-                            <div>
                                 <span class="label">სათადარიგო ნაწილების ღირებულება:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'product').mapped('price_subtotal'))"/>
                             </div>
+                            <hr/>
                             <div><span class="label">თანხა:</span> <span t-field="doc.amount_total"/></div>
-                            <div><span class="label">ავანსკი:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
+                            <div><span class="label">ავანსი:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
+                            <div><span class="label">გადასახდელი თანხა:</span> <span t-field="doc.amount_total"/></div>
                         </div>
                         <hr/>
                         <div class="bank-details">
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><span class="label">დასახელება:</span> Ltd Novcom</td>
+                                        <td><span class="label">დასახელება:</span> შპს ნოვკომ</td>
+                                        <td><span class="label">დასახელება:</span> შპს ნოვკომ</td>
+                                    </tr>
+                                      <tr>
+                                        <td><span class="label">ს/კ:</span> 404535614</td>
                                         <td><span class="label">ს/კ:</span> 404535614</td>
                                     </tr>
                                     <tr>

@@ -84,7 +84,7 @@
 
                         <!-- Service Table -->
                         <span class="table-title">Service</span>
-                        <table>
+                        <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>N</th>

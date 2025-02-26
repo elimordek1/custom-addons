@@ -121,7 +121,12 @@
                                 </t>
                             </tbody>
                         </table>
-
+                        <div class="total-section">
+                            <div>
+                                <span class="label">Cost of Work::</span>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
+                            </div>
+                        </div>
                         <!-- Parts Table -->
                         <span class="table-title">Parts</span>
                         <table class="table-borderless">
@@ -168,15 +173,12 @@
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">Cost of Work:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
-                            </div>
-                            <div>
                                 <span class="label">Cost of Spare Parts:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'product').mapped('price_subtotal'))"/>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))"/>
                             </div>
-                            <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
+                            <div><span class="label">Total:</span> <span t-field="doc.amount_total"/></div>
                             <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
+                            <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
                         </div>
                         <hr/>
                         <div class="bank-details">

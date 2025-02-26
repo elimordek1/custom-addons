@@ -135,7 +135,6 @@
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>ნაწილის ნომერი</th>
                                     <th>სათადარიგო ნაწილის დასახელება</th>
                                     <th>ერთეულის ფასი</th>
                                     <th>რაოდენობა</th>
@@ -147,10 +146,6 @@
                                     <tr>
                                         <td>
                                             <t t-esc="line_index + 1"/>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>

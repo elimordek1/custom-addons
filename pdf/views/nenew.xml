@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="invoice-title">
-                            <span class="invoice-label">Receipt-Delivery Act</span>
+                            <span class="invoice-label">Acceptance Report</span>
                         </div>
 
                         <div class="info-row">
@@ -72,7 +72,6 @@
                         </div>
 
                         <!-- Vehicle Table -->
-                        <span class="table-title">Automobile Information</span>
                         <table class="table-borderless">
                             <thead>
                                 <tr>
@@ -93,12 +92,11 @@
                         </table>
 
                         <!-- Service Table -->
-                        <span class="table-title">Service</span>
                         <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>Name of the Service</th>
+                                    <th>Labor</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -127,12 +125,10 @@
                             </div>
                         </div>
                         <!-- Parts Table -->
-                        <span class="table-title">Parts</span>
                         <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>Part Number</th>
                                     <th>Name of the spare part</th>
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
@@ -144,10 +140,6 @@
                                     <tr>
                                         <td>
                                          <t t-esc="line_index + 1"/>
-                                        </td>
-                                        <td>
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
-                                            <span t-if="not line.product_id.default_code"> </span>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
@@ -174,7 +166,8 @@
                                 <span class="label">Cost of Spare Parts:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
-                            <div><span class="label">Total:</span> <span t-field="doc.amount_total"/></div>
+                            <hr/>
+                            <div><span class="label">Sum:</span> <span t-field="doc.amount_total"/></div>
                             <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
                             <div><span class="label">Total Amount:</span> <span t-field="doc.amount_total"/></div>
                         </div>
@@ -183,8 +176,8 @@
                             <table class="table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td><span class="label">Name:</span> Ltd Novcom</td>
-                                        <td><span class="label">Name:</span> Ltd Novcom</td>
+                                        <td><span class="label">Title:</span> LLC NOVCOM</td>
+                                        <td><span class="label">Title:</span> LLC NOVCOM</td>
                                     </tr>
                                      <tr>
                                         <td><span class="label">Tax ID:</span> 404535614</td>
@@ -207,12 +200,12 @@
                         </div>
                         <div class="footer_left" style="margin-top: 0px; text-align: right; font-size: 11px; width: 49%; float: right;">
                              <div class="signature-box" style="margin-left:auto;">
-                                <div class="signature-line">Responsible</div>
+                                <div class="signature-line">Seller</div>
                             </div>
                         </div>
                         <div class="footer_right" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: left;">
                             <div class="signature-box" style="float:left;text-align:left;">
-                                <div class="signature-line">Buyer</div>
+                                <div class="signature-line">Costumer</div>
                             </div>
                         </div>
                         <div style="height:100px;"></div>

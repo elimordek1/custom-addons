@@ -44,8 +44,8 @@
                     </style>
 
                     <div class="invoice-container">
-                        <div class="text-center">
-                            <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
+                        <div class="text-right">
+                            <img src="/pdf/static/description/pego_logo.png" style="max-width: 100px;"/>
                             <h3>PEUGEOT GEORGIA</h3>
                         </div>
 

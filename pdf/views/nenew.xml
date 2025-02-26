@@ -63,7 +63,7 @@
                                 <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
                             </div>
                             <div class="customer-info">
-                                <span class="section-title">Buyer:</span>
+                                <span class="section-title" style="border-bottom:1px solid black">Buyer:</span>
                                 <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
@@ -106,8 +106,7 @@
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'service')" t-as="line">
                                     <tr>
                                         <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
+                                            <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
@@ -124,7 +123,7 @@
                         <div class="total-section">
                             <div>
                                 <span class="label">Cost of Work::</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
                         </div>
                         <!-- Parts Table -->
@@ -144,8 +143,7 @@
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები')" t-as="line">
                                     <tr>
                                         <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
+                                         <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
@@ -174,7 +172,7 @@
                         <div class="total-section">
                             <div>
                                 <span class="label">Cost of Spare Parts:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))"/>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
                             <div><span class="label">Total:</span> <span t-field="doc.amount_total"/></div>
                             <div><span class="label">Advance:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>

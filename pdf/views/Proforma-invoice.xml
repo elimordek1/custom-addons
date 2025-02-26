@@ -68,7 +68,7 @@
                                  <div><span class="label">ნომერი:</span> <span t-field="doc.name"/></div>
                             </div>
                             <div class="customer-info">
-                                <span class="section-title">მყიდველი:</span>
+                                <span class="section-title" style="border-bottom:1px solid black">მყიდველი:</span>
                                 <div><span class="label">დასახელება:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">პ/ნ:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">მისამართი:</span> <span t-field="doc.partner_id.street"/></div>
@@ -109,8 +109,7 @@
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.type == 'service')" t-as="line">
                                     <tr>
                                         <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
+                                            <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
@@ -126,8 +125,8 @@
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">სერვისის ღირებულება:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))"/>
+                                <span class="label">სულ სამუშაოების ღირებულება:</span>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
                         </div>
 
@@ -147,8 +146,7 @@
                                 <t t-foreach="doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები')" t-as="line">
                                     <tr>
                                         <td>
-                                            <span t-if="line.sequence" t-field="line.sequence"/>
-                                            <span t-if="not line.sequence"> </span>
+                                            <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
@@ -177,7 +175,7 @@
                         <div class="total-section">
                             <div>
                                 <span class="label">სათადარიგო ნაწილების ღირებულება:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))"/>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
                             <hr/>
                             <div><span class="label">თანხა:</span> <span t-field="doc.amount_total"/></div>
@@ -213,12 +211,12 @@
                         </div>
                         <div class="footer_left" style="margin-top: 0px; text-align: right; font-size: 11px; width: 49%; float: right;">
                              <div class="signature-box" style="margin-left:auto;">
-                                <div class="signature-line">პასუხისმგებელი</div>
+                                <div class="signature-line">შემსრულებელი</div>
                             </div>
                         </div>
                         <div class="footer_right" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: left;">
                             <div class="signature-box" style="float:left;text-align:left;">
-                                <div class="signature-line">მყიდველები</div>
+                                <div class="signature-line">დამკვეთი</div>
                             </div>
                         </div>
                         <div style="height:100px;"></div>

@@ -16,9 +16,9 @@
                         .label { font-weight: bold; }
                         .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
                         .table-title { font-weight: bold; margin: 15px 0 5px 0; display: block; }
-                        table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none !important; }
-                        th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none !important; border-bottom: 1px solid #ddd; }
-                        td { padding: 8px; border: none !important; }
+                        table { width: 100%; margin-bottom: 15px; border-collapse: collapse; font-size: 12px; border: none; }
+                        th { background-color: #f2f2f2; padding: 8px; text-align: left; border: none; border-bottom: 1px solid #ddd; }
+                        td { padding: 8px; border: none; }
                         .total-section { margin: 15px 0; font-size: 12px; text-align: right; }
                         .footer-container { text-align: center; font-size: 12px; margin-top: 30px; }
                         .thank-you-message { font-size: 14px; margin-bottom: 5px; }
@@ -26,8 +26,8 @@
                         table, th, td {
                             border: none !important;
                         }
-                        .signature-box {
-                            width: 100%;
+                          .signature-box {
+                            width: 30%;
                             text-align: center;
                         }
                         .signature-line {
@@ -36,11 +36,11 @@
                             padding-top: 5px;
                         }
                         .flex-row {
-                            display: flex;
-                            gap: 20px;
-                            justify-content: flex-start;
-                            align-items: center;
-                        }
+    display: flex;
+    gap: 20px;             /* Расстояние между элементами */
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: center;   /* Выравнивание по вертикали */
+}
                     </style>
 
                     <div class="invoice-container">
@@ -55,8 +55,8 @@
 
                         <div class="info-row">
                              <div class="invoice-info">
-                                <div><span class="label">თარიღი:</span> <span t-field="doc.date_order"/></div>
-                                <div><span class="label">ნომერი:</span> <span t-field="doc.name"/></div>
+                                 <div><span class="label">თარიღი:</span> <span t-field="doc.date_order" t-options="{'format': 'dd.MM.yyyy'}"/></div>
+                                 <div><span class="label">ნომერი:</span> <span t-field="doc.name"/></div>
                             </div>
                             <div class="customer-info">
                                 <span class="section-title">მყიდველი:</span>
@@ -79,10 +79,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span t-field="doc.car_id.model_id.name"/></td>
-                                    <td><span t-field="doc.car_id.vin_sn"/></td>
-                                    <td><span t-field="doc.car_id.odometer"/></td>
-                                    <td><span t-field="doc.car_id.license_plate"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.model_id.name"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.vin_sn"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.odometer"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.license_plate"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -183,7 +183,7 @@
                                         <td><span class="label">დასახელება:</span> შპს ნოვკომ</td>
                                         <td><span class="label">დასახელება:</span> შპს ნოვკომ</td>
                                     </tr>
-                                    <tr>
+                                      <tr>
                                         <td><span class="label">ს/კ:</span> 404535614</td>
                                         <td><span class="label">ს/კ:</span> 404535614</td>
                                     </tr>
@@ -202,23 +202,18 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <!-- Signature section fixed -->
-                        <div style="display: flex; justify-content: space-between; margin-top: 30px; width: 100%;">
-                            <div style="text-align: left; font-size: 11px; width: 30%;">
-                                <div class="signature-box" style="width: 100%;">
-                                    <div class="signature-line">პასუხისმგებელი</div>
-                                </div>
-                            </div>
-                            <div style="text-align: right; font-size: 11px; width: 30%;">
-                                <div class="signature-box" style="width: 100%;">
-                                    <div class="signature-line">მყიდველები</div>
-                                </div>
+                        <div class="footer_left" style="margin-top: 0px; text-align: right; font-size: 11px; width: 49%; float: right;">
+                             <div class="signature-box">
+                            <div class="signature-line">პასუხისმგებელი</div>
+                        </div>
+                        </div>
+                        <div class="footer_right" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: left;">
+                            <div class="signature-box">
+                                <div class="signature-line">მყიდველები</div>
                             </div>
                         </div>
-
-                        <div style="height:50px;"></div> <!-- Reduced space -->
-                        <div class="footer-container">
+                        <div style="height:100px;"></div>
+                        <div class="footer-container pt-4">
                             <div class="thank-you-message">პეჟოს საქართველოს გუნდი მადლობას გიხდით რომ ირჩევთ პეჟოს</div>
                             <hr/>
                             <div class="company-info">აღმაშენებლის ხეივანი 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</div>

@@ -88,7 +88,7 @@
                             <tbody>
                                 <tr>
                                     <td style="border:none;"><span t-field="doc.car_id.model_id.name"/></td>
-                                    <td style="border:none;"><span t-field="doc.car_id.vin_sn"/></td>
+                                    <td style="border:none;"><span t-field="doc.car_id.x_studio_vinnumber"/></td>
                                     <td style="border:none;"><span t-field="doc.car_id.odometer"/></td>
                                     <td style="border:none;"><span t-field="doc.car_id.license_plate"/></td>
                                 </tr>

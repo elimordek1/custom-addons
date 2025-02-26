@@ -44,7 +44,7 @@
                     </style>
 
                     <div class="invoice-container">
-                        <div class="header text-center">
+                        <div class="text-center">
                             <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
                             <h3>PEUGEOT GEORGIA</h3>
                         </div>
@@ -168,7 +168,7 @@
                         <div class="total-section">
                             <div>
                                 <span class="label">სათადარიგო ნაწილების ღირებულება:</span>
-                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'product').mapped('price_subtotal'))"/>
+                                <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.categ_id.name == 'სათადარიგო ნაწილები').mapped('price_subtotal'))"/>
                             </div>
                             <hr/>
                             <div><span class="label">თანხა:</span> <span t-field="doc.amount_total"/></div>

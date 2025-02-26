@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="invoice-title">
-                            <span class="invoice-label">ჩეკი-გადაცემის აქტია</span>
+                            <span class="invoice-label">მიღება-ჩაბარების აქტი</span>
                         </div>
 
                         <div class="info-row">
@@ -59,23 +59,22 @@
                                 <div><span class="label">ნომერი:</span> <span t-field="doc.name"/></div>
                             </div>
                             <div class="customer-info">
-                                <span class="section-title">ყიდულობს:</span>
-                                <div><span class="label">სახელი:</span> <span t-field="doc.partner_id.name"/></div>
-                                <div><span class="label">VAT ნომერი:</span> <span t-field="doc.partner_id.vat"/></div>
+                                <span class="section-title">მყიდველი:</span>
+                                <div><span class="label">დასახელება:</span> <span t-field="doc.partner_id.name"/></div>
+                                <div><span class="label">პ/ნ:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">მისამართი:</span> <span t-field="doc.partner_id.street"/></div>
                                 <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.phone"/></div>
                             </div>
                         </div>
 
                         <!-- ავტომობილების მაგიდა -->
-                        <span class="table-title">ავტომობილის ინფორმაცია</span>
                         <table>
                             <thead>
                                 <tr>
                                     <th>ავტომობილის მოდელი</th>
                                     <th>VIN კოდი</th>
-                                    <th>მილაჟი</th>
-                                    <th>სახელობარი ნომერი</th>
+                                    <th>გარბენი</th>
+                                    <th>სახელმწიფო ნომერი</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,13 +88,12 @@
                         </table>
 
                         <!-- მომსახურების მაგიდა -->
-                        <span class="table-title">სერვისი</span>
                         <table>
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>მომსახურების სახელი</th>
-                                    <th>რაოდენობა</th>
+                                    <th>სამუშაოს დასახელება</th>
+                                    <th>თანხა</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,16 +117,15 @@
                         </table>
 
                         <!-- ნაწილების მაგიდა -->
-                        <span class="table-title">ნაწილები</span>
                         <table>
                             <thead>
                                 <tr>
                                     <th>N</th>
-                                    <th>ნაწილების ნომერი</th>
-                                    <th>ნაწილების სახელი</th>
-                                    <th>ერთეული ფასი</th>
+                                    <th>ნაწილის ნომერი</th>
+                                    <th>სათადარიგო ნაწილის დასახელება</th>
+                                    <th>ერთეულის ფასი</th>
                                     <th>რაოდენობა</th>
-                                    <th>რაოდენობა</th>
+                                    <th>თანხა</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,16 +168,16 @@
                                 <span class="label">სათადარიგო ნაწილების ღირებულება:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'product').mapped('price_subtotal'))"/>
                             </div>
-                            <div><span class="label">მთლიანი თანხა:</span> <span t-field="doc.amount_total"/></div>
-                            <div><span class="label">გადახდა წინასწარ:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
+                            <div><span class="label">თანხა:</span> <span t-field="doc.amount_total"/></div>
+                            <div><span class="label">ავანსკი:</span> <span t-field="doc.x_studio_related_field_4is_1ijgac036"/></div>
                         </div>
                         <hr/>
                         <div class="bank-details">
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><span class="label">სახელი:</span> Ltd Novcom</td>
-                                        <td><span class="label">ვატ ნომერი:</span> 404535614</td>
+                                        <td><span class="label">დასახელება:</span> Ltd Novcom</td>
+                                        <td><span class="label">ს/კ:</span> 404535614</td>
                                     </tr>
                                     <tr>
                                         <td><span class="label">ბანკი:</span> JSC "TBC ბანკი"</td>
@@ -191,8 +188,8 @@
                                         <td><span class="label">ბანკის კოდი:</span> BAGAGE22</td>
                                     </tr>
                                     <tr>
-                                        <td><span class="label">IBAN:</span> GE42TB7364236020100014</td>
-                                        <td><span class="label">IBAN:</span> GE54BG0000000580810424</td>
+                                        <td><span class="label">ანგირიშის ნომერი:</span> GE42TB7364236020100014</td>
+                                        <td><span class="label">ანგირიშის ნომერი:</span> GE54BG0000000580810424</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -208,9 +205,9 @@
                             </div>
                         </div>
                         <div class="footer-container">
-                            <div class="thank-you-message">Peugeot Georgia გუნდი მადლობას გიხდით Peugeot-ის არჩევისათვის</div>
+                            <div class="thank-you-message">პეჟოს საქართველოს გუნდი მადლობას გიხდით რომ ირჩევთ პეჟოს</div>
                             <hr/>
-                            <div class="company-info">აგმაშენებლის ქ. 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</div>
+                            <div class="company-info">აღმაშენებლის ხეივანი 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</div>
                         </div>
                     </div>
                 </t>

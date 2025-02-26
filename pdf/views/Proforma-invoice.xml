@@ -68,7 +68,7 @@
                         </div>
 
                         <!-- ავტომობილების მაგიდა -->
-                        <table>
+                        <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>ავტომობილის მოდელი</th>
@@ -177,7 +177,7 @@
                         </div>
                         <hr/>
                         <div class="bank-details">
-                            <table>
+                            <table class="table-borderless">
                                 <tbody>
                                     <tr>
                                         <td><span class="label">დასახელება:</span> შპს ნოვკომ</td>

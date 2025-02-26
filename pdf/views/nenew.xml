@@ -63,7 +63,7 @@
 
                         <!-- Vehicle Table -->
                         <span class="table-title">Automobile Information</span>
-                        <table>
+                        <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>Automobile Model</th>
@@ -114,7 +114,7 @@
 
                         <!-- Parts Table -->
                         <span class="table-title">Parts</span>
-                        <table>
+                        <table class="table-borderless">
                             <thead>
                                 <tr>
                                     <th>N</th>
@@ -170,7 +170,7 @@
                         </div>
                         <hr/>
                         <div class="bank-details">
-                            <table>
+                            <table class="table-borderless">
                                 <tbody>
                                     <tr>
                                         <td><span class="label">Name:</span> Ltd Novcom</td>

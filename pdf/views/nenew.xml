@@ -35,6 +35,17 @@
             border-top: 1px solid #000;
             padding-top: 5px;
         }
+
+                        @media print {
+    table {
+        page-break-inside: avoid; /* Prevent the table from breaking inside */
+        break-inside: avoid;      /* For better browser support */
+    }
+
+    tr {
+        page-break-inside: avoid; /* Prevent table rows from breaking */
+    }
+}
                     </style>
 
                     <div class="invoice-container">

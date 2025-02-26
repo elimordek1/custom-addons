@@ -41,6 +41,16 @@
     justify-content: flex-start; /* Выравнивание по левому краю */
     align-items: center;   /* Выравнивание по вертикали */
 }
+                                                @media print {
+    table {
+        page-break-inside: avoid; /* Prevent the table from breaking inside */
+        break-inside: avoid;      /* For better browser support */
+    }
+
+    tr {
+        page-break-inside: avoid; /* Prevent table rows from breaking */
+    }
+}
                     </style>
 
                     <div class="invoice-container">

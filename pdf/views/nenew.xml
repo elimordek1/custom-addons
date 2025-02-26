@@ -124,7 +124,7 @@
                         </table>
                         <div class="total-section">
                             <div>
-                                <span class="label">Cost of Work::</span>
+                                <span class="label">Cost of Work:</span>
                                 <span t-esc="sum(doc.order_line.filtered(lambda l: l.product_id.type == 'service').mapped('price_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                             </div>
                         </div>

@@ -89,6 +89,7 @@
                             </table>
                         </div>
                     </div>
+                  <div style="height: 40px;"></div>
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
@@ -99,20 +100,20 @@
                   <div class="mt-4" style="padding-top:20px;">
                       <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                           <tr>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                              <td style="padding: 8px;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
+                              <td style="padding: 8px;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
                           </tr>
                           <tr>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
+                              <td style="padding: 8px;"><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
+                              <td style="padding: 8px;"><strong>ბანკი:</strong> სს "საქართველოს ბანკი"</td>
                           </tr>
                           <tr>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკის კოდი:</strong> TBCBGE22</td>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ბანკის კოდი:</strong> BAGAGE22</td>
+                              <td style="padding: 8px;"><strong>ბანკის კოდი:</strong> TBCBGE22</td>
+                              <td style="padding: 8px;"><strong>ბანკის კოდი:</strong> BAGAGE22</td>
                           </tr>
                           <tr>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
-                              <td style="padding: 8px; border: 1px solid #ddd;"><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
+                              <td style="padding: 8px;"><strong>ანგარიში:</strong> GE42TB7364236020100014</td>
+                              <td style="padding: 8px;"><strong>ანგარიში:</strong> GE54BG0000000580810424</td>
                           </tr>
                       </table>
                   </div>

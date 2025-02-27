@@ -120,6 +120,7 @@
 
                   <!-- Footer -->
                   <div class="footer text-center">
+                      <p>შემქმნელი: <span t-field="doc.user_id.name"/></p>
                       <p>მადლობა რომ ირჩევთ პეჟოს</p>
                   </div>
               </t>

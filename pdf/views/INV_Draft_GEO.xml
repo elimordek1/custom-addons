@@ -4,56 +4,39 @@
       <t t-call="web.html_container">
           <t t-foreach="docs" t-as="doc">
               <t t-call="web.basic_layout">
+                    <style>
+                        .info-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+                        .invoice-info { text-align: right; flex: 1; }
+                        .section-title { font-weight: bold; display: block; margin-bottom: 5px; }
+                        .customer-info { text-align: left; flex: 1; }
+                    </style>
                   <!-- Header with Logo -->
-                  <div class="header text-center">
-                      <img src="/pdf/static/description/Peugeot-Logo.png" style="max-width: 100px;"/>
-                      <h3>PEUGEOT GEORGIA</h3>
+                  <div class="header text-end">
+                      <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 100px;"/>
                   </div>
 
                   <!-- Title -->
                   <div class="text-center mb-4">
-                      <h4>მიღება-ჩაბარების აქტი</h4>
+                      <div><span class="label">ინვოისი INV#</span> <span t-field="doc.name"/></div>
                   </div>
 
-                 <div class="row mb-4">
-                    <div class="col">
-                        <strong>თარიღი:</strong> <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
-                    </div>
-                    <div class="col">
-                        <strong>შევეთის ნომერი:</strong> <span t-field="doc.name"/>
-                    </div>
-                    <div class="col">
-                        <strong>მოქმედების ვადა:</strong> <span t-field="doc.validity_date"/>
-                    </div>
-                </div>
-
-                                  <!-- Customer Information Block -->
-                  <div class="row mb-4">
-                <div class="col-6">
-                    <table class="table table-sm" style="border: 1px solid #ddd;">
-                        <tr>
-                            <td><strong>მყიდველი:</strong></td>
-                            <td><span t-field="doc.partner_id.name"/></td>
-                        </tr>
-                        <tr>
-                            <td><strong>პ/ნ:</strong></td>
-                            <td><span t-field="doc.partner_id.vat"/></td>
-                        </tr>
-                        <tr>
-                            <td><strong>მისამართი:</strong></td>
-                            <td><span t-field="doc.partner_id.street"/></td>
-                        </tr>
-                        <tr>
-                            <td><strong>ტელეფონის ნომერი:</strong></td>
-                            <td><span t-field="doc.partner_id.mobile"/></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+                     <div class="info-row">
+                             <div class="invoice-info">
+                                 <div><span class="label">თარიღი:</span> <span t-field="doc.date_order" t-options="{'format': 'dd.MM.yyyy'}"/></div>
+                                <div><span class="label">შევეთის ნომერი:</span> <span t-field="doc.name"/></div>
+                                <div><span class="label">მოქმედების ვადა:</span> <span t-field="doc.validity_date"/></div>
+                            </div>
+                            <div class="customer-info">
+                                <div><span class="label">მყიდველი:</span> <span t-field="doc.partner_id.name"/></div>
+                                <div><span class="label">პ/ნ:</span> <span t-field="doc.partner_id.vat"/></div>
+                                <div><span class="label">მისამართი:</span> <span t-field="doc.partner_id.street"/></div>
+                                <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.mobile"/></div>
+                            </div>
+                        </div>
 
                   <!-- Vehicle Table -->
                   <div class="vehicle-table" style="margin-top: 20px;margin-bot:20px;">
-                      <table style="width: 100%; border-collapse: collapse;">
+                      <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                           <thead>
                               <tr style="border-bottom: 2px solid #000;">
                                   <th style="padding: 8px;">ავტომობილის მოდელი</th>
@@ -90,7 +73,7 @@
                   </div>
                    <div class="mb-4" style="margin-top: 20px; width: 100%; display: flex; justify-content: flex-end;padding-bottom:20px;">
                         <div style="float: right; width: 40%;">
-                            <table style="width: 100%;">
+                            <table style="width: 100%;" class="table-borderless">
                                 <tr>
                                     <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">ავანსი :</td>
                                     <td style="padding: 8px; text-align: right; width: 50%;">
@@ -106,10 +89,15 @@
                             </table>
                         </div>
                     </div>
+                  <div class="text-center">
+                      ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
+                      <hr/>
+                      ღირებულებაში შედის განბაჟების და გაფორმების ხაეჯები
+                  </div>
                   <div style="height: 40px;"></div>
                   <!-- Bank Details -->
                   <div class="mt-4" style="padding-top:20px;">
-                      <table style="width: 100%; border-collapse: collapse;">
+                      <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                           <tr>
                               <td style="padding: 8px; border: 1px solid #ddd;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
                               <td style="padding: 8px; border: 1px solid #ddd;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
@@ -131,8 +119,7 @@
 
                   <!-- Footer -->
                   <div class="footer text-center">
-                      <p>პეჟოს გუნდი გიხდით მადლობას პეჟოს არჩევისთვის</p>
-                      <p>აღმაშენებლის ხეივანი 100, 0131 თბილისი | საქართველო +995 (32) 2 19 21 95, info@peugeot-georgia.ge</p>
+                      <p>მადლობა რომ ირჩევთ პეჟოს</p>
                   </div>
               </t>
           </t>

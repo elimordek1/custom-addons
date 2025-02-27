@@ -72,7 +72,7 @@
                                 <div><span class="label">დასახელება:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">პ/ნ:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">მისამართი:</span> <span t-field="doc.partner_id.street"/></div>
-                                <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.phone"/></div>
+                                <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.mobile"/></div>
                             </div>
                         </div>
 

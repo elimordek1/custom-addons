@@ -67,7 +67,7 @@
                                 <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
-                                <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
+                                <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.mobile"/></div>
                             </div>
                         </div>
 

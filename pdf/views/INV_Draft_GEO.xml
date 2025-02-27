@@ -12,7 +12,7 @@
                     </style>
                   <!-- Header with Logo -->
                   <div class="header text-end">
-                      <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 100px;"/>
+                      <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 400px;"/>
                   </div>
 
                   <!-- Title -->
@@ -30,7 +30,7 @@
                                 <div><span class="label">მყიდველი:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">პ/ნ:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">მისამართი:</span> <span t-field="doc.partner_id.street"/></div>
-                                <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.mobile"/></div>
+                                <div><span class="label">ტელეფონის ნომერი:</span> <span t-field="doc.partner_id.phone"/></div>
                             </div>
                         </div>
 
@@ -89,7 +89,7 @@
                             </table>
                         </div>
                     </div>
-                  <div class="text-center">
+                  <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
                       ღირებულებაში შედის განბაჟების და გაფორმების ხაეჯები

@@ -12,7 +12,7 @@
                     </style>
                     <!-- Header with Logo -->
                     <div class="header text-end">
-                        <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 100px;"/>
+                        <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 400px;"/>
                     </div>
 
                      <!-- Title -->
@@ -30,7 +30,7 @@
                                 <div><span class="label">Buyer:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">ID:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Adress:</span> <span t-field="doc.partner_id.street"/></div>
-                                <div><span class="label">Phone:</span> <span t-field="doc.partner_id.mobile"/></div>
+                                <div><span class="label">Phone:</span> <span t-field="doc.partner_id.phone"/></div>
                             </div>
                         </div>
 
@@ -90,7 +90,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="text-center">
+                    <div class="text-center mt-4">
                       Payment is made in national currency, with the offical exchange rate of the national bank valid on the day of payment.
                       <hr/>
                       Cost includes customs clearance fees.

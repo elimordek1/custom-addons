@@ -121,6 +121,7 @@
                     </div>
                     <!-- Footer -->
                     <div class="footer text-center">
+                        <p><span t-field="doc.user_id.name"/>---------------</p>
                         <p>Thanks for choosing Peugeot</p>
                     </div>
                 </t>

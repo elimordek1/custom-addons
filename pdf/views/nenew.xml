@@ -49,7 +49,7 @@
                     </style>
 
                     <div class="invoice-container">
-                              <div class="header text-end">
+                              <div class="text-end">
                                  <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 200px;"/>
                              </div>
 

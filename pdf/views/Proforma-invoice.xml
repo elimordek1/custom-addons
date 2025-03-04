@@ -54,9 +54,9 @@
                     </style>
 
                     <div class="invoice-container">
-                        <div class="header text-end">
-                            <div></div>
-                        </div>
+                           <div class="header text-end">
+                                 <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 200px;"/>
+                             </div>
 
                         <div class="invoice-title">
                             <span class="invoice-label">მიღება-ჩაბარების აქტი</span>

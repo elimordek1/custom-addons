@@ -120,7 +120,7 @@
                         </table>
                     </div>
                     <!-- Footer -->
-                    <div class="footer text-center">
+                    <div class="text-center">
                         <p><span t-field="doc.user_id.name"/>---------------</p>
                         <p>Thanks for choosing Peugeot</p>
                     </div>

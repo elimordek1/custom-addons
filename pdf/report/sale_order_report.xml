@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="custom_paperformat_no_margin" model="report.paperformat">
+    <field name="name">Custom No Margin</field>
+    <field name="default" eval="True"/>
+    <field name="format">A4</field>
+    <field name="margin_top">0</field>
+    <field name="margin_bottom">0</field>
+    <field name="margin_left">20</field>
+    <field name="margin_right">20</field>
+
+</record>
+
     <record id="action_report_sale_order_custom" model="ir.actions.report">
         <field name="name">ავტომობილის ინვოისი Geo</field>
         <field name="model">sale.order</field>
@@ -9,6 +20,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pdf.custom_paperformat_no_margin"/>
     </record>
 
 
@@ -21,6 +33,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pdf.custom_paperformat_no_margin"/>
     </record>
 
     <record id="action_report_sale_order_peugeot-geo-act" model="ir.actions.report">
@@ -32,6 +45,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pdf.custom_paperformat_no_margin"/>
     </record>
 
     <record id="action_report_sale_order_peugeot-eng-act" model="ir.actions.report">
@@ -43,7 +57,10 @@
         <field name="report_type">qweb-pdf</field>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pdf.custom_paperformat_no_margin"/>
     </record>
+
+
 
 
 </odoo>

@@ -89,7 +89,7 @@
                             </table>
                         </div>
                     </div>
-                  <div style="height: 100px;"></div>
+                  <div style="height: 200px;"></div>
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
@@ -122,6 +122,7 @@
                   <div style="height:200px;"></div>
                   <div class="text-center">
                       <p><span t-field="doc.user_id.name"/>---------------</p>
+                                        <div style="height: 100px;"></div>
                       <p>მადლობა რომ ირჩევთ პეჟოს</p>
                   </div>
               </t>

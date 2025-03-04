@@ -55,7 +55,7 @@
 
                     <div class="invoice-container">
                         <div class="header text-end">
-                                 <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 200px;"/>
+                            <div></div>
                         </div>
 
                         <div class="invoice-title">

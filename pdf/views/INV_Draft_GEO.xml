@@ -11,8 +11,8 @@
                         .customer-info { text-align: left; flex: 1; }
                     </style>
                   <!-- Header with Logo -->
-                  <div class="header text-end">
-                      <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 400px;"/>
+                  <div class="text-end mb-4">
+                      <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 300px;"/>
                   </div>
 
                   <!-- Title -->
@@ -93,7 +93,7 @@
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
-                      ღირებულებაში შედის განბაჟების და გაფორმების ხაეჯები
+                      ღირებულებაში შედის განბაჟების და გაფორმების ხარჯები
                   </div>
                   <div style="height: 40px;"></div>
                   <!-- Bank Details -->

@@ -49,8 +49,8 @@
                     </style>
 
                     <div class="invoice-container">
-                              <div class="text-end">
-                                 <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 200px;"/>
+                              <div class="text-end mb-4">
+                                 <img src="/pdf/static/description/pego_logo.jpg" style="max-width: 300px;"/>
                              </div>
 
                         <div class="invoice-title">
@@ -205,7 +205,7 @@
                         </div>
                         <div class="footer_right" style="margin-top: 0px; text-align: left; font-size: 11px; width: 49%; float: left;">
                             <div class="signature-box" style="float:left;text-align:left;">
-                                <div class="signature-line">Costumer</div>
+                                <div class="signature-line">Customer</div>
                             </div>
                         </div>
                         <div style="height:100px;"></div>

@@ -120,7 +120,7 @@
                         </table>
                     </div>
                     <!-- Footer -->
-                    <div style="height:200px;"></div>
+                    <div style="height:125px;"></div>
                     <div class="text-center">
                         <p><span t-field="doc.user_id.name"/>---------------</p>
                         <div style="height: 50px;"></div>

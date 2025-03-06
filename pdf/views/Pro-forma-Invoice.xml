@@ -136,10 +136,10 @@
                         </table>
                     </div>
                     <!-- Footer -->
-                    <div style="height:130px;"></div>
+                    <div style="height:230px;"></div>
                     <div class="text-center">
                         <p><span class="mr-2" t-field="doc.user_id.name"/>------------------</p>
-                        <div style="height: 50px;"></div>
+                        <div style="height: 40px;"></div>
                         <p>Thanks, for choosing Peugeot</p>
                     </div>
                 </t>

@@ -45,7 +45,7 @@
                                   <th style="padding: 8px;">ექსტერიერის ფერი</th>
                                   <th style="padding: 8px;">ძრავის მოცულობა</th>
                                   <th style="padding: 8px;">ღირებულება დღგ-ს გარეშე</th>
-                                  <th style="padding: 8px;">ღირებულება</th>
+                                  <th style="padding: 8px;">ღირებულება დღგ-ს ჩათვლით</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -105,7 +105,7 @@
                             </table>
                         </div>
                     </div>
-                  <div style="height: 125px;"></div>
+                  <div style="height: 170px;"></div>
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
@@ -135,9 +135,9 @@
                   </div>
 
                   <!-- Footer -->
-                  <div style="height:125px;"></div>
+                  <div style="height:160px;"></div>
                   <div class="text-center">
-                      <p><span class="mr-2" t-field="doc.user_id.name"/>---------------</p>
+                      <p><span class="mr-2" t-field="doc.user_id.name"/>------------------</p>
                                         <div style="height: 50px;"></div>
                       <p>მადლობა, რომ ირჩევთ პეჟოს</p>
                   </div>

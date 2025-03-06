@@ -106,7 +106,7 @@
                             </table>
                         </div>
                     </div>
-                    <div style="height: 125px;"></div>
+                    <div style="height: 170px;"></div>
                     <div class="text-center mt-4">
                       Payment is made in national currency, with the offical exchange rate of the national bank valid on the day of payment.
                       <hr/>
@@ -136,9 +136,9 @@
                         </table>
                     </div>
                     <!-- Footer -->
-                    <div style="height:125px;"></div>
+                    <div style="height:160px;"></div>
                     <div class="text-center">
-                        <p><span class="mr-2" t-field="doc.user_id.name"/>---------------</p>
+                        <p><span class="mr-2" t-field="doc.user_id.name"/>------------------</p>
                         <div style="height: 50px;"></div>
                         <p>Thanks, for choosing Peugeot</p>
                     </div>

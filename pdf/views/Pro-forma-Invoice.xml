@@ -138,9 +138,9 @@
                     <!-- Footer -->
                     <div style="height:125px;"></div>
                     <div class="text-center">
-                        <p><span t-field="doc.user_id.name"/>    ---------------</p>
+                        <p><span class="mr-2" t-field="doc.user_id.name"/>---------------</p>
                         <div style="height: 50px;"></div>
-                        <p>Thanks for choosing Peugeot</p>
+                        <p>Thanks, for choosing Peugeot</p>
                     </div>
                 </t>
             </t>

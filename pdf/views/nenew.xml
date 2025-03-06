@@ -60,12 +60,12 @@
                         <div class="info-row">
                              <div class="invoice-info">
                                  <div><span class="label">Date:</span> <span t-field="doc.date_order" t-options="{'format': 'dd.MM.yyyy'}"/></div>
-                                <div><span class="label">Number:</span> <span t-field="doc.name"/></div>
+                                <div><span class="label">Order Number:</span> <span t-field="doc.name"/></div>
                             </div>
                             <div class="customer-info">
                                 <span class="section-title" style="border-bottom:1px solid black">Buyer:</span>
                                 <div><span class="label">Name:</span> <span t-field="doc.partner_id.name"/></div>
-                                <div><span class="label">VAT No:</span> <span t-field="doc.partner_id.vat"/></div>
+                                <div><span class="label">ID Number:</span> <span t-field="doc.partner_id.vat"/></div>
                                 <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
                                 <div><span class="label">Phone Number:</span> <span t-field="doc.partner_id.phone"/></div>
                             </div>
@@ -108,7 +108,7 @@
                                         </td>
                                         <td>
                                             <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
+                                            <span t-if="not line.product_id.name_english"> </span>
                                         </td>
                                         <td>
                                             <span t-if="line.price_subtotal" t-field="line.price_subtotal"/>
@@ -180,8 +180,8 @@
                                         <td><span class="label">Title:</span> LLC NOVCOM</td>
                                     </tr>
                                      <tr>
-                                        <td><span class="label">Tax ID:</span> 404535614</td>
-                                        <td><span class="label">Tax ID:</span> 404535614</td>
+                                        <td><span class="label">ID:</span> 404535614</td>
+                                        <td><span class="label">ID:</span> 404535614</td>
                                     </tr>
                                     <tr>
                                         <td><span class="label">Bank:</span> JSC "TBC Bank"</td>

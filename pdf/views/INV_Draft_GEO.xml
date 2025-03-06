@@ -44,6 +44,7 @@
                                   <th style="padding: 8px;">გამოშვების წელი</th>
                                   <th style="padding: 8px;">ექსტერიერის ფერი</th>
                                   <th style="padding: 8px;">ძრავის მოცულობა</th>
+                                  <th style="padding: 8px;">ღირებულება დღგ-ს გარეშე</th>
                                   <th style="padding: 8px;">ღირებულება</th>
                               </tr>
                           </thead>
@@ -64,9 +65,12 @@
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd;">
                                       <span t-field="line.product_id.engine_volume_id.name"/>
                                   </td>
-                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                    <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                                   </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                    <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                    <span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                  </td>
                               </tr>
                           </tbody>
                       </table>
@@ -81,9 +85,21 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">თანხა დღგ-ს გარეშე :</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
+                                        <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">დღგ-ს თანხა :</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
+                                        <span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">ჯამური გადასახდელი თანხა :</td>
                                     <td style="padding: 8px; text-align: right; width: 50%;">
-                                        <span t-field="doc.amount_total"/>
+                                        <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                     </td>
                                 </tr>
                             </table>
@@ -101,7 +117,7 @@
                       <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                           <tr>
                               <td style="padding: 8px;"><strong>დასახელება:</strong> შპს ნოვკომი</td>
-                              <td style="padding: 8px;"><strong>საიდენტიფიკაციო კოდი:</strong> 404535614</td>
+                              <td style="padding: 8px;"><strong>ს/კ:</strong> 404535614</td>
                           </tr>
                           <tr>
                               <td style="padding: 8px;"><strong>ბანკი:</strong> სს "თიბისი ბანკი"</td>
@@ -121,7 +137,7 @@
                   <!-- Footer -->
                   <div style="height:125px;"></div>
                   <div class="text-center">
-                      <p><span t-field="doc.user_id.name"/>---------------</p>
+                      <p><span t-field="doc.user_id.name"/>    ---------------</p>
                                         <div style="height: 50px;"></div>
                       <p>მადლობა რომ ირჩევთ პეჟოს</p>
                   </div>

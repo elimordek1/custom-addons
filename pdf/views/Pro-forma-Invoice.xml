@@ -29,7 +29,7 @@
                             <div class="customer-info">
                                 <div><span class="label">Buyer:</span> <span t-field="doc.partner_id.name"/></div>
                                 <div><span class="label">ID:</span> <span t-field="doc.partner_id.vat"/></div>
-                                <div><span class="label">Adress:</span> <span t-field="doc.partner_id.street"/></div>
+                                <div><span class="label">Address:</span> <span t-field="doc.partner_id.street"/></div>
                                 <div><span class="label">Phone:</span> <span t-field="doc.partner_id.phone"/></div>
                             </div>
                         </div>
@@ -39,12 +39,13 @@
                         <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                             <thead>
                                 <tr style="border-bottom: 2px solid #000;">
-                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Automobile Model</th>
-                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">VIN Code</th>
-                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Release Year</th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Vechicle Model </th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Model VIN Number</th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Manufactering</th>
                                     <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Exterior Color</th>
-                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Engine Size</th>
-                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Price</th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Engine Capacity</th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Price EXCL VAT</th>
+                                    <th style="padding: 8px; white-space: pre-line; vertical-align: bottom;">Price INCL VAT</th>
                                 </tr>
                             </thead>
                              <tbody>
@@ -65,7 +66,10 @@
                                       <span t-field="line.product_id.engine_volume_id.name"/>
                                   </td>
                                   <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
-                                    <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                  </td>
+                                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
+                                    <span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                   </td>
                               </tr>
                           </tbody>
@@ -76,15 +80,27 @@
                         <div style="float: right; width: 40%;">
                             <table style="width: 100%;" class="table-borderless">
                                 <tr>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Balance :</td>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Advance Payable:</td>
                                     <td style="padding: 8px; text-align: right; width: 50%;">
                                         <span t-field="doc.x_studio_related_field_4is_1ijgac036"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Total Amount :</td>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Untaxed Amount:</td>
                                     <td style="padding: 8px; text-align: right; width: 50%;">
-                                        <span t-field="doc.amount_total"/>
+                                        <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Tax:</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
+                                        <span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; text-align: right; font-weight: bold; width: 70%;">Total Payable:</td>
+                                    <td style="padding: 8px; text-align: right; width: 50%;">
+                                        <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                     </td>
                                 </tr>
                             </table>
@@ -102,8 +118,8 @@
                     <div class="mt-4" style="padding-top:20px;">
                         <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
                             <tr>
-                                <td style="padding: 8px;"><strong>Name:</strong> Ltd Novcom</td>
-                                <td style="padding: 8px;"><strong>Tax ID:</strong> 404535614</td>
+                                <td style="padding: 8px;"><strong>Name:</strong> LLC Novcom</td>
+                                <td style="padding: 8px;"><strong>ID:</strong> 404535614</td>
                             </tr>
                             <tr>
                                 <td style="padding: 8px;"><strong>Bank:</strong> JSC "TBC Bank"</td>
@@ -122,7 +138,7 @@
                     <!-- Footer -->
                     <div style="height:125px;"></div>
                     <div class="text-center">
-                        <p><span t-field="doc.user_id.name"/>---------------</p>
+                        <p><span t-field="doc.user_id.name"/>    ---------------</p>
                         <div style="height: 50px;"></div>
                         <p>Thanks for choosing Peugeot</p>
                     </div>

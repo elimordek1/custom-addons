@@ -107,7 +107,7 @@
                                             <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
+                                            <span t-if="line.product_id.name_english" t-field="line.product_id.name_english"/>
                                             <span t-if="not line.product_id.name_english"> </span>
                                         </td>
                                         <td>
@@ -142,8 +142,8 @@
                                          <t t-esc="line_index + 1"/>
                                         </td>
                                         <td>
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name"/>
-                                            <span t-if="not line.product_id.name"> </span>
+                                            <span t-if="line.product_id.name_english" t-field="line.product_id.name_english"/>
+                                            <span t-if="not line.product_id.name_english"> </span>
                                         </td>
                                         <td>
                                             <span t-if="line.price_unit" t-field="line.price_unit"/>

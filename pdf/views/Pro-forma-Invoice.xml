@@ -136,7 +136,7 @@
                         </table>
                     </div>
                     <!-- Footer -->
-                    <div style="height:230px;"></div>
+                    <div style="height:100px;"></div>
                     <div class="text-center">
                         <p><span class="mr-2" t-field="doc.user_id.name"/>------------------</p>
                         <div style="height: 40px;"></div>

@@ -105,13 +105,13 @@
                             </table>
                         </div>
                     </div>
-                  <div style="height: 160px;"></div>
+                  <div style="height: 120px;"></div>
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
                       ღირებულებაში შედის განბაჟების და გაფორმების ხარჯები
                   </div>
-                  <div style="height: 40px;"></div>
+                  <div style="height: 20px;"></div>
                   <!-- Bank Details -->
                   <div class="mt-4" style="padding-top:20px;">
                       <table style="width: 100%; border-collapse: collapse;" class="table-borderless">

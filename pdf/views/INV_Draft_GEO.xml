@@ -105,7 +105,7 @@
                             </table>
                         </div>
                     </div>
-                  <div style="height: 170px;"></div>
+                  <div style="height: 160px;"></div>
                   <div class="text-center mt-4">
                       ანგარიშსწორება წარმოებს ეროვნულ ვალუტაში, გადახდის დღეს მოქმედი ეროვნული ბანკის ოფიციალური კურსით.
                       <hr/>
@@ -135,7 +135,7 @@
                   </div>
 
                   <!-- Footer -->
-                  <div style="height:160px;"></div>
+                  <div style="height:130px;"></div>
                   <div class="text-center">
                       <p><span class="mr-2" t-field="doc.user_id.name"/>------------------</p>
                                         <div style="height: 50px;"></div>

@@ -391,7 +391,7 @@ class SaleOrderExtended(models.Model):
     
     def _is_vehicle_sale(self, order):
         """Check if the order contains products from vehicle category"""
-        vehicle_category_ids = self.env['product.category'].search([('name', 'ilike', 'vehicle')]).ids
+        vehicle_category_ids = self.env['product.category'].search([('name', 'ilike', 'ავტომობილი')]).ids
         
         for line in order.order_line:
             if line.product_id and line.product_id.categ_id and line.product_id.categ_id.id in vehicle_category_ids:

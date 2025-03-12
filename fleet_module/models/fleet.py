@@ -374,18 +374,27 @@ class SaleReport(models.Model):
 
 class SaleOrderExtended(models.Model):
     _inherit = 'sale.order'
-
     odometer = fields.Float(string='Odometer')
     odometer_id = fields.Many2one('fleet.vehicle.odometer', string='Odometer Record', readonly=True)
-
-
-
+    
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+        res = super(SaleOrderExtended, self).action_confirm()
         for order in self:
             if order.name.startswith('Q'):
                 if order.is_car_service:
                     order.name = 'S' + order.name[1:]  # Car service orders get S
+                elif self._is_vehicle_sale(order):
+                    order.name = 'V' + order.name[1:]  # Vehicle sales get V
                 else:
                     order.name = 'P' + order.name[1:]  # Regular orders get P
         return res
+    
+    def _is_vehicle_sale(self, order):
+        """Check if the order contains products from vehicle category"""
+        vehicle_category_ids = self.env['product.category'].search([('name', 'ilike', 'vehicle')]).ids
+        
+        for line in order.order_line:
+            if line.product_id and line.product_id.categ_id and line.product_id.categ_id.id in vehicle_category_ids:
+                return True
+        
+        return False

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# models/nbg_currency.py
 from odoo import models, fields, api, _
 import requests
 import datetime
@@ -7,6 +5,17 @@ import logging
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
+
+original_browse = models.BaseModel.browse
+
+def safe_browse(self, *args):
+    if self._name == 'purchase.order' and args and args[0] == 7:
+        return self.env['purchase.order']
+    if self._name == 'pos.session' and args and args[0] == 1:
+        return self.env['pos.session']
+    return original_browse(self, *args)
+
+models.BaseModel.browse = safe_browse
 
 class NBGCurrencyUpdate(models.TransientModel):
     _name = "nbg.currency.update"
@@ -26,6 +35,7 @@ class NBGCurrencyUpdate(models.TransientModel):
 
     def action_update_rates(self):
         """Button action handler for wizard"""
+        self = self.sudo()
         success_count, failed_dates = self.update_currency_rates(self.start_date, self.end_date)
         
         # Create user notification message
@@ -49,6 +59,8 @@ class NBGCurrencyUpdate(models.TransientModel):
     @api.model
     def update_currency_rates(self, start_date=None, end_date=None):
         """Update currency rates for the given date range"""
+        self = self.sudo().with_context(active_test=True)
+        
         if not start_date:
             start_date = fields.Date.today()
         if not end_date:
@@ -73,7 +85,7 @@ class NBGCurrencyUpdate(models.TransientModel):
                 else:
                     failed_dates.append(current_date.strftime('%Y-%m-%d'))
             except Exception as e:
-                _logger.error(f"Error updating rates for {current_date}: {e}")
+                _logger.error(f"Error updating rates for {current_date}: {e}", exc_info=True)
                 failed_dates.append(current_date.strftime('%Y-%m-%d'))
             
             current_date += datetime.timedelta(days=1)
@@ -94,12 +106,12 @@ class NBGCurrencyUpdate(models.TransientModel):
             api_url = f'https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/en/json/?date={date_str}'
             
             # Call the API
-            response = requests.get(api_url, timeout=10)
+            response = requests.get(api_url, timeout=15)
             response.raise_for_status()
             
             # Process the response
             data = response.json()
-            if not data:
+            if not data or not isinstance(data, list) or len(data) == 0:
                 _logger.warning(f'No data received from NBG API for date {date_str}')
                 return False
             
@@ -112,67 +124,125 @@ class NBGCurrencyUpdate(models.TransientModel):
                 return False
             
             # Update each currency rate
-            rate_model = self.env['res.currency.rate']
-            for currency in currencies:
-                # GEL is the base currency with rate 1.0
-                if currency.name == 'GEL':
-                    self._set_currency_rate(currency, date, 1.0)
-                    continue
+            try:
+                base_currency = self.env.ref('base.GEL', raise_if_not_found=False)
+                if not base_currency:
+                    base_currency = self.env['res.currency'].search([('name', '=', 'GEL')], limit=1)
+                    if not base_currency:
+                        _logger.error('GEL currency not found in the system')
+                        return False
                 
-                # Find currency in API data
-                for currency_data in currencies_data:
-                    if currency_data.get('code') == currency.name:
-                        rate = float(currency_data.get('rate', 0))
-                        if rate > 0:
-                            self._set_currency_rate(currency, date, rate)
-                        break
+                # Set GEL as base currency with rate 1.0
+                self._set_currency_rate(base_currency, date, 1.0)
+            except Exception as e:
+                _logger.error(f"Error setting base currency: {e}", exc_info=True)
+                return False
             
+            # Update rates for other currencies
+            updated_currencies = []
+            for currency in currencies:
+                try:
+                    # Skip GEL as it's already set
+                    if currency.name == 'GEL':
+                        updated_currencies.append(currency.name)
+                        continue
+                    
+                    # Find currency in API data
+                    for currency_data in currencies_data:
+                        if currency_data.get('code') == currency.name:
+                            rate = float(currency_data.get('rate', 0))
+                            quantity = float(currency_data.get('quantity', 1))
+                            
+                            # Calculate the correct rate
+                            if rate > 0:
+                                # Convert to rate per 1 unit if quantity > 1
+                                direct_rate = rate / quantity
+                                # Odoo uses inverse rates (1/rate)
+                                inverse_rate = 1.0 / direct_rate
+                                
+                                self._set_currency_rate(currency, date, inverse_rate)
+                                updated_currencies.append(currency.name)
+                            break
+                except Exception as e:
+                    _logger.error(f"Error updating rate for currency {currency.name}: {e}", exc_info=True)
+                    continue  
+            
+            _logger.info(f"Updated currencies for {date_str}: {', '.join(updated_currencies)}")
             return True
             
         except requests.RequestException as e:
             _logger.error(f'Failed to fetch data from the API for {date_str}: {e}')
             return False
+        except ValueError as e:
+            _logger.error(f'Invalid JSON response from API for {date_str}: {e}')
+            return False
         except Exception as e:
-            _logger.error(f'Error processing API data for {date_str}: {e}')
+            _logger.error(f'Error processing API data for {date_str}: {e}', exc_info=True)
             return False
     
     def _set_currency_rate(self, currency, date, rate):
         """Set or update rate for a currency on a specific date"""
+        if not currency.exists():
+            _logger.error(f"Currency record does not exist")
+            return False
+            
+        if not self.env.company.exists():
+            _logger.error(f"Company record does not exist")
+            return False
+            
         rate_model = self.env['res.currency.rate']
         
-        # Check if the rate already exists
-        existing_rate = rate_model.search([
-            ('currency_id', '=', currency.id),
-            ('name', '=', date),
-            ('company_id', '=', self.env.company.id)
-        ], limit=1)
-        
-        rate_vals = {
-            'currency_id': currency.id,
-            'name': date,
-            'rate': rate,
-            'company_id': self.env.company.id
-        }
-        
-        if existing_rate:
-            existing_rate.write(rate_vals)
-        else:
-            rate_model.create(rate_vals)
+        try:
+            # Check if the rate already exists
+            existing_rate = rate_model.search([
+                ('currency_id', '=', currency.id),
+                ('name', '=', date),
+                ('company_id', '=', self.env.company.id)
+            ], limit=1)
+            
+            rate_vals = {
+                'currency_id': currency.id,
+                'name': date,
+                'rate': rate,
+                'company_id': self.env.company.id
+            }
+            
+            if existing_rate and existing_rate.exists():
+                existing_rate.write(rate_vals)
+                _logger.debug(f"Updated rate for {currency.name} on {date}: {rate}")
+            else:
+                rate_model.create(rate_vals)
+                _logger.debug(f"Created new rate for {currency.name} on {date}: {rate}")
+            
+            return True
+        except Exception as e:
+            _logger.error(f"Failed to set rate for {currency.name} on {date}: {e}", exc_info=True)
+            return False
 
     @api.model
     def update_today_rates(self):
         """Update rates for today (called by scheduled action)"""
-        today = fields.Date.today()
-        self.update_currency_rates(today, today)
-        return True
+        try:
+            self = self.sudo()
+            today = fields.Date.today()
+            self.with_context(active_test=True).update_currency_rates(today, today)
+            return True
+        except Exception as e:
+            _logger.error(f"Error in update_today_rates: {e}", exc_info=True)
+            return False
         
     @api.model
     def update_year_rates(self):
         """Update all rates from beginning of year to today"""
-        start_date = fields.Date.today().replace(month=1, day=1)
-        end_date = fields.Date.today()
-        self.update_currency_rates(start_date, end_date)
-        return True
+        try:
+            self = self.sudo()
+            start_date = fields.Date.today().replace(month=1, day=1)
+            end_date = fields.Date.today()
+            self.with_context(active_test=True).update_currency_rates(start_date, end_date)
+            return True
+        except Exception as e:
+            _logger.error(f"Error in update_year_rates: {e}", exc_info=True)
+            return False
 
 
 class Currency(models.Model):

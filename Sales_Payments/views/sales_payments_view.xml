@@ -1,0 +1,59 @@
+<odoo>
+    <!-- Extending Sale Order Form View to Include Sales Payments -->
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sales.payments</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Sales Payments">
+                    <field name="payments_cus_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="accountpaymentid"/>
+                            <field name="currency_id"/>
+                            <field name="amount"/>
+                            <field name="payment_date"/>
+                            <field name="memo"/>
+                            <field name="partner_id"/>
+                            <field name="amount_company_currency_signed" sum="Total"/>
+                            <field name="amount_currency" sum="Total"/>
+                        </list>
+                    </field>
+ <!-- Total Payments Section Inside Sale Order -->
+                    <group string="Total Payments">
+                        <field name="total_amount_company_currency_signed" readonly="1"/>
+                        <field name="total_amount_currency" readonly="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="view_move_form_inherit_advance_recalculation" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.advance.recalculation</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button 
+                    name="recalculate_advances" 
+                    string="ავანსების გადათვლა" 
+                    type="object" 
+                    class="oe_highlight" 
+                    confirm="ავანსების გადათვლის ფუნქცია შეცვლის ინვოისის ღირებულებას. გსურთ გაგრძელება?"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_account_payment_form_inherit" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="amount_company_currency_signed" invisible="currency_id == company_currency_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

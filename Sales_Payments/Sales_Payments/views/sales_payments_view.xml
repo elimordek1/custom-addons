@@ -1,0 +1,99 @@
+<odoo>
+
+    <!-- Form View for Sales Payments Custom XO -->
+    <record id="view_sales_payments_form" model="ir.ui.view">
+        <field name="name">sales.payments.custom.xo.form</field>
+        <field name="model">sales.payments.custom.xo</field>
+        <field name="arch" type="xml">
+            <form string="Sales Payments">
+                <sheet>
+                    <group>
+                        <field name="name" placeholder="Enter Payment Reference"/>
+                        <field name="sale_order_id" placeholder="Select Sale Order"/>
+                        <field name="accountpaymentid" placeholder="Select Payment Order"/>
+                        <field name="currency_id" placeholder="Currency"/>
+                        <field name="amount" placeholder="Payment Amount"/>
+                        <field name="payment_date" placeholder="Payment Date"/>
+                        <field name="memo" placeholder="Memo"/>
+                        <field name="partner_id" placeholder="Customer"/>
+                        <field name="amount_signed" placeholder="Amount Signed"/>
+                        <field name="amount_company_currency_signed" placeholder="Amount in GEL"/>
+                    </group>
+
+                    <!-- Total Payments Section -->
+                    <group string="Total Payments">
+                        <field name="total_amount_signed" readonly="1"/>
+                        <field name="total_amount_company_currency_signed" readonly="1"/>
+                        <field name="total_amount" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree (List) View for Sales Payments Custom XO -->
+    <record id="view_sales_payments_tree" model="ir.ui.view">
+        <field name="name">sales.payments.custom.xo.tree</field>
+        <field name="model">sales.payments.custom.xo</field>
+        <field name="arch" type="xml">
+            <list string="Sales Payments">
+                <field name="name"/>
+                <field name="sale_order_id"/>
+                <field name="accountpaymentid"/>
+                <field name="currency_id"/>
+                <field name="amount" sum="Total"/>
+                <field name="payment_date"/>
+                <field name="memo"/>
+                <field name="partner_id"/>
+                <field name="amount_signed" sum="Total"/>
+                <field name="amount_company_currency_signed" sum="Total"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action Window for Sales Payments Custom XO -->
+    <record id="action_sales_payments_custom_xo" model="ir.actions.act_window">
+        <field name="name">Sales Payments</field>
+        <field name="res_model">sales.payments.custom.xo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Item for Sales Payments under Sales -->
+    <menuitem id="menu_sales_payments_root" name="Sales Payments" parent="sale.sale_order_menu"/>
+    <menuitem id="menu_sales_payments" name="Manage Payments" parent="menu_sales_payments_root" action="action_sales_payments_custom_xo"/>
+
+    <!-- Extending Sale Order Form View to Include Sales Payments -->
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sales.payments</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Sales Payments">
+                    <field name="payments_cus_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="accountpaymentid"/>
+                            <field name="currency_id"/>
+                            <field name="amount" sum="Total"/>
+                            <field name="payment_date"/>
+                            <field name="memo"/>
+                            <field name="partner_id"/>
+                            <field name="amount_signed" sum="Total"/>
+                            <field name="amount_company_currency_signed" sum="Total"/>
+                        </list>
+                    </field>
+ <!-- Total Payments Section Inside Sale Order -->
+                    <group string="Total Payments">
+                        <field name="total_amount_signed" readonly="1"/>
+                        <field name="total_amount_company_currency_signed" readonly="1"/>
+                        <field name="total_amount" readonly="1"/>
+                    </group>
+
+
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

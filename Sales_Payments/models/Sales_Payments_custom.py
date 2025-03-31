@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -147,6 +148,7 @@ class AccountMove(models.Model):
         if self.move_type != 'out_invoice':
             raise UserError("This function only applies to customer invoices.")
         
+        # Get the sale order
         sale_order = self.env['sale.order'].search([
             ('invoice_ids', 'in', self.ids)
         ], limit=1)
@@ -157,110 +159,163 @@ class AccountMove(models.Model):
         if self.state != 'draft':
             raise UserError("You can only modify draft invoices.")
         
-        # Get currency information
-        company_currency = sale_order.company_id.currency_id  # GEL
-        so_currency = sale_order.currency_id  # USD (Pricelist currency)
-        
         # Get payments from the sale order
         payments = sale_order.payments_cus_ids
         
         if not payments:
             raise UserError("No payments found for this sale order.")
         
-        # Get total sale order amount in SO currency
-        total_so_amount = sale_order.amount_total  # e.g., 1000 USD
+        # Calculate total payment amount
+        total_payment_amount = sum(p.amount_company_currency_signed for p in payments)
+        if total_payment_amount <= 0:
+            raise UserError("Total payment amount must be greater than zero.")
         
-        # Calculate total payments in SO currency (all converted to SO currency at payment date)
-        total_paid_so_currency = sum(p.amount_currency for p in payments)
+        # Required accounts
+        receivable_account = self.partner_id.property_account_receivable_id
+        advance_account = self.env['account.account'].search([('code', '=', '1410')], limit=1)
+        income_account = self.env['account.account'].search([('code', '=', '3120')], limit=1)
         
-        # Calculate remaining amount to be paid in SO currency
-        remaining_so_currency = total_so_amount - total_paid_so_currency
+        if not advance_account or not income_account:
+            raise UserError("Could not find required accounts: 1410 (Advance) or 3120 (Income)")
         
-        # Get invoice date rate (SO currency to company currency)
-        invoice_date_rate = so_currency._get_conversion_rate(
-            so_currency, company_currency, sale_order.company_id, self.date or fields.Date.today())
+        # Find all debit lines (product lines essentially)
+        debit_lines = self.line_ids.filtered(lambda l: l.debit > 0)
         
-        # Convert remaining SO currency to company currency at invoice date rate
-        remaining_company_currency = remaining_so_currency * invoice_date_rate
+        # Calculate total debit
+        total_debit = sum(line.debit for line in debit_lines)
         
-        # Add the original GEL payments (no conversion needed, already in company currency)
-        gel_payments = payments.filtered(lambda p: p.currency_id == company_currency)
-        gel_payment_total = sum(p.amount_company_currency_signed for p in gel_payments)
+        # Calculate how much to reduce from each line proportionally
+        for line in debit_lines:
+            proportion = line.debit / total_debit
+            amount_to_subtract = proportion * total_payment_amount
+            
+            # Update the line directly with SQL to avoid ORM recomputation
+            self.env.cr.execute("""
+                UPDATE account_move_line 
+                SET debit = debit - %s, balance = balance - %s 
+                WHERE id = %s
+            """, (amount_to_subtract, amount_to_subtract, line.id))
         
-        # Add the USD payments converted to GEL at their respective payment dates
-        usd_payments = payments.filtered(lambda p: p.currency_id == so_currency)
-        usd_payment_in_gel = sum(p.amount_company_currency_signed for p in usd_payments)
+        # Find credit lines (the receivable lines)
+        credit_lines = self.line_ids.filtered(lambda l: l.credit > 0)
         
-        # Calculate final invoice amount in company currency
-        invoice_amount_in_company_currency = gel_payment_total + usd_payment_in_gel + remaining_company_currency
+        # Calculate total credit
+        total_credit = sum(line.credit for line in credit_lines)
         
-        # Keep the total in SO currency unchanged
-        invoice_amount_in_so_currency = total_so_amount
+        # Update credit lines proportionally
+        for line in credit_lines:
+            proportion = line.credit / total_credit
+            amount_to_subtract = proportion * total_payment_amount
+            
+            # Update the line directly with SQL
+            self.env.cr.execute("""
+                UPDATE account_move_line 
+                SET credit = credit - %s, balance = balance + %s 
+                WHERE id = %s
+            """, (amount_to_subtract, amount_to_subtract, line.id))
         
-        # Prepare narration text with calculation details
+        # Create journal entries for each payment
+        invoice_currency = self.currency_id
+        company_currency = self.company_id.currency_id
+        
+        # Prepare narration text
         narration = f"""
-Invoice Amount Calculation:
-- Total Sale Order: {total_so_amount:.2f} {so_currency.name}
-- Payments in {company_currency.name}: {gel_payment_total:.2f}
-- Payments in {so_currency.name} (converted to {company_currency.name}): {usd_payment_in_gel:.2f}
-- Remaining amount in {so_currency.name}: {remaining_so_currency:.2f}
-- Remaining amount in {company_currency.name} (at rate {invoice_date_rate:.4f}): {remaining_company_currency:.2f}
-- Total invoice amount in {company_currency.name}: {invoice_amount_in_company_currency:.2f}
-"""
+    Invoice Amount Calculation with Advance Payments:
+    - Total Advance Payments: {total_payment_amount:.2f} {company_currency.name}
+    - Payments applied proportionally to all invoice lines
+    - Journal entries created for accounts:
+      * Debit 3120 (Income)
+      * Credit 1410 (Advance)
+    
+    Payments applied:
+    """
         
-        # Update the invoice narration
-        self.write({
-            'narration': narration
-        })
+        for payment in payments:
+            payment_amount = payment.amount_company_currency_signed
+            payment_currency = payment.currency_id
+            payment_date = payment.payment_date or fields.Date.today()
+            
+            # Add payment details to narration
+            narration += f"- {payment.name}: {payment.amount:.2f} {payment_currency.name} ({payment_amount:.2f} {company_currency.name}) - {payment_date}\n"
+            
+            # Convert payment amount to invoice currency using the rate from payment date
+            if payment_currency != invoice_currency:
+                payment_amount_in_invoice_currency = payment_currency._convert(
+                    payment.amount,
+                    invoice_currency,
+                    self.company_id,
+                    payment_date
+                )
+            else:
+                payment_amount_in_invoice_currency = payment.amount
+                
+            # Insert income line (3120 debit)
+            self.env.cr.execute("""
+                INSERT INTO account_move_line (
+                    move_id, name, account_id, debit, credit, 
+                    date, partner_id, currency_id, amount_currency, 
+                    balance, company_id, display_type
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                self.id, 
+                f'Income from advance payment {payment.name}',
+                income_account.id,
+                payment_amount,
+                0.0,
+                self.date,
+                self.partner_id.id,
+                invoice_currency.id,
+                payment_amount_in_invoice_currency,
+                payment_amount,
+                self.company_id.id,
+                False
+            ))
+            
+            # Insert advance line (1410 credit)
+            self.env.cr.execute("""
+                INSERT INTO account_move_line (
+                    move_id, name, account_id, debit, credit, 
+                    date, partner_id, currency_id, amount_currency, 
+                    balance, company_id, display_type
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                self.id, 
+                f'Advance payment reconciliation {payment.name}',
+                advance_account.id,
+                0.0,
+                payment_amount,
+                self.date,
+                self.partner_id.id,
+                invoice_currency.id,
+                -payment_amount_in_invoice_currency,
+                -payment_amount,
+                self.company_id.id,
+                False
+            ))
         
-        move_id = self.id
+        # Update invoice narration
+        if self.narration:
+            self.narration += '\n\n' + narration
+        else:
+            self.narration = narration
         
-        # SQL part unchanged
-        # Correct handling for receivable line (credit)
-        self.env.cr.execute("""
-            UPDATE account_move_line 
-            SET credit = %s, debit = 0.0, amount_currency = %s, balance = %s
-            WHERE move_id = %s AND account_id = %s
-        """, (
-            invoice_amount_in_company_currency,
-            -abs(invoice_amount_in_so_currency) if so_currency != company_currency else -invoice_amount_in_company_currency,
-            -invoice_amount_in_company_currency,  # Balance should be negative for credit
-            move_id,
-            self.partner_id.property_account_receivable_id.id
-        ))
-        
-        # Correct handling for income line (debit)
-        self.env.cr.execute("""
-            UPDATE account_move_line 
-            SET debit = %s, credit = 0.0, amount_currency = %s, balance = %s
-            WHERE move_id = %s AND account_id = %s
-        """, (
-            invoice_amount_in_company_currency,
-            abs(invoice_amount_in_so_currency) if so_currency != company_currency else invoice_amount_in_company_currency,
-            invoice_amount_in_company_currency,  # Balance should be positive for debit
-            move_id,
-            sale_order.order_line[0].product_id.categ_id.property_account_income_categ_id.id
-        ))
-        
-        # Commit changes
-        self.env.cr.commit()
+        # Invalidate cache to ensure updated values are shown
+        self.invalidate_recordset()
         
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'Invoice Updated',
-                'message': f'Invoice set to {invoice_amount_in_so_currency:.2f} {so_currency.name} ({invoice_amount_in_company_currency:.2f} {company_currency.name})',
+                'title': 'Advances Applied',
+                'message': f'Advanced payments totaling {total_payment_amount} have been proportionally applied to reduce the invoice',
                 'sticky': False,
             }
         }
-
-
-from odoo import models, fields, api
-
+        
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
-
 
     amount_company_currency_signed = fields.Monetary(
         string="Amount in Company Currency",

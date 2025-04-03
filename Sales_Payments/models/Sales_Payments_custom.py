@@ -142,11 +142,16 @@ class SaleOrder(models.Model):
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
-    
+
+
     def recalculate_advances(self):
         self.ensure_one()
         if self.move_type != 'out_invoice':
             raise UserError("This function only applies to customer invoices.")
+    
+        # Calculate sum of invoice move lines
+        sum_of_invoice_lines = sum(self.line_ids.mapped('balance'))
+        _logger.info("Sum of all invoice move lines: %s", sum_of_invoice_lines)
         
         # Get the sale order
         sale_order = self.env['sale.order'].search([
@@ -165,8 +170,64 @@ class AccountMove(models.Model):
         if not payments:
             raise UserError("No payments found for this sale order.")
         
-        # Calculate total payment amount
+        # Calculate total payment amount in company currency
         total_payment_amount = sum(p.amount_company_currency_signed for p in payments)
+        _logger.info("Total payment amount in company currency: %s", total_payment_amount)
+        
+        # Calculate total payment amount in invoice currency
+        invoice_currency = self.currency_id
+        company_currency = self.company_id.currency_id
+        total_payment_amount_in_invoice_currency = 0
+        
+        for payment in payments:
+            payment_currency = payment.currency_id
+            payment_date = payment.payment_date or fields.Date.today()
+            
+            # Convert payment amount to invoice currency
+            if payment_currency != invoice_currency:
+                payment_amount_in_invoice_currency = payment_currency._convert(
+                    payment.amount,
+                    invoice_currency,
+                    self.company_id,
+                    payment_date
+                )
+            else:
+                payment_amount_in_invoice_currency = payment.amount
+                
+            total_payment_amount_in_invoice_currency += payment_amount_in_invoice_currency
+            
+        price_total= sum(self.invoice_line_ids.mapped('price_total'))
+        _logger.info("Total payment amount in invoice currency: %s Total price: %s", total_payment_amount_in_invoice_currency,price_total)
+
+        difference = price_total - total_payment_amount_in_invoice_currency
+        
+        #convert difference to Gel now company currency 
+        # Convert difference to GEL
+        gel_currency = self.env.ref('base.GEL')
+        company_currency = self.company_id.currency_id
+        invoice_currency = self.currency_id
+        
+        if invoice_currency != gel_currency:
+            difference_in_gel = invoice_currency._convert(
+                difference,
+                gel_currency,
+                self.company_id,
+                self.date or fields.Date.today()
+            )
+        else:
+            difference_in_gel = difference
+        
+        _logger.info("Difference in invoice currency: %s, Difference in GEL: %s", difference, difference_in_gel)
+
+        total_mindia = difference_in_gel + total_payment_amount
+        _logger.info("Damatebai mindiasi: %s", total_mindia)
+        total_mindia_no_drg = total_mindia / 1.18
+    
+        mindia_drg = total_mindia*18/118
+        _logger.info("Damatebai mindia drg gareshe: %s, mindia drg %s", total_mindia_no_drg, mindia_drg)
+        
+
+        
         if total_payment_amount <= 0:
             raise UserError("Total payment amount must be greater than zero.")
         
@@ -178,50 +239,48 @@ class AccountMove(models.Model):
         if not advance_account or not income_account:
             raise UserError("Could not find required accounts: 1410 (Advance) or 3120 (Income)")
         
-        # Find all debit lines (product lines essentially)
+        # Find all debit lines (product lines)
         debit_lines = self.line_ids.filtered(lambda l: l.debit > 0)
-        
-        # Calculate total debit
         total_debit = sum(line.debit for line in debit_lines)
+        _logger.info("Total debit lines sum: %s", total_debit)
         
-        # Calculate how much to reduce from each line proportionally
-        for line in debit_lines:
-            proportion = line.debit / total_debit
-            amount_to_subtract = proportion * total_payment_amount
-            
-            # Update the line directly with SQL to avoid ORM recomputation
-            self.env.cr.execute("""
-                UPDATE account_move_line 
-                SET debit = debit - %s, balance = balance - %s 
-                WHERE id = %s
-            """, (amount_to_subtract, amount_to_subtract, line.id))
-        
-        # Find credit lines (the receivable lines)
+        # Find credit lines (receivable lines)
         credit_lines = self.line_ids.filtered(lambda l: l.credit > 0)
-        
-        # Calculate total credit
         total_credit = sum(line.credit for line in credit_lines)
+        _logger.info("Total credit lines sum: %s", total_credit)
         
-        # Update credit lines proportionally
-        for line in credit_lines:
-            proportion = line.credit / total_credit
-            amount_to_subtract = proportion * total_payment_amount
-            
-            # Update the line directly with SQL
+        # For debit lines, set debit to 2300
+        # For debit lines, set debit to total_mindia
+        for line in debit_lines:
             self.env.cr.execute("""
                 UPDATE account_move_line 
-                SET credit = credit - %s, balance = balance + %s 
+                SET debit = %s, balance = %s 
                 WHERE id = %s
-            """, (amount_to_subtract, amount_to_subtract, line.id))
+            """, (total_mindia, total_mindia, line.id))
         
-        # Create journal entries for each payment
-        invoice_currency = self.currency_id
-        company_currency = self.company_id.currency_id
+        # For credit lines, set credit based on account and display_type
+        for line in credit_lines:
+            if line.account_id.code == "6110":
+                self.env.cr.execute("""
+                    UPDATE account_move_line 
+                    SET credit = %s, balance = -%s 
+                    WHERE id = %s
+                """, (total_mindia_no_drg, total_mindia_no_drg, line.id))
+            elif line.account_id.code == "3330" and line.display_type == "tax":
+                self.env.cr.execute("""
+                    UPDATE account_move_line 
+                    SET credit = %s, balance = -%s 
+                    WHERE id = %s
+                """, (mindia_drg, mindia_drg, line.id))
+            else:
+                # Skip other credit lines
+                pass
         
         # Prepare narration text
         narration = f"""
     Invoice Amount Calculation with Advance Payments:
     - Total Advance Payments: {total_payment_amount:.2f} {company_currency.name}
+    - Invoice Currency Payments: {total_payment_amount_in_invoice_currency:.2f} {invoice_currency.name}
     - Payments applied proportionally to all invoice lines
     - Journal entries created for accounts:
       * Debit 3120 (Income)
@@ -230,6 +289,7 @@ class AccountMove(models.Model):
     Payments applied:
     """
         
+        # Process each payment
         for payment in payments:
             payment_amount = payment.amount_company_currency_signed
             payment_currency = payment.currency_id
@@ -249,6 +309,8 @@ class AccountMove(models.Model):
             else:
                 payment_amount_in_invoice_currency = payment.amount
                 
+            _logger.info("Payment %s amount in invoice currency: %s", payment.name, payment_amount_in_invoice_currency)
+            
             # Insert income line (3120 debit)
             self.env.cr.execute("""
                 INSERT INTO account_move_line (
@@ -304,12 +366,16 @@ class AccountMove(models.Model):
         # Invalidate cache to ensure updated values are shown
         self.invalidate_recordset()
         
+        # Log final sums after modifications
+        final_sum_of_lines = sum(self.line_ids.mapped('balance'))
+        _logger.info("Final sum of all invoice move lines: %s", final_sum_of_lines)
+        
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'title': 'Advances Applied',
-                'message': f'Advanced payments totaling {total_payment_amount} have been proportionally applied to reduce the invoice',
+                'message': f'Advanced payments totaling {total_payment_amount} company currency ({total_payment_amount_in_invoice_currency} invoice currency) have been applied to the invoice',
                 'sticky': False,
             }
         }
